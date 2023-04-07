@@ -34,12 +34,12 @@ db.User.hasMany(db.Menu, { foreignKey: "user_id" });
 db.Menu.belongsTo(db.User, { foreignKey: "user_id" });
 
 /* ManyToOne like Recette */
-db.User.hasMany(db.Recette, { foreignKey: "nombrelike" });
-db.Recette.belongsTo(db.User, { foreignKey: "nombrelike" });
+//db.User.hasMany(db.Recette, { foreignKey: "nombrelike" });
+//db.Recette.belongsTo(db.User, { foreignKey: "nombrelike" });
 
 /* ManyToOne like Menu */
-db.User.hasMany(db.Menu, { foreignKey: "nombrelike" });
-db.Menu.belongsTo(db.User, { foreignKey: "nombrelike" });
+//db.User.hasMany(db.Menu, { foreignKey: "nombrelike" });
+//db.Menu.belongsTo(db.User, { foreignKey: "nombrelike" });
 
 /* ManyToOne User Recette */
 db.User.hasMany(db.Menu, { foreignKey: "user_id" });
@@ -82,8 +82,8 @@ db.Menu.hasMany(db.Commentaire, { foreignKey: "menu_id" });
 db.Commentaire.belongsTo(db.Menu, { foreignKey: "menu_id" });
 
 /* ManyToOne like Commentaire */
-db.User.hasMany(db.Commentaire, { foreignKey: "nombrelike" });
-db.Commentaire.belongsTo(db.User, { foreignKey: "nombrelike" });
+//db.User.hasMany(db.Commentaire, { foreignKey: "nombrelike" });
+//db.Commentaire.belongsTo(db.User, { foreignKey: "nombrelike" });
 
 /* Synchronisation des modèles */
 sequelize.sync({alter:true});

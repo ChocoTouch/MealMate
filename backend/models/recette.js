@@ -15,11 +15,11 @@ module.exports = (sequelize) => {
                 type: DataTypes.INTEGER(10),
                 allowNull: false,
             },
-            nombrelike: {
-                type:DataTypes.INTEGER(10),
-                defaultValue: 0,
-                allowNull: false,
-            },
+            // nombrelike: {
+            //     type:DataTypes.INTEGER(10),
+            //     defaultValue: 0,
+            //     allowNull: false,
+            // },
             nom: {
                 type: DataTypes.STRING(50),
                 allowNull: false,

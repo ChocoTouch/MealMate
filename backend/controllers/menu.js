@@ -1,25 +1,25 @@
 /* Import des modules nécessaires */
 const DB = require('../db.config')
-const Recette = DB.Recette
+const Menu = DB.Menu
 const { RequestError, RecetteError } = require("../error/customError");
 
-/* Routage de la ressource Recette (Ensemble des Recettes) */
-exports.getAllRecipes = (req, res, next) => {
-  Recette.findAll()
-    .then((recettes) => res.json({ data: recettes }))
+/* Routage de la ressource Recette (Ensemble des Menus) */
+exports.getAllMenus = (req, res, next) => {
+  Menu.findAll()
+    .then((menus) => res.json({ data: menus }))
     .catch((err) => next());
 };
 
-/* GET ID (Recette spécifique)*/
-exports.getRecipe = async (req, res, next) => {
-  let recetteID = parseInt(req.params.id);
+/* GET ID (Menu spécifique)*/
+exports.getMenu = async (req, res, next) => {
+  let menuID = parseInt(req.params.id);
   // Verifie si le champ id est présent + cohérent
-  if (!recetteID) {
+  if (!menuID) {
     throw new RequestError("Paramètre(s) manquant(s) .");
   }
 
   try {
-    // Récupération de la recette
+    // Récupération du menu
     let recette = await Recette.findOne({ where: { id: recetteID }, raw: true });
     // Test de l'existance de la recette
     if (recette === null) {

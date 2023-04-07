@@ -48,7 +48,7 @@ exports.addUser = async (req, res, next) => {
 
     // Test de l'existance de l'utilisateur
     if (user !== null) {
-      throw new RequestError(`L'utilisateur ${nom} existe déjà .`, 1);
+      throw new RequestError(`L'adresse email ${email} est déjà utilisée.`, 1);
     }
 
     // Hashage du mot de passe

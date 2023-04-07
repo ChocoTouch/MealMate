@@ -19,11 +19,11 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING(30),
                 allowNull: false,
             },
-            nombrelike: {
-                type:DataTypes.INTEGER(10),
-                defaultValue: 0,
-                allowNull: false,
-            },
+            // nombrelike: {
+            //     type:DataTypes.INTEGER(10),
+            //     defaultValue: 0,
+            //     allowNull: false,
+            // },
         },
         { paranoid: true } // softDelete
     );

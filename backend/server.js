@@ -22,7 +22,7 @@ const recettes_router = require("./routes/recettes")
 
 /* Mise en place du routage */
 app.get("/", (req, res) => res.send(`Welcome to the MealMate API by Bauchet Anthony`));
-app.use("/users", checkAdminTokenMW, user_router); //checkTokenMW,
+app.use("/users", checkAdminTokenMW, user_router); //checkAdminTokenMW,
 app.use("/auth", auth_router);
 app.use("/recettes", checkTokenMW, recettes_router);
 app.get("*", (req, res) => res.status(501).send("Ressource non existant"));
