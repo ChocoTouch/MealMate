@@ -1,0 +1,51 @@
+
+PAGES PUBLIQUES :
+	/home
+	/contact
+	/about
+	/recipes (recherches et affichage de recettes avec likes et commentaires)
+
+PAGES USERS :
+	/home
+	/recipes
+	/menus (liste de menus de la semaine avec likes et commentaires)
+	/user/profile
+	/user/parameters
+	/user/recipes (gestion de recettes)
+		/index
+		/edit
+		/add
+		/delete
+	/user/menus (gestion de menus)
+		/index
+		/edit
+		/add
+		/delete
+	/about
+	/contact
+
+PAGES LOGIN :
+	/auth/login
+
+PAGES ADMIN :
+	/admin/dashboard (données sur les utilisateurs, recettes, menus)
+	/admin/user (gestion des utilisateurs)
+		/index
+		/edit
+		/add
+		/delete
+	/admin/recipes (gestion de recettes)
+		/index
+		/edit
+		/add
+		/delete
+	/admin/menus (gestion de menus)
+		/index
+		/edit
+		/add
+		/delete
+	/admin/comments (gestion de commentaires)
+		/index
+		/edit
+		/add
+		/delete

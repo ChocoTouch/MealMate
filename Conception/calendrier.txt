@@ -1,0 +1,3 @@
+11/02 : Cahier des charges mit en place
+12/02 : Conception du modèle de données et de l'architecture React de l'application
+09/04 : Partie Conception terminée (exceptée le diagramme UML) avec le cahier des charges, MCD, MLD, MPD. Développement des modèles de l'API.
