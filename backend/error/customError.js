@@ -29,6 +29,34 @@ class MainError extends Error {
           this.statusCode = 409;
         }
         break;
+      case "MenuError":
+        if (errorType == 0) {
+          this.statusCode = 404;
+        } else {
+          this.statusCode = 409;
+        }
+        break;
+      case "CommentaireError":
+        if (errorType == 0) {
+          this.statusCode = 404;
+        } else {
+          this.statusCode = 409;
+        }
+        break;
+      case "CategorieError":
+        if (errorType == 0) {
+          this.statusCode = 404;
+        } else {
+          this.statusCode = 409;
+        }
+        break;
+      case "IngredientError":
+        if (errorType == 0) {
+          this.statusCode = 404;
+        } else {
+          this.statusCode = 409;
+        }
+        break;
       case "RequestError":
         this.statusCode = 400;
         break;
@@ -44,6 +72,14 @@ class UserError extends MainError {}
 
 class RecetteError extends MainError {}
 
+class CommentaireError extends MainError {}
+
+class CategorieError extends MainError {}
+
+class IngredientError extends MainError {}
+
+class MenuError extends MainError {}
+
 class RequestError extends MainError {}
 
 module.exports = {
@@ -51,5 +87,9 @@ module.exports = {
   AuthenticationError,
   UserError,
   RecetteError,
+  CommentaireError,
+  CategorieError,
+  IngredientError,
+  MenuError,
   RequestError,
 };

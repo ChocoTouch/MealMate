@@ -1,9 +1,9 @@
 /* Import des modules nécessaires */
-const DB = require('../db.config')
-const Menu = DB.Menu
+const DB = require("../db.config");
+const Menu = DB.Menu;
 const { RequestError, RecetteError } = require("../error/customError");
 
-/* Routage de la ressource Recette (Ensemble des Menus) */
+/* Routage de la ressource Menu (Ensemble des Menus) */
 exports.getAllMenus = (req, res, next) => {
   Menu.findAll()
     .then((menus) => res.json({ data: menus }))
@@ -20,78 +20,76 @@ exports.getMenu = async (req, res, next) => {
 
   try {
     // Récupération du menu
-    let recette = await Recette.findOne({ where: { id: recetteID }, raw: true });
-    // Test de l'existance de la recette
-    if (recette === null) {
-      throw new RecetteError("Cette recette n'existe pas .", 0);
+    let menu = await Menu.findOne({ where: { id: menuID }, raw: true });
+    // Test de l'existance du menu
+    if (menu === null) {
+      throw new RecetteError("Ce menu n'existe pas .", 0);
     }
-    // Recette trouvée
-    return res.json({ data: recette });
+    // Menu trouvé
+    return res.json({ data: menu });
   } catch (err) {
     next(err);
   }
 };
 
 /* PUT */
-exports.addRecipe = async (req, res, next) => {
+exports.addMenu = async (req, res, next) => {
   try {
-    
-    const { nom, user_id, description, instructions, pays, vegetarien, vegetalien, sansgluten } = req.body;
+    const { nom, user_id } = req.body;
     // Validation des données reçues
-    if (!nom || !user_id || !description || !instructions || !pays || !vegetarien || !vegetalien || !sansgluten) {
+    if (!nom || !user_id) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    //req.body.nombreLike = 0;
-    // Création de la recette
-    let recette = await Recette.create(req.body);
+    // Création du menu
+    let menu = await Menu.create(req.body);
 
-    // Réponse de la recette créé.
-    return res.json({ message: "La recette a bien été créée .", data: recette });
+    // Réponse du menu créé.
+    return res.json({ message: "Le menu a bien été créée .", data: menu });
   } catch (err) {
     next(err);
   }
 };
 
 /* PATCH ID & BODY*/
-exports.updateRecipe = async (req, res, next) => {
+exports.updateMenu = async (req, res, next) => {
   try {
-    let recetteID = parseInt(req.params.id);
+    let menuID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
-    if (!recetteID) {
+    if (!menuID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
-    // Recherche de la recette
-    let recette = await Recette.findOne({ where: { id: recetteID }, raw: true });
+    // Recherche du menu
+    let menu = await Menu.findOne({ where: { id: menuID }, raw: true });
 
-    // Vérification de l'existance de la recette
-    if (recette === null) {
-      throw new RecetteError("Cette recette n'existe pas .", 0);
+    // Vérification de l'existance du menu
+    if (menu === null) {
+      throw new RecetteError("Ce menu n'existe pas .", 0);
     }
 
-    // Mise à jour de la recette
-    await Recette.update(req.body, { where: { id: recetteID } });
+    // Mise à jour du menu
+    await Menu.update(req.body, { where: { id: menuID } });
 
     // Réponse de la mise à jour
-    return res.json({ message: "La recette à bien été modifiée .", data: recette });
+    return res.json({ message: "Le menu à bien été modifiée .", data: menu });
   } catch (err) {
     next(err);
   }
 };
 
 /* POST UNTRASH */
-exports.untrashRecipe = async (req, res, next) => {
+exports.untrashMenu = async (req, res, next) => {
   try {
-    let recetteID = parseInt(req.params.id);
+    let menuID = parseInt(req.params.id);
 
     // Vérification si champ id présent et cohérent
-    if (!recetteID) {
+    if (!menuID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
-    // Restauration de la recette
-    await Recette.restore({ where: { id: recetteID } });
+    // Restauration du menu
+    await Menu.restore({ where: { id: menuID } });
 
     // Réponse de la Restauration
     return res.status(204).json({});
@@ -101,17 +99,17 @@ exports.untrashRecipe = async (req, res, next) => {
 };
 
 /* SOFT DELETE TRASH */
-exports.trashRecipe = async (req, res, next) => {
+exports.trashMenu = async (req, res, next) => {
   try {
-    let recetteID = parseInt(req.params.id);
+    let menuID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
-    if (!recetteID) {
+    if (!menuID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
-    // Suppression de la recette (soft delete without force: true)
-    await Recette.destroy({ where: { id: recetteID } });
+    // Suppression du menu (soft delete without force: true)
+    await Menu.destroy({ where: { id: menuID } });
 
     // Réponse du soft delete
     return res.status(204).json({});
@@ -121,17 +119,17 @@ exports.trashRecipe = async (req, res, next) => {
 };
 
 /* HARD DELETE ID*/
-exports.deleteRecipe = async (req, res, next) => {
+exports.deleteMenu = async (req, res, next) => {
   try {
-    let recetteID = parseInt(req.params.id);
+    let menuID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
-    if (!recetteID) {
+    if (!menuID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
-    // Suppression de la recette (hard delete with force: true)
-    await Recette.destroy({ where: { id: recetteID }, force: true });
+    // Suppression du menu (hard delete with force: true)
+    await Menu.destroy({ where: { id: menuID }, force: true });
 
     // Réponse du hard delete
     return res.status(204).json({});

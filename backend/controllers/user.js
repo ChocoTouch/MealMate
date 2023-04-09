@@ -1,6 +1,6 @@
 /* Import des modules nécessaires */
-const DB = require('../db.config')
-const User = DB.User
+const DB = require("../db.config");
+const User = DB.User;
 const { RequestError, UserError } = require("../error/customError");
 
 /* Routage de la ressource User (Ensemble des Users) */
@@ -59,7 +59,10 @@ exports.addUser = async (req, res, next) => {
     let userc = await User.create(req.body);
 
     // Réponse de l'utilisateur créé.
-    return res.json({ message: "L'utilisateur à bien été crée .", data: userc });
+    return res.json({
+      message: "L'utilisateur à bien été crée .",
+      data: userc,
+    });
   } catch (err) {
     next(err);
   }
@@ -87,7 +90,10 @@ exports.updateUser = async (req, res, next) => {
     await User.update(req.body, { where: { id: userID } });
 
     // Réponse de la mise à jour
-    return res.json({ message: "L'utilisateur à bien été modifié .", data: user });
+    return res.json({
+      message: "L'utilisateur à bien été modifié .",
+      data: user,
+    });
   } catch (err) {
     next(err);
   }

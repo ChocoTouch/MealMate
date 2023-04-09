@@ -1,6 +1,6 @@
 /* Import des modules nécessaires */
-const DB = require('../db.config')
-const Recette = DB.Recette
+const DB = require("../db.config");
+const Recette = DB.Recette;
 const { RequestError, RecetteError } = require("../error/customError");
 
 /* Routage de la ressource Recette (Ensemble des Recettes) */
@@ -20,7 +20,10 @@ exports.getRecipe = async (req, res, next) => {
 
   try {
     // Récupération de la recette
-    let recette = await Recette.findOne({ where: { id: recetteID }, raw: true });
+    let recette = await Recette.findOne({
+      where: { id: recetteID },
+      raw: true,
+    });
     // Test de l'existance de la recette
     if (recette === null) {
       throw new RecetteError("Cette recette n'existe pas .", 0);
@@ -35,18 +38,37 @@ exports.getRecipe = async (req, res, next) => {
 /* PUT */
 exports.addRecipe = async (req, res, next) => {
   try {
-    
-    const { nom, user_id, description, instructions, pays, vegetarien, vegetalien, sansgluten } = req.body;
+    const {
+      nom,
+      user_id,
+      description,
+      instructions,
+      pays,
+      vegetarien,
+      vegetalien,
+      sansgluten,
+    } = req.body;
     // Validation des données reçues
-    if (!nom || !user_id || !description || !instructions || !pays || !vegetarien || !vegetalien || !sansgluten) {
+    if (
+      !nom ||
+      !user_id ||
+      !description ||
+      !instructions ||
+      !pays ||
+      !vegetarien ||
+      !vegetalien ||
+      !sansgluten
+    ) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    //req.body.nombreLike = 0;
     // Création de la recette
     let recette = await Recette.create(req.body);
 
     // Réponse de la recette créé.
-    return res.json({ message: "La recette a bien été créée .", data: recette });
+    return res.json({
+      message: "La recette a bien été créée .",
+      data: recette,
+    });
   } catch (err) {
     next(err);
   }
@@ -63,7 +85,10 @@ exports.updateRecipe = async (req, res, next) => {
     }
 
     // Recherche de la recette
-    let recette = await Recette.findOne({ where: { id: recetteID }, raw: true });
+    let recette = await Recette.findOne({
+      where: { id: recetteID },
+      raw: true,
+    });
 
     // Vérification de l'existance de la recette
     if (recette === null) {
@@ -74,7 +99,10 @@ exports.updateRecipe = async (req, res, next) => {
     await Recette.update(req.body, { where: { id: recetteID } });
 
     // Réponse de la mise à jour
-    return res.json({ message: "La recette à bien été modifiée .", data: recette });
+    return res.json({
+      message: "La recette à bien été modifiée .",
+      data: recette,
+    });
   } catch (err) {
     next(err);
   }
