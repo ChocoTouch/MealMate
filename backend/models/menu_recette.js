@@ -1,4 +1,5 @@
 /* Import des modules nécessaires */
+const { STRING } = require("sequelize");
 const { DataTypes, UniqueConstraintError } = require("sequelize");
 
 /* Définition du modèle */
@@ -11,6 +12,17 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      count: {
+        type: DataTypes.INTEGER(4),
+      },
+      // jours: {
+      //   type: DataTypes.ARRAY(STRING),
+      //   allowNull: false,
+      // },
+      // repas: {
+      //   type: DataTypes.ARRAY(STRING),
+      //   allowNull: false,
+      // }
     },
     { paranoid: true } // softDelete
   );

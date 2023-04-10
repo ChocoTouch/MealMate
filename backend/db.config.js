@@ -31,7 +31,7 @@ db.Liker_commentaire = require("./models/liker_commentaire")(sequelize);
 
 /* ManyToOne User Recette */
 db.User.hasMany(db.Recette, { foreignKey: "user_id" });
-db.Recette.belongsTo(db.User, { foreignKey: "user_id" });
+db.Recette.belongsTo(db.User,{ foreignKey: "user_id" });
 
 /* ManyToOne User Menu */
 db.User.hasMany(db.Menu, { foreignKey: "user_id" });
@@ -99,6 +99,6 @@ db.Commentaire.belongsTo(db.Menu, { foreignKey: "menu_id" });
 
 /* Synchronisation des modèles */
 //{alter:true}{force:true}
-sequelize.sync();
+sequelize.sync({alter:true});
 
 module.exports = db;

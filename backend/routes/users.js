@@ -33,4 +33,7 @@ router.delete("/trash/:id", userController.trashUser);
 /* HARD DELETE ID*/
 router.delete("/:id", userController.deleteUser);
 
+/* GET ID (User spécifique)*/
+router.get("/recettes/:id", userController.getUserRecettes);
+
 module.exports = router;

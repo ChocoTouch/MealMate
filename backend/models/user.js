@@ -1,7 +1,6 @@
 /* Import des modules nécessaires */
 const { DataTypes, UniqueConstraintError } = require("sequelize");
 const bcrypt = require("bcrypt");
-const { STRING } = require("sequelize");
 
 /* Définition du modèle */
 module.exports = (sequelize) => {

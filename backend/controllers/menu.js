@@ -1,6 +1,8 @@
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const Menu = DB.Menu;
+const Recette = DB.Recette;
+const User = DB.User;
 const { RequestError, RecetteError } = require("../error/customError");
 
 /* Routage de la ressource Menu (Ensemble des Menus) */
@@ -20,7 +22,10 @@ exports.getMenu = async (req, res, next) => {
 
   try {
     // Récupération du menu
-    let menu = await Menu.findOne({ where: { id: menuID }, raw: true });
+    let menu = await Menu.findOne({
+      where: { id: menuID },
+      include: { model: User, attributes: ["id", "pseudo", "email"] },
+    });
     // Test de l'existance du menu
     if (menu === null) {
       throw new RecetteError("Ce menu n'existe pas .", 0);
@@ -35,13 +40,19 @@ exports.getMenu = async (req, res, next) => {
 /* PUT */
 exports.addMenu = async (req, res, next) => {
   try {
-    const { nom, user_id } = req.body;
+    const { nom, description, user_id } = req.body;
     // Validation des données reçues
-    if (!nom || !user_id) {
+    if (!nom || !description || !user_id) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // Création du menu
-    let menu = await Menu.create(req.body);
+    let menu = await Menu.create(req.body, {
+      include: [
+        {
+          model: User,
+        },
+      ],
+    });
 
     // Réponse du menu créé.
     return res.json({ message: "Le menu a bien été créée .", data: menu });
@@ -133,6 +144,36 @@ exports.deleteMenu = async (req, res, next) => {
 
     // Réponse du hard delete
     return res.status(204).json({});
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* PUT */
+exports.addMenuRecette = async (req, res, next) => {
+  try {
+    const { recette_id, menu_id, jours, repas } = req.body;
+    // Validation des données reçues
+    if (!recette_id || !menu_id || !jours || !repas) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    let menu = await Menu.findOne({ where: { id: menu_id } });
+    // Vérification de l'existance du menu
+    if (menu === null) {
+      throw new RecetteError("Ce menu n'existe pas .", 0);
+    }
+    let recette = await Recette.findOne({ where: { id: recette_id } });
+    // Vérification de l'existance du menu
+    if (recette === null) {
+      throw new RecetteError("Cette recette n'existe pas .", 0);
+    }
+    // Ajout de la recette dans le menu
+    let menuRecette = await menu.addRecette(recette, { through: { repas: repas, jours: jours } });
+    // Réponse du menu créé.
+    return res.json({
+      message: "La recette a bien été ajoutée au menu .",
+      data: menuRecette,
+    });
   } catch (err) {
     next(err);
   }

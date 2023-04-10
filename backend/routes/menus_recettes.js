@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
 const express = require("express");
 const checkTokenMW = require("../jsonwebtoken/check");
-const recetteController = require("../controllers/recette");
+const menuRecetteController = require("../controllers/menu_recette");
 
 /* Récupération du router d'express */
 let router = express.Router();
@@ -14,24 +14,24 @@ router.use((req, res, next) => {
 });
 
 /* Routage de la ressource Recette (Ensemble des Recettes) */
-router.get("/", recetteController.getAllRecettes);
+router.get("/:id", menuRecetteController.getAllMenusForRecette);
 
 /* GET ID (Recette spécifique)*/
-router.get("/:id", recetteController.getRecette);
+//router.get("/:id", menuRecetteController.getRecette);
 
 /* PUT */
-router.put("", recetteController.addRecette); //checkTokenMW
+//router.put("", checkTokenMW, menuRecetteController.addRecette);
 
 /* PATCH ID & BODY*/
-router.patch("/:id", recetteController.updateRecette); //checkTokenMW
+//router.patch("/:id", checkTokenMW, menuRecetteController.updateRecette);
 
 /* POST UNTRASH */
-router.post("/untrash/:id", recetteController.untrashRecette); //checkTokenMW
+//router.post("/untrash/:id", checkTokenMW, menuRecetteController.untrashRecette);
 
 /* SOFT DELETE TRASH */
-router.delete("/trash/:id", recetteController.trashRecette); //checkTokenMW
+//router.delete("/trash/:id", checkTokenMW, menuRecetteController.trashRecette);
 
 /* HARD DELETE ID*/
-router.delete("/:id", recetteController.deleteRecette); //checkTokenMW
+//router.delete("/:id", checkTokenMW, menuRecetteController.deleteRecette);
 
 module.exports = router;

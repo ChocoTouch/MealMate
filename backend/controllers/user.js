@@ -1,6 +1,7 @@
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const User = DB.User;
+const Recette = DB.Recette;
 const { RequestError, UserError } = require("../error/customError");
 
 /* Routage de la ressource User (Ensemble des Users) */
@@ -21,7 +22,9 @@ exports.getUser = async (req, res, next) => {
 
   try {
     // Récupération de l'utilisateur
-    let user = await User.findOne({ where: { id: userID }, raw: true });
+    let user = await User.findOne({ where: { id: userID },
+       raw: true,
+    });
     // Test de l'existance de l'utilisateur
     if (user === null) {
       throw new UserError("Cet utilisateur n'existe pas .", 0);
@@ -51,7 +54,7 @@ exports.addUser = async (req, res, next) => {
       throw new RequestError(`L'adresse email ${email} est déjà utilisée.`, 1);
     }
 
-    // Hashage du mot de passe
+    // Hashage du mot de passe -- MOVED
     // let hash = await bcrypt.hash(Password, parseInt(process.env.BCRYPT_SALT_ROUND))
     // req.body.Password = hash;
 
@@ -154,6 +157,27 @@ exports.deleteUser = async (req, res, next) => {
 
     // Réponse du hard delete
     return res.status(204).json({});
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* GET ID (User spécifique)*/
+exports.getUserRecettes = async (req, res, next) => {
+  let userID = parseInt(req.params.id);
+
+  try {
+    // Récupération de l'utilisateur
+    let recettes = await Recette.findAll({ 
+      where: { user_id: userID },
+      //include: {model: Recette, attributes:['id','nom']}
+    });
+    // Test de l'existance de l'utilisateur
+    if (recettes === null) {
+      throw new UserError("Cet utilisateur n'existe pas .", 0);
+    }
+    // Utilisateur trouvé
+    return res.json({ data: recettes });
   } catch (err) {
     next(err);
   }

@@ -1,17 +1,19 @@
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const Recette = DB.Recette;
-const { RequestError, RecetteError } = require("../error/customError");
+const User = DB.User;
+const Menu = DB.Menu;
+const { RequestError, RecetteError, UserError } = require("../error/customError");
 
 /* Routage de la ressource Recette (Ensemble des Recettes) */
-exports.getAllRecipes = (req, res, next) => {
+exports.getAllRecettes = (req, res, next) => {
   Recette.findAll()
     .then((recettes) => res.json({ data: recettes }))
     .catch((err) => next());
 };
 
 /* GET ID (Recette spécifique)*/
-exports.getRecipe = async (req, res, next) => {
+exports.getRecette = async (req, res, next) => {
   let recetteID = parseInt(req.params.id);
   // Verifie si le champ id est présent + cohérent
   if (!recetteID) {
@@ -22,7 +24,7 @@ exports.getRecipe = async (req, res, next) => {
     // Récupération de la recette
     let recette = await Recette.findOne({
       where: { id: recetteID },
-      raw: true,
+      include: {model: User, attributes:['id','pseudo','email']}
     });
     // Test de l'existance de la recette
     if (recette === null) {
@@ -36,7 +38,7 @@ exports.getRecipe = async (req, res, next) => {
 };
 
 /* PUT */
-exports.addRecipe = async (req, res, next) => {
+exports.addRecette = async (req, res, next) => {
   try {
     const {
       nom,
@@ -61,8 +63,19 @@ exports.addRecipe = async (req, res, next) => {
     ) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
+
+    // Récupération de l'utilisateur
+    let user = await User.findOne({ where: { id: user_id } }); 
+    // Test de l'existance de l'utilisateur
+    if (user === null) {
+      throw new UserError("Cet utilisateur n'existe pas .", 0);
+    }
     // Création de la recette
-    let recette = await Recette.create(req.body);
+    let recette = await Recette.create(req.body,{include: [
+      {
+        model: User,
+      }
+    ]});
 
     // Réponse de la recette créé.
     return res.json({
@@ -75,7 +88,7 @@ exports.addRecipe = async (req, res, next) => {
 };
 
 /* PATCH ID & BODY*/
-exports.updateRecipe = async (req, res, next) => {
+exports.updateRecette = async (req, res, next) => {
   try {
     let recetteID = parseInt(req.params.id);
 
@@ -109,7 +122,7 @@ exports.updateRecipe = async (req, res, next) => {
 };
 
 /* POST UNTRASH */
-exports.untrashRecipe = async (req, res, next) => {
+exports.untrashRecette = async (req, res, next) => {
   try {
     let recetteID = parseInt(req.params.id);
 
@@ -129,7 +142,7 @@ exports.untrashRecipe = async (req, res, next) => {
 };
 
 /* SOFT DELETE TRASH */
-exports.trashRecipe = async (req, res, next) => {
+exports.trashRecette = async (req, res, next) => {
   try {
     let recetteID = parseInt(req.params.id);
 
@@ -149,7 +162,7 @@ exports.trashRecipe = async (req, res, next) => {
 };
 
 /* HARD DELETE ID*/
-exports.deleteRecipe = async (req, res, next) => {
+exports.deleteRecette = async (req, res, next) => {
   try {
     let recetteID = parseInt(req.params.id);
 
