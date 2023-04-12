@@ -1,0 +1,19 @@
+Ingredient
+id	nom	description	pays	calories	prix
+1	Tomates	Rouges, juteuses et savoureuses	Mexique	25	2
+2	Poulet	Source de protéines maigres avec une saveur douce	États-Unis	200	10
+3	Quinoa	Noix et riche en protéines	Pérou	120	5
+4	Chou frisé	Vert feuillu avec un goût légèrement amer	États-Unis	50	3
+5	Saumon	Riche en acides gras oméga-3	Norvège	300	20
+
+Menu
+id	user_id	nom	description
+1	1	Brunch	Un repas du matin délicieux et nourrissant
+2	2	Dîner	Un repas du soir satisfaisant et savoureux
+3	3	Dessert	Une douceur sucrée pour terminer la journée
+
+Recette
+id	user_id	nom	description	instructions	pays	vegetarien	vegetalien	sansgluten
+1	1	Soupe de tomates	Un classique réconfortant	1. Faire revenir les oignons et l'ail dans une casserole. 2. Ajouter les tomates et le bouillon. 3. Laisser mijoter pendant 20 minutes. 4. Mixer jusqu'à obtenir une texture lisse.	France	true	false	true
+2	2	Curry de poulet	Un plat épicé et savoureux	1. Faire revenir le poulet, les oignons et l'ail. 2. Ajouter le curry et le lait de coco. 3. Laisser mijoter pendant 30 minutes. 4. Servir sur du riz.	Inde	false	false	true
+3	3	Gâteau au chocolat	Un dessert riche et décadent	1. Mélanger la farine, le sucre, la poudre de cacao et la levure. 2. Ajouter les œufs, le lait et le chocolat fondu. 3. Cuire au four pendant 30 minutes.	États-Unis	true	true	false

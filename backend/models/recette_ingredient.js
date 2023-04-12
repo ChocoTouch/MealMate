@@ -11,6 +11,10 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      count: {
+        type: DataTypes.INTEGER(4),
+        allowNull: false,
+      },
     },
     { paranoid: true } // softDelete
   );

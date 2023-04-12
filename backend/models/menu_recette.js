@@ -14,15 +14,8 @@ module.exports = (sequelize) => {
       },
       count: {
         type: DataTypes.INTEGER(4),
-      },
-      // jours: {
-      //   type: DataTypes.ARRAY(STRING),
-      //   allowNull: false,
-      // },
-      // repas: {
-      //   type: DataTypes.ARRAY(STRING),
-      //   allowNull: false,
-      // }
+        allowNull:false,
+      }
     },
     { paranoid: true } // softDelete
   );

@@ -12,10 +12,10 @@ router.use((req, res, next) => {
   next();
 });
 
-/* Routage de la ressource User (Ensemble des Users) */
+/* GET */
 router.get("/", userController.getAllUsers);
 
-/* GET ID (User spécifique)*/
+/* GET ID */
 router.get("/:id", userController.getUser);
 
 /* PUT */
@@ -33,7 +33,10 @@ router.delete("/trash/:id", userController.trashUser);
 /* HARD DELETE ID*/
 router.delete("/:id", userController.deleteUser);
 
-/* GET ID (User spécifique)*/
-router.get("/recettes/:id", userController.getUserRecettes);
+/* GET ID*/
+router.get("/recettes/:id", userController.getRecettesForUser);
+
+/* GET ID*/
+router.get("/menus/:id", userController.getRecettesForUser);
 
 module.exports = router;

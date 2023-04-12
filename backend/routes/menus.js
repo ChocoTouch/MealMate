@@ -13,10 +13,10 @@ router.use((req, res, next) => {
   next();
 });
 
-/* Routage de la ressource Recette (Ensemble des Recettes) */
+/* GET */
 router.get("/", menuController.getAllMenus);
 
-/* GET ID (Recette spécifique)*/
+/* GET ID */
 router.get("/:id", menuController.getMenu);
 
 /* PUT */
@@ -36,4 +36,8 @@ router.delete("/:id", menuController.deleteMenu); //checkTokenMW
 
 /* PUT */
 router.put("/recettes", menuController.addMenuRecette); //checkTokenMW
+
+/* GET ID */
+router.get("/recettes/:id", menuController.getRecettesForMenu);
+
 module.exports = router;

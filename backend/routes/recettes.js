@@ -13,10 +13,10 @@ router.use((req, res, next) => {
   next();
 });
 
-/* Routage de la ressource Recette (Ensemble des Recettes) */
+/* GET */
 router.get("/", recetteController.getAllRecettes);
 
-/* GET ID (Recette spécifique)*/
+/* GET ID */
 router.get("/:id", recetteController.getRecette);
 
 /* PUT */
@@ -33,5 +33,14 @@ router.delete("/trash/:id", recetteController.trashRecette); //checkTokenMW
 
 /* HARD DELETE ID*/
 router.delete("/:id", recetteController.deleteRecette); //checkTokenMW
+
+/* GET ID */
+router.get("/menus/:id", recetteController.getMenusForRecette);
+
+/* PUT */
+router.put("/ingredients", recetteController.addRecetteIngredient); //checkTokenMW
+
+/* GET */
+router.get("/ingredients/:id", recetteController.getIngredientsForRecette);
 
 module.exports = router;

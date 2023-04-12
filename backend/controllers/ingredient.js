@@ -1,16 +1,17 @@
 /* Import des modules nécessaires */
-const DB = require('../db.config')
-const Ingredient = DB.Ingredient
-const { RequestError, RecetteError } = require("../error/customError");
+const DB = require("../db.config");
+const Ingredient = DB.Ingredient;
+const Recette = DB.Recette;
+const { RequestError, IngredientError } = require("../error/customError");
 
-/* Routage de la ressource Ingredient (Ensemble des Ingredients) */
+/* Récupération de l'ensemble des Ingredients */
 exports.getAllIngredients = (req, res, next) => {
-    Ingredient.findAll()
+  Ingredient.findAll()
     .then((ingredients) => res.json({ data: ingredients }))
     .catch((err) => next());
 };
 
-/* GET ID (Ingredient spécifique)*/
+/* Récupération d'un Ingredient */
 exports.getIngredient = async (req, res, next) => {
   let ingredientID = parseInt(req.params.id);
   // Verifie si le champ id est présent + cohérent
@@ -20,10 +21,13 @@ exports.getIngredient = async (req, res, next) => {
 
   try {
     // Récupération de l'ingredient
-    let ingredient = await Ingredient.findOne({ where: { id: ingredientID }, raw: true });
+    let ingredient = await Ingredient.findOne({
+      where: { id: ingredientID },
+      raw: true,
+    });
     // Test de l'existance de l'ingredient
     if (ingredient === null) {
-      throw new RecetteError("Cet ingredient n'existe pas .", 0);
+      throw new IngredientError("Cet ingrédient n'existe pas .", 0);
     }
     // Ingredient trouvée
     return res.json({ data: ingredient });
@@ -32,26 +36,53 @@ exports.getIngredient = async (req, res, next) => {
   }
 };
 
-/* PUT */
+/* Récupération des Recettes d'un Ingredient */
+exports.getRecettesForIngredient = async (req, res, next) => {
+  let ingredientID = parseInt(req.params.id);
+  // Verifie si le champ id est présent + cohérent
+  if (!ingredientID) {
+    throw new RequestError("Paramètre(s) manquant(s) .");
+  }
+  try {
+    // Récupération de l'ingredient
+    let ingredient = await Ingredient.findOne({
+      where: { id: ingredientID },
+      include: Recette,
+    });
+    // Test de l'existance de l'ingredient
+    if (ingredient === null) {
+      throw new IngredientError("Cet ingrédient n'existe pas .", 0);
+    }
+    let recettes = ingredient.Recettes;
+    // Recettes et Ingredient trouvé
+    return res.json({ data: recettes });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* Création d'un Ingredient */
 exports.addIngredient = async (req, res, next) => {
   try {
-
     const { nom, description, calories, prix } = req.body;
     // Validation des données reçues
-    if (!nom || !description || !calories || !prix ) {
+    if (!nom || !description || !calories || !prix) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // Création de l'ingredient
     let ingredient = await Ingredient.create(req.body);
 
     // Réponse de l'ingredient créé.
-    return res.json({ message: "L'ingredient a bien été créé .", data: ingredient });
+    return res.json({
+      message: "L'ingredient a bien été créé .",
+      data: ingredient,
+    });
   } catch (err) {
     next(err);
   }
 };
 
-/* PATCH ID & BODY*/
+/* Modification d'un Ingredient */
 exports.updateIngredient = async (req, res, next) => {
   try {
     let ingredientID = parseInt(req.params.id);
@@ -62,24 +93,30 @@ exports.updateIngredient = async (req, res, next) => {
     }
 
     // Recherche de l'ingredient
-    let ingredient = await Ingredient.findOne({ where: { id: ingredientID }, raw: true });
+    let ingredient = await Ingredient.findOne({
+      where: { id: ingredientID },
+      raw: true,
+    });
 
     // Vérification de l'existance de l'ingredient
     if (ingredient === null) {
-      throw new RecetteError("Cet ingredient n'existe pas .", 0);
+      throw new IngredientError("Cet ingredient n'existe pas .", 0);
     }
 
     // Mise à jour de l'ingredient
     await Ingredient.update(req.body, { where: { id: ingredientID } });
 
     // Réponse de la mise à jour
-    return res.json({ message: "L'ingredient à bien été modifiée .", data: ingredient });
+    return res.json({
+      message: "L'ingredient à bien été modifiée .",
+      data: ingredient,
+    });
   } catch (err) {
     next(err);
   }
 };
 
-/* POST UNTRASH */
+/* Annulation de suppression d'un Ingredient (Soft Delete) */
 exports.untrashIngredient = async (req, res, next) => {
   try {
     let ingredientID = parseInt(req.params.id);
@@ -99,7 +136,7 @@ exports.untrashIngredient = async (req, res, next) => {
   }
 };
 
-/* SOFT DELETE TRASH */
+/* Suppression d'un Ingredient (Soft Delete) */
 exports.trashIngredient = async (req, res, next) => {
   try {
     let ingredientID = parseInt(req.params.id);
@@ -119,7 +156,7 @@ exports.trashIngredient = async (req, res, next) => {
   }
 };
 
-/* HARD DELETE ID*/
+/* Suppression d'un Ingredient (Hard Delete) */
 exports.deleteIngredient = async (req, res, next) => {
   try {
     let ingredientID = parseInt(req.params.id);

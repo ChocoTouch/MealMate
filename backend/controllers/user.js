@@ -2,16 +2,17 @@
 const DB = require("../db.config");
 const User = DB.User;
 const Recette = DB.Recette;
+const Menu = DB.Menu;
 const { RequestError, UserError } = require("../error/customError");
 
-/* Routage de la ressource User (Ensemble des Users) */
+/* Récupération de l'ensemble des Utilisateurs */
 exports.getAllUsers = (req, res, next) => {
   User.findAll()
     .then((users) => res.json({ data: users }))
     .catch((err) => next());
 };
 
-/* GET ID (User spécifique)*/
+/* Récupération d'un Utilisateur */
 exports.getUser = async (req, res, next) => {
   let userID = parseInt(req.params.id);
 
@@ -22,9 +23,7 @@ exports.getUser = async (req, res, next) => {
 
   try {
     // Récupération de l'utilisateur
-    let user = await User.findOne({ where: { id: userID },
-       raw: true,
-    });
+    let user = await User.findOne({ where: { id: userID }, raw: true });
     // Test de l'existance de l'utilisateur
     if (user === null) {
       throw new UserError("Cet utilisateur n'existe pas .", 0);
@@ -36,7 +35,7 @@ exports.getUser = async (req, res, next) => {
   }
 };
 
-/* PUT */
+/* Création d'un Utilisateur */
 exports.addUser = async (req, res, next) => {
   try {
     const { nom, prenom, pseudo, email, motdepasse, roles } = req.body;
@@ -71,7 +70,7 @@ exports.addUser = async (req, res, next) => {
   }
 };
 
-/* PATCH ID & BODY*/
+/* Modification d'un Utilisateur */
 exports.updateUser = async (req, res, next) => {
   try {
     let userID = parseInt(req.params.id);
@@ -102,7 +101,7 @@ exports.updateUser = async (req, res, next) => {
   }
 };
 
-/* POST UNTRASH */
+/* Annulation de suppression d'un Utilisateur (Soft Delete) */
 exports.untrashUser = async (req, res, next) => {
   try {
     let userID = parseInt(req.params.id);
@@ -122,7 +121,7 @@ exports.untrashUser = async (req, res, next) => {
   }
 };
 
-/* SOFT DELETE TRASH */
+/* Suppression d'un Utilisateur (Soft Delete) */
 exports.trashUser = async (req, res, next) => {
   try {
     let userID = parseInt(req.params.id);
@@ -142,7 +141,7 @@ exports.trashUser = async (req, res, next) => {
   }
 };
 
-/* HARD DELETE ID*/
+/* Suppression d'un Utilisateur (Hard Delete) */
 exports.deleteUser = async (req, res, next) => {
   try {
     let userID = parseInt(req.params.id);
@@ -162,15 +161,14 @@ exports.deleteUser = async (req, res, next) => {
   }
 };
 
-/* GET ID (User spécifique)*/
-exports.getUserRecettes = async (req, res, next) => {
+/* Récupération des recettes d'un Utilisateur */
+exports.getRecettesForUser = async (req, res, next) => {
   let userID = parseInt(req.params.id);
 
   try {
     // Récupération de l'utilisateur
-    let recettes = await Recette.findAll({ 
+    let recettes = await Recette.findAll({
       where: { user_id: userID },
-      //include: {model: Recette, attributes:['id','nom']}
     });
     // Test de l'existance de l'utilisateur
     if (recettes === null) {
@@ -178,6 +176,26 @@ exports.getUserRecettes = async (req, res, next) => {
     }
     // Utilisateur trouvé
     return res.json({ data: recettes });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* Récupération des menus d'un Utilisateur */
+exports.getMenusForUser = async (req, res, next) => {
+  let userID = parseInt(req.params.id);
+
+  try {
+    // Récupération de l'utilisateur
+    let menus = await Menu.findAll({
+      where: { user_id: userID },
+    });
+    // Test de l'existance de l'utilisateur
+    if (menus === null) {
+      throw new UserError("Cet utilisateur n'existe pas .", 0);
+    }
+    // Utilisateur trouvé
+    return res.json({ data: menus });
   } catch (err) {
     next(err);
   }
