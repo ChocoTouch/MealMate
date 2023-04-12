@@ -18,13 +18,17 @@ const checkTokenMW = (req, res, next) => {
   const token =
     req.headers.authorization && extractBearer(req.headers.authorization);
   if (!token) {
-    return res.status(401).json({ message: "Pas de Token d'authentification ." });
+    return res
+      .status(401)
+      .json({ message: "Pas de Token d'authentification ." });
   }
 
   // Vérification de la validité du token
   jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
     if (err) {
-      return res.status(401).json({ message: "Token d'authentification invalide ." });
+      return res
+        .status(401)
+        .json({ message: "Token d'authentification invalide ." });
     }
     next(err);
   });

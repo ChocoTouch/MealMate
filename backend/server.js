@@ -2,7 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const checkTokenMW = require("./jsonwebtoken/check");
-const checkAdminTokenMW = require("./jsonwebtoken/checkadmin")
+const checkAdminTokenMW = require("./jsonwebtoken/checkadmin");
 const errorHandler = require("./error/errorHandler");
 
 /* Import de la connexion à la base de données */
@@ -20,10 +20,12 @@ const user_router = require("./routes/users");
 const auth_router = require("./routes/auth");
 const recettes_router = require("./routes/recettes");
 const menus_router = require("./routes/menus");
-const ingredients_router = require("./routes/ingredients")
+const ingredients_router = require("./routes/ingredients");
 
 /* Mise en place du routage */
-app.get("/", (req, res) => res.send(`Welcome to the MealMate API by Bauchet Anthony`));
+app.get("/", (req, res) =>
+  res.send(`Welcome to the MealMate API by Bauchet Anthony`)
+);
 app.use("/users", user_router); //checkAdminTokenMW,
 app.use("/auth", auth_router);
 app.use("/recettes", recettes_router); //checkTokenMW
@@ -33,7 +35,8 @@ app.get("*", (req, res) => res.status(501).send("Ressource non existant"));
 app.use(errorHandler);
 
 /* Demarrage serveur avec test DB*/
-DB.sequelize.authenticate()
+DB.sequelize
+  .authenticate()
   .then(() => console.log("Database connection OK"))
   .then(() => {
     app.listen(process.env.SERVER_PORT, () => {

@@ -32,7 +32,7 @@ router.post("/untrash/:id", ingredientController.untrashIngredient); //checkToke
 router.delete("/trash/:id", ingredientController.trashIngredient); //checkTokenMW
 
 /* HARD DELETE ID*/
-router.delete("/:id",ingredientController.deleteIngredient); //checkTokenMW
+router.delete("/:id", ingredientController.deleteIngredient); //checkTokenMW
 
 /* GET ID */
 router.get("/recettes/:id", ingredientController.getRecettesForIngredient);

@@ -14,8 +14,8 @@ module.exports = (sequelize) => {
       },
       count: {
         type: DataTypes.INTEGER(4),
-        allowNull:false,
-      }
+        allowNull: false,
+      },
     },
     { paranoid: true } // softDelete
   );
