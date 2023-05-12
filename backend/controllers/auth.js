@@ -7,10 +7,10 @@ const { AuthenticationError } = require("../error/customError");
 /* Routage de la ressource auth (POST)*/
 exports.login = async (req, res, next) => {
   try {
-    const { email, motdepasse } = req.body;
+    const { email, password } = req.body;
 
     // Validation des données
-    if (!email || !motdepasse) {
+    if (!email || !password) {
       throw new AuthenticationError("Vos identifiants sont incorrects .", 0);
     }
 
@@ -23,7 +23,7 @@ exports.login = async (req, res, next) => {
       );
     }
     // Vérification du mot de passe
-    let test = await User.checkPassword(motdepasse, user.motdepasse);
+    let test = await User.checkPassword(password, user.password);
     if (!test) {
       throw new AuthenticationError("Mot de passe incorrect .", 2);
     }
@@ -32,11 +32,11 @@ exports.login = async (req, res, next) => {
     const token = jwt.sign(
       {
         id: user.id,
-        nom: user.nom,
-        prenom: user.prenom,
+        name: user.name,
+        firstname: user.firstname,
         email: user.email,
         roles: user.roles,
-        pseudo: user.pseudo,
+        username: user.username,
         telephone: user.telephone,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,

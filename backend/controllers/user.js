@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const User = DB.User;
-const Recette = DB.Recette;
+const Recipe = DB.Recipe;
 const Menu = DB.Menu;
 const { RequestError, UserError } = require("../error/customError");
 
@@ -38,10 +38,10 @@ exports.getUser = async (req, res, next) => {
 /* Création d'un Utilisateur */
 exports.addUser = async (req, res, next) => {
   try {
-    const { nom, prenom, pseudo, email, motdepasse, roles } = req.body;
+    const { name, firstname, username, email, password, roles } = req.body;
 
     // Validation des données reçues
-    if (!nom || !prenom || !pseudo || !email || !motdepasse || !roles) {
+    if (!name || !firstname || !username || !email || !password || !roles) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
@@ -161,21 +161,21 @@ exports.deleteUser = async (req, res, next) => {
   }
 };
 
-/* Récupération des recettes d'un Utilisateur */
-exports.getRecettesForUser = async (req, res, next) => {
+/* Récupération des Recipes d'un Utilisateur */
+exports.getRecipesForUser = async (req, res, next) => {
   let userID = parseInt(req.params.id);
 
   try {
     // Récupération de l'utilisateur
-    let recettes = await Recette.findAll({
+    let recipes = await Recipe.findAll({
       where: { user_id: userID },
     });
     // Test de l'existance de l'utilisateur
-    if (recettes === null) {
+    if (recipes === null) {
       throw new UserError("Cet utilisateur n'existe pas .", 0);
     }
     // Utilisateur trouvé
-    return res.json({ data: recettes });
+    return res.json({ data: recipes });
   } catch (err) {
     next(err);
   }

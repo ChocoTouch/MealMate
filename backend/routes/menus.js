@@ -35,9 +35,9 @@ router.delete("/trash/:id", menuController.trashMenu); //checkTokenMW
 router.delete("/:id", menuController.deleteMenu); //checkTokenMW
 
 /* PUT */
-router.put("/recettes", menuController.addMenuRecette); //checkTokenMW
+router.put("/recettes", menuController.addRecipeInMenu); //checkTokenMW
 
 /* GET ID */
-router.get("/recettes/:id", menuController.getRecettesForMenu);
+router.get("/recettes/:id", menuController.getRecipesInMenu);
 
 module.exports = router;

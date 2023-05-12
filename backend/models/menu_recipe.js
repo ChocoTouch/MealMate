@@ -3,16 +3,20 @@ const { DataTypes, UniqueConstraintError } = require("sequelize");
 
 /* Définition du modèle */
 module.exports = (sequelize) => {
-  const Liker_commentaire = sequelize.define(
-    "Liker_commentaire",
+  const Menu_recipe = sequelize.define(
+    "Menu_recipe",
     {
       id: {
         type: DataTypes.INTEGER(10),
         primaryKey: true,
         autoIncrement: true,
       },
+      count: {
+        type: DataTypes.INTEGER(4),
+        allowNull: false,
+      },
     },
     { paranoid: true } // softDelete
   );
-  return Liker_commentaire;
+  return Menu_recipe;
 };

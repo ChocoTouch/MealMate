@@ -3,8 +3,8 @@ const { DataTypes, UniqueConstraintError } = require("sequelize");
 
 /* Définition du modèle */
 module.exports = (sequelize) => {
-  const Recette = sequelize.define(
-    "Recette",
+  const Recipe = sequelize.define(
+    "Recipe",
     {
       id: {
         type: DataTypes.INTEGER(10),
@@ -15,7 +15,15 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER(10),
         allowNull: false,
       },
-      nom: {
+      theme_id:{
+        type: DataTypes.INTEGER(10),
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      slug: {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
@@ -27,24 +35,12 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(2500),
         allowNull: false,
       },
-      pays: {
-        type: DataTypes.STRING(30),
-        allowNull: true,
-      },
-      vegetarien: {
-        type: DataTypes.BOOLEAN,
+      difficulty: {
+        type: DataTypes.INTEGER(1),
         allowNull: false,
-      },
-      vegetalien: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-      sansgluten: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
+      }
     },
     { paranoid: true } // softDelete
   );
-  return Recette;
+  return Recipe;
 };

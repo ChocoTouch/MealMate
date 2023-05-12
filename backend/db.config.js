@@ -1,4 +1,4 @@
-/* Import des modules nécessaires */
+/* Import des modules nécesss */
 const { Sequelize } = require("sequelize");
 
 /* Connexion à la base de données */
@@ -17,37 +17,43 @@ let sequelize = new Sequelize(
 const db = {};
 db.sequelize = sequelize;
 db.User = require("./models/user")(sequelize);
-db.Recette = require("./models/recette")(sequelize);
+db.Recipe = require("./models/recipe")(sequelize);
 db.Ingredient = require("./models/ingredient")(sequelize);
 db.Menu = require("./models/menu")(sequelize);
-db.Categorie = require("./models/categorie")(sequelize);
-db.Commentaire = require("./models/commentaire")(sequelize);
-db.Recette_ingredient = require("./models/recette_ingredient")(sequelize);
-db.Menu_recette = require("./models/menu_recette")(sequelize);
-db.Ingredient_categorie = require("./models/ingredient_categorie")(sequelize);
-db.Liker_menu = require("./models/liker_menu")(sequelize);
-db.Liker_recette = require("./models/liker_recette")(sequelize);
-db.Liker_commentaire = require("./models/liker_commentaire")(sequelize);
+db.category = require("./models/category")(sequelize);
+db.Comment = require("./models/comment")(sequelize);
+db.Theme = require("./models/theme")(sequelize);
+db.Diet = require("./models/diet")(sequelize);
+db.Recipe_ingredient = require("./models/recipe_ingredient")(sequelize);
+db.Menu_recipe = require("./models/menu_recipe")(sequelize);
+db.Ingredient_category = require("./models/ingredient_category")(sequelize);
+db.Liker_menu = require("./models/like_menu")(sequelize);
+db.Liker_recipe = require("./models/like_recipe")(sequelize);
+db.Liker_comment = require("./models/like_comment")(sequelize);
 
-/* ManyToOne User Recette */
-db.User.hasMany(db.Recette, { foreignKey: "user_id" });
-db.Recette.belongsTo(db.User, { foreignKey: "user_id" });
+/* ManyToOne Theme Recipe */
+db.Theme.hasMany(db.Recipe, { foreignKey: "theme_id" });
+db.Recipe.belongsTo(db.Theme, { foreignKey: "theme_id" });
+
+/* ManyToOne User Recipe */
+db.User.hasMany(db.Recipe, { foreignKey: "user_id" });
+db.Recipe.belongsTo(db.User, { foreignKey: "user_id" });
 
 /* ManyToOne User Menu */
 db.User.hasMany(db.Menu, { foreignKey: "user_id" });
 db.Menu.belongsTo(db.User, { foreignKey: "user_id" });
 
-/* ManyToOne User Commentaire */
-db.User.hasMany(db.Commentaire, { foreignKey: "user_id" });
-db.Commentaire.belongsTo(db.User, { foreignKey: "user_id" });
+/* ManyToOne User Comment */
+db.User.hasMany(db.Comment, { foreignKey: "user_id" });
+db.Comment.belongsTo(db.User, { foreignKey: "user_id" });
 
-/* Super ManyToMany User Like Recette */
-db.User.belongsToMany(db.Recette, { through: db.Liker_recette });
-db.Recette.belongsToMany(db.User, { through: db.Liker_recette });
-db.Liker_recette.belongsTo(db.User);
-db.Liker_recette.belongsTo(db.Recette);
-db.User.hasMany(db.Liker_recette);
-db.Recette.hasMany(db.Liker_recette);
+/* Super ManyToMany User Like Recipe */
+db.User.belongsToMany(db.Recipe, { through: db.Liker_recipe });
+db.Recipe.belongsToMany(db.User, { through: db.Liker_recipe });
+db.Liker_recipe.belongsTo(db.User);
+db.Liker_recipe.belongsTo(db.Recipe);
+db.User.hasMany(db.Liker_recipe);
+db.Recipe.hasMany(db.Liker_recipe);
 
 /* Super ManyToMany User Like Menu */
 db.User.belongsToMany(db.Menu, { through: db.Liker_menu });
@@ -57,48 +63,48 @@ db.Liker_menu.belongsTo(db.Menu);
 db.User.hasMany(db.Liker_menu);
 db.Menu.hasMany(db.Liker_menu);
 
-/* ManyToOne User Like Commentaire */
-db.User.belongsToMany(db.Commentaire, { through: db.Liker_commentaire });
-db.Commentaire.belongsToMany(db.User, { through: db.Liker_commentaire });
-db.Liker_commentaire.belongsTo(db.User);
-db.Liker_commentaire.belongsTo(db.Commentaire);
-db.User.hasMany(db.Liker_commentaire);
-db.Commentaire.hasMany(db.Liker_commentaire);
+/* ManyToOne User Like Comment */
+db.User.belongsToMany(db.Comment, { through: db.Liker_comment });
+db.Comment.belongsToMany(db.User, { through: db.Liker_comment });
+db.Liker_comment.belongsTo(db.User);
+db.Liker_comment.belongsTo(db.Comment);
+db.User.hasMany(db.Liker_comment);
+db.Comment.hasMany(db.Liker_comment);
 
-/* Super ManyToMany Recette Ingredient */
-db.Recette.belongsToMany(db.Ingredient, { through: db.Recette_ingredient });
-db.Ingredient.belongsToMany(db.Recette, { through: db.Recette_ingredient });
-db.Recette_ingredient.belongsTo(db.Ingredient);
-db.Recette_ingredient.belongsTo(db.Recette);
-db.Ingredient.hasMany(db.Recette_ingredient);
-db.Recette.hasMany(db.Recette_ingredient);
+/* Super ManyToMany Recipe Ingredient */
+db.Recipe.belongsToMany(db.Ingredient, { through: db.Recipe_ingredient });
+db.Ingredient.belongsToMany(db.Recipe, { through: db.Recipe_ingredient });
+db.Recipe_ingredient.belongsTo(db.Ingredient);
+db.Recipe_ingredient.belongsTo(db.Recipe);
+db.Ingredient.hasMany(db.Recipe_ingredient);
+db.Recipe.hasMany(db.Recipe_ingredient);
 
-/* Super ManyToMany Menu Recette */
-db.Menu.belongsToMany(db.Recette, { through: db.Menu_recette });
-db.Recette.belongsToMany(db.Menu, { through: db.Menu_recette });
-db.Menu_recette.belongsTo(db.Recette);
-db.Menu_recette.belongsTo(db.Menu);
-db.Recette.hasMany(db.Menu_recette);
-db.Menu.hasMany(db.Menu_recette);
+/* Super ManyToMany Menu Recipe */
+db.Menu.belongsToMany(db.Recipe, { through: db.Menu_recipe });
+db.Recipe.belongsToMany(db.Menu, { through: db.Menu_recipe });
+db.Menu_recipe.belongsTo(db.Recipe);
+db.Menu_recipe.belongsTo(db.Menu);
+db.Recipe.hasMany(db.Menu_recipe);
+db.Menu.hasMany(db.Menu_recipe);
 
-/* Super ManyToMany Categorie Ingredient */
-db.Ingredient.belongsToMany(db.Categorie, { through: db.Ingredient_categorie });
-db.Categorie.belongsToMany(db.Ingredient, { through: db.Ingredient_categorie });
-db.Ingredient_categorie.belongsTo(db.Ingredient);
-db.Ingredient_categorie.belongsTo(db.Categorie);
-db.Ingredient.hasMany(db.Ingredient_categorie);
-db.Categorie.hasMany(db.Ingredient_categorie);
+/* Super ManyToMany category Ingredient */
+db.Ingredient.belongsToMany(db.category, { through: db.Ingredient_category });
+db.category.belongsToMany(db.Ingredient, { through: db.Ingredient_category });
+db.Ingredient_category.belongsTo(db.Ingredient);
+db.Ingredient_category.belongsTo(db.category);
+db.Ingredient.hasMany(db.Ingredient_category);
+db.category.hasMany(db.Ingredient_category);
 
-/* ManyToOne Recette Commentaire */
-db.Recette.hasMany(db.Commentaire, { foreignKey: "recette_id" });
-db.Commentaire.belongsTo(db.Recette, { foreignKey: "recette_id" });
+/* ManyToOne Recipe Comment */
+db.Recipe.hasMany(db.Comment, { foreignKey: "recipe_id" });
+db.Comment.belongsTo(db.Recipe, { foreignKey: "recipe_id" });
 
-/* ManyToOne Menu Commentaire */
-db.Menu.hasMany(db.Commentaire, { foreignKey: "menu_id" });
-db.Commentaire.belongsTo(db.Menu, { foreignKey: "menu_id" });
+/* ManyToOne Menu Comment */
+db.Menu.hasMany(db.Comment, { foreignKey: "menu_id" });
+db.Comment.belongsTo(db.Menu, { foreignKey: "menu_id" });
 
 /* Synchronisation des modèles */
 //{alter:true}{force:true}
-sequelize.sync({ alter: true });
+sequelize.sync();
 
 module.exports = db;

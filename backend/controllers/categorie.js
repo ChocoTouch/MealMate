@@ -1,42 +1,42 @@
 /* Import des modules nécessaires */
 const DB = require("../db.config");
-const Categorie = DB.Categorie;
-const { RequestError, CategorieError } = require("../error/customError");
+const Category = DB.Category;
+const { RequestError, CategoryError } = require("../error/customError");
 
-/* Routage de la ressource Categorie (Ensemble des Categories) */
+/* Routage de la ressource Category (Ensemble des Categories) */
 exports.getAllCategories = (req, res, next) => {
-  Categorie.findAll()
+  Category.findAll()
     .then((categories) => res.json({ data: categories }))
     .catch((err) => next());
 };
 
 /* GET ID (Categorie spécifique)*/
-exports.getCategorie = async (req, res, next) => {
-  let categorieID = parseInt(req.params.id);
+exports.getCategory = async (req, res, next) => {
+  let categoryID = parseInt(req.params.id);
   // Verifie si le champ id est présent + cohérent
-  if (!categorieID) {
+  if (!categoryID) {
     throw new RequestError("Paramètre(s) manquant(s) .");
   }
 
   try {
     // Récupération de la categorie
-    let categorie = await Categorie.findOne({
-      where: { id: categorieID },
+    let category = await Category.findOne({
+      where: { id: categoryID },
       raw: true,
     });
     // Test de l'existance de la categorie
-    if (categorie === null) {
-      throw new CategorieError("Cette categorie n'existe pas .", 0);
+    if (category === null) {
+      throw new CategoryError("Cette categorie n'existe pas .", 0);
     }
     // Categorie trouvée
-    return res.json({ data: categorie });
+    return res.json({ data: category });
   } catch (err) {
     next(err);
   }
 };
 
 /* PUT */
-exports.addCategorie = async (req, res, next) => {
+exports.addCategory = async (req, res, next) => {
   try {
     const { nom } = req.body;
     // Validation des données reçues
@@ -44,12 +44,12 @@ exports.addCategorie = async (req, res, next) => {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // Création de la categorie
-    let categorie = await Categorie.create(req.body);
+    let category = await Category.create(req.body);
 
     // Réponse de la categorie créé.
     return res.json({
-      message: "La categorie a bien été créée .",
-      data: categorie,
+      message: "La category a bien été créée .",
+      data: category,
     });
   } catch (err) {
     next(err);
@@ -57,33 +57,33 @@ exports.addCategorie = async (req, res, next) => {
 };
 
 /* PATCH ID & BODY*/
-exports.updateCategorie = async (req, res, next) => {
+exports.updateCategory = async (req, res, next) => {
   try {
-    let categorieID = parseInt(req.params.id);
+    let categoryID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
-    if (!categorieID) {
+    if (!categoryID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
     // Recherche de la categorie
-    let categorie = await Categorie.findOne({
-      where: { id: categorieID },
+    let category = await Category.findOne({
+      where: { id: categoryID },
       raw: true,
     });
 
     // Vérification de l'existance de la categorie
-    if (categorie === null) {
-      throw new CategorieError("Cette categorie n'existe pas .", 0);
+    if (category === null) {
+      throw new CategoryError("Cette category n'existe pas .", 0);
     }
 
     // Mise à jour de la categorie
-    await Categorie.update(req.body, { where: { id: categorieID } });
+    await Category.update(req.body, { where: { id: categoryID } });
 
     // Réponse de la mise à jour
     return res.json({
-      message: "La categorie à bien été modifiée .",
-      data: categorie,
+      message: "La category à bien été modifiée .",
+      data: category,
     });
   } catch (err) {
     next(err);
@@ -91,17 +91,17 @@ exports.updateCategorie = async (req, res, next) => {
 };
 
 /* POST UNTRASH */
-exports.untrashCategorie = async (req, res, next) => {
+exports.untrashCategory = async (req, res, next) => {
   try {
-    let categorieID = parseInt(req.params.id);
+    let categoryID = parseInt(req.params.id);
 
     // Vérification si champ id présent et cohérent
-    if (!categorieID) {
+    if (!categoryID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
     // Restauration de la categorie
-    await Categorie.restore({ where: { id: categorieID } });
+    await Category.restore({ where: { id: categoryID } });
 
     // Réponse de la Restauration
     return res.status(204).json({});
@@ -111,17 +111,17 @@ exports.untrashCategorie = async (req, res, next) => {
 };
 
 /* SOFT DELETE TRASH */
-exports.trashCategorie = async (req, res, next) => {
+exports.trashCategory = async (req, res, next) => {
   try {
-    let categorieID = parseInt(req.params.id);
+    let categoryID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
-    if (!categorieID) {
+    if (!categoryID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
     // Suppression de la categorie (soft delete without force: true)
-    await Categorie.destroy({ where: { id: categorieID } });
+    await Category.destroy({ where: { id: categoryID } });
 
     // Réponse du soft delete
     return res.status(204).json({});
@@ -131,17 +131,17 @@ exports.trashCategorie = async (req, res, next) => {
 };
 
 /* HARD DELETE ID*/
-exports.deleteCategorie = async (req, res, next) => {
+exports.deleteCategory = async (req, res, next) => {
   try {
-    let categorieID = parseInt(req.params.id);
+    let categoryID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
-    if (!categorieID) {
+    if (!categoryID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
     // Suppression de la categorie (hard delete with force: true)
-    await Categorie.destroy({ where: { id: categorieID }, force: true });
+    await Category.destroy({ where: { id: categoryID }, force: true });
 
     // Réponse du hard delete
     return res.status(204).json({});

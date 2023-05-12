@@ -12,7 +12,11 @@ module.exports = (sequelize) => {
         autoIncrement: true,
         allowNull: false,
       },
-      nom: {
+      name: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      slug: {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
@@ -20,15 +24,11 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(250),
         allowNull: false,
       },
-      pays: {
-        type: DataTypes.STRING(30),
-        allowNull: true,
-      },
       calories: {
         type: DataTypes.INTEGER(7),
         allowNull: false,
       },
-      prix: {
+      price: {
         type: DataTypes.INTEGER(7),
         allowNull: false,
       },

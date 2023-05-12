@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const Ingredient = DB.Ingredient;
-const Recette = DB.Recette;
+const Recipe = DB.Recipe;
 const { RequestError, IngredientError } = require("../error/customError");
 
 /* Récupération de l'ensemble des Ingredients */
@@ -37,7 +37,7 @@ exports.getIngredient = async (req, res, next) => {
 };
 
 /* Récupération des Recettes d'un Ingredient */
-exports.getRecettesForIngredient = async (req, res, next) => {
+exports.getRecipesForIngredient = async (req, res, next) => {
   let ingredientID = parseInt(req.params.id);
   // Verifie si le champ id est présent + cohérent
   if (!ingredientID) {
@@ -47,15 +47,15 @@ exports.getRecettesForIngredient = async (req, res, next) => {
     // Récupération de l'ingredient
     let ingredient = await Ingredient.findOne({
       where: { id: ingredientID },
-      include: Recette,
+      include: Recipe,
     });
     // Test de l'existance de l'ingredient
     if (ingredient === null) {
       throw new IngredientError("Cet ingrédient n'existe pas .", 0);
     }
-    let recettes = ingredient.Recettes;
+    let recipes = ingredient.Recipes;
     // Recettes et Ingredient trouvé
-    return res.json({ data: recettes });
+    return res.json({ data: recipes });
   } catch (err) {
     next(err);
   }

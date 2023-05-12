@@ -12,15 +12,19 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      nom: {
+      name: {
         type: DataTypes.STRING(30),
         allowNull: false,
       },
-      prenom: {
+      slug: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      firstname: {
         type: DataTypes.STRING(30),
         allowNull: false,
       },
-      pseudo: {
+      username: {
         type: DataTypes.STRING(30),
         allowNull: false,
         unique: true,
@@ -32,7 +36,7 @@ module.exports = (sequelize) => {
         },
         unique: true,
       },
-      motdepasse: {
+      password: {
         type: DataTypes.STRING(64),
         is: /^[0-9a-f]{64}$/i,
         allowNull: false,
@@ -54,10 +58,10 @@ module.exports = (sequelize) => {
   User.beforeCreate(async (user, options) => {
     /* Hashage du mot de passe */
     let hash = await bcrypt.hash(
-      user.motdepasse,
+      user.password,
       parseInt(process.env.BCRYPT_SALT_ROUND)
     );
-    user.motdepasse = hash;
+    user.password = hash;
   });
 
   /* Méthode de vérification de mot de passe */

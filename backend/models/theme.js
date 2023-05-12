@@ -1,23 +1,30 @@
 /* Import des modules nécessaires */
-const { STRING } = require("sequelize");
 const { DataTypes, UniqueConstraintError } = require("sequelize");
 
 /* Définition du modèle */
 module.exports = (sequelize) => {
-  const Menu_recette = sequelize.define(
-    "Menu_recette",
+  const Theme = sequelize.define(
+    "Theme",
     {
       id: {
         type: DataTypes.INTEGER(10),
         primaryKey: true,
         autoIncrement: true,
       },
-      count: {
-        type: DataTypes.INTEGER(4),
+      name: {
+        type: DataTypes.STRING(30),
         allowNull: false,
       },
+      slug: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING(250),
+        allowNull: false,
+      }
     },
     { paranoid: true } // softDelete
   );
-  return Menu_recette;
+  return Theme;
 };

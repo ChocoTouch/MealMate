@@ -1,11 +1,11 @@
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const Menu = DB.Menu;
-const Recette = DB.Recette;
+const Recipe = DB.Recipe;
 const User = DB.User;
 const {
   RequestError,
-  RecetteError,
+  RecipeError,
   MenuError,
   UserError,
 } = require("../error/customError");
@@ -29,7 +29,7 @@ exports.getMenu = async (req, res, next) => {
     // Récupération du menu
     let menu = await Menu.findOne({
       where: { id: menuID },
-      include: { model: User, attributes: ["id", "pseudo", "email"] },
+      include: { model: User, attributes: ["id", "username", "email"] },
     });
     // Test de l'existance du menu
     if (menu === null) {
@@ -42,8 +42,8 @@ exports.getMenu = async (req, res, next) => {
   }
 };
 
-/* Récupération des Recettes d'un Menu */
-exports.getRecettesForMenu = async (req, res, next) => {
+/* Récupération des Recipes d'un Menu */
+exports.getRecipesInMenu = async (req, res, next) => {
   let menuID = parseInt(req.params.id);
   // Verifie si le champ id est présent + cohérent
   if (!menuID) {
@@ -51,14 +51,14 @@ exports.getRecettesForMenu = async (req, res, next) => {
   }
   try {
     // Récupération du menu
-    let menu = await Menu.findOne({ where: { id: menuID }, include: Recette });
+    let menu = await Menu.findOne({ where: { id: menuID }, include: Recipe });
     // Test de l'existance du menu
     if (menu === null) {
       throw new MenuError("Ce menu n'existe pas .", 0);
     }
-    let recettes = menu.Recettes;
+    let recipes = menu.Recipes;
     // Recettes et Menu trouvé
-    return res.json({ data: recettes });
+    return res.json({ data: recipes });
   } catch (err) {
     next(err);
   }
@@ -67,9 +67,9 @@ exports.getRecettesForMenu = async (req, res, next) => {
 /* Création d'un Menu */
 exports.addMenu = async (req, res, next) => {
   try {
-    const { nom, description, user_id } = req.body;
+    const { name, description, user_id } = req.body;
     // Validation des données reçues
-    if (!nom || !description || !user_id) {
+    if (!name || !description || !user_id) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // Récupération de l'utilisateur
@@ -88,18 +88,18 @@ exports.addMenu = async (req, res, next) => {
     });
 
     // Réponse du menu créé.
-    return res.json({ message: "Le menu a bien été créée .", data: menu });
+    return res.json({ message: "Le menu a bien été crée .", data: menu });
   } catch (err) {
     next(err);
   }
 };
 
-/* Ajout d'une Recette dans un Menu */
-exports.addMenuRecette = async (req, res, next) => {
+/* Ajout d'une Recipe dans un Menu */
+exports.addRecipeInMenu = async (req, res, next) => {
   try {
-    const { recette_id, menu_id, count } = req.body;
+    const { recipe_id, menu_id, count } = req.body;
     // Validation des données reçues
-    if (!recette_id || !menu_id || !count) {
+    if (!recipe_id || !menu_id || !count) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     let menu = await Menu.findOne({ where: { id: menu_id } });
@@ -107,19 +107,19 @@ exports.addMenuRecette = async (req, res, next) => {
     if (menu === null) {
       throw new MenuError("Ce menu n'existe pas .", 0);
     }
-    let recette = await Recette.findOne({ where: { id: recette_id } });
-    // Vérification de l'existance de la recette
-    if (recette === null) {
-      throw new RecetteError("Cette recette n'existe pas .", 0);
+    let recipe = await Recipe.findOne({ where: { id: recipe_id } });
+    // Vérification de l'existance de la Recipe
+    if (recipe === null) {
+      throw new RecipeError("Cette Recipe n'existe pas .", 0);
     }
-    // Ajout de la recette dans le menu
-    let menuRecette = await menu.addRecette(recette, {
+    // Ajout de la Recipe dans le menu
+    let menuRecipe = await menu.addRecipe(recipe, {
       through: { count: count },
     });
     // Réponse du menu créé.
     return res.json({
-      message: "La recette a bien été ajoutée au menu .",
-      data: menuRecette,
+      message: "La Recette a bien été ajoutée au menu .",
+      data: menuRecipe,
     });
   } catch (err) {
     next(err);
