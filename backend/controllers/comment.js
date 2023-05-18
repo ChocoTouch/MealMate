@@ -36,11 +36,12 @@ exports.getComment = async (req, res, next) => {
 };
 
 /* PUT */
-exports.addCommentMenu = async (req, res, next) => {
+exports.addCommentInMenu = async (req, res, next) => {
   try {
-    const { texte, menu_id } = req.body;
+    let menuID = parseInt(req.params.id);
+    const { texte } = req.body;
     // Validation des données reçues
-    if (!texte || !menu_id) {
+    if (!texte || !menuID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // Création du Commentaire
@@ -57,11 +58,12 @@ exports.addCommentMenu = async (req, res, next) => {
 };
 
 /* PUT */
-exports.addCommentRecipe = async (req, res, next) => {
+exports.addCommentInRecipe = async (req, res, next) => {
   try {
-    const { texte, recipe_id } = req.body;
+    let recipeID = parseInt(req.params.id);
+    const { texte} = req.body;
     // Validation des données reçues
-    if (!texte || !recipe_id) {
+    if (!texte || !recipeID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // Création du Commentaire

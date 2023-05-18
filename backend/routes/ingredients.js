@@ -19,6 +19,9 @@ router.get("/", ingredientController.getAllIngredients);
 /* GET ID */
 router.get("/:id", ingredientController.getIngredient);
 
+/* GET ID */
+router.get("/recipes/:id", ingredientController.getRecipesForIngredient);
+
 /* PUT */
 router.put("", ingredientController.addIngredient); //checkTokenMW
 
@@ -33,8 +36,5 @@ router.delete("/trash/:id", ingredientController.trashIngredient); //checkTokenM
 
 /* HARD DELETE ID*/
 router.delete("/:id", ingredientController.deleteIngredient); //checkTokenMW
-
-/* GET ID */
-router.get("/recettes/:id", ingredientController.getRecipesForIngredient);
 
 module.exports = router;

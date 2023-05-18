@@ -35,9 +35,18 @@ router.delete("/trash/:id", menuController.trashMenu); //checkTokenMW
 router.delete("/:id", menuController.deleteMenu); //checkTokenMW
 
 /* PUT */
-router.put("/recettes", menuController.addRecipeInMenu); //checkTokenMW
+router.put("/meal/:id", menuController.addMealInMenu); //checkTokenMW
+
+/* PUT */
+router.put("/recipe/:id", menuController.addRecipeInMenu); //checkTokenMW
+
+/* PUT */
+router.put("/day/:id", menuController.addDayOfWeekInMenu); //checkTokenMW
+
+/* PUT */
+router.put("/course/:id", menuController.addCourseInMenu); //checkTokenMW
 
 /* GET ID */
-router.get("/recettes/:id", menuController.getRecipesInMenu);
+router.get("/recipes/:id", menuController.getRecipesInMenu);
 
 module.exports = router;

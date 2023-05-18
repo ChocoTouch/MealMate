@@ -97,128 +97,6 @@ exports.addMenu = async (req, res, next) => {
   }
 };
 
-/* Ajout d'un Repas dans un Menu */
-exports.addMealInMenu = async (req, res, next) => {
-  try {
-    const { meal_id, menu_id, count } = req.body;
-    // Validation des données reçues
-    if (!meal_id || !menu_id || !count ) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
-    // Vérification de l'existance du Menu
-    if (menu === null) {
-      throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
-    }
-    let meal = await Meal.findOne({ where: { id: meal_id } });
-    // Vérification de l'existance du Repas
-    if (meal === null) {
-      throw new RecipeError("Ce repas n'existe pas .", 0);
-    }
-    // Ajout du Repas dans le Menu
-    let menuMeal = await menu.addMeal(meal);
-    // Réponse du Menu créé.
-    return res.json({
-      message: "Ce repas a bien été ajoutée à votre menu .",
-      data: menuMeal,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-/* Ajout d'un Jour dans un Menu */
-exports.addDayOfWeekInMenu = async (req, res, next) => {
-  try {
-    const { dayOfWeek_id, menu_id, count } = req.body;
-    // Validation des données reçues
-    if (!dayOfWeek_id || !menu_id || !count ) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
-    // Vérification de l'existance du Menu
-    if (menu === null) {
-      throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
-    }
-    let dayOfWeek = await DayOfWeek.findOne({ where: { id: dayOfWeek_id } });
-    // Vérification de l'existance du Jour
-    if (dayOfWeek === null) {
-      throw new RecipeError("Ce jour n'existe pas .", 0);
-    }
-    // Ajout du Jour dans le Menu
-    let menuDayOfWeek = await menu.addDayOfWeek(dayOfWeek);
-    // Réponse du Menu créé.
-    return res.json({
-      message: "Ce jour a bien été ajoutée à votre menu .",
-      data: menuDayOfWeek,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-/* Ajout d'un Plat dans un Menu */
-exports.addCourseInMenu = async (req, res, next) => {
-  try {
-    const { course_id, menu_id, count } = req.body;
-    // Validation des données reçues
-    if (!course_id || !menu_id || !count ) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
-    // Vérification de l'existance du Menu
-    if (menu === null) {
-      throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
-    }
-    let course = await Course.findOne({ where: { id: course_id } });
-    // Vérification de l'existance du Plat
-    if (course === null) {
-      throw new RecipeError("Ce plat n'existe pas .", 0);
-    }
-    // Ajout du Plat dans le Menu
-    let menuCourse = await menu.addCourse(course);
-    // Réponse du Menu créé.
-    return res.json({
-      message: "Ce plat a bien été ajoutée à votre menu .",
-      data: menuCourse,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-/* Ajout d'une Recette dans un Menu */
-exports.addRecipeInMenu = async (req, res, next) => {
-  try {
-    const { recipe_id, menu_id, count } = req.body;
-    // Validation des données reçues
-    if (!recipe_id || !menu_id || !count ) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
-    // Vérification de l'existance du menu
-    if (menu === null) {
-      throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
-    }
-    let recipe = await Recipe.findOne({ where: { id: recipe_id } });
-    // Vérification de l'existance de la Recette
-    if (recipe === null) {
-      throw new RecipeError("Cette recette n'existe pas .", 0);
-    }
-    // Ajout de la Recette dans le menu
-    let menuRecipe = await menu.addRecipe(recipe, {
-      through: { count: count },
-    });
-    // Réponse du menu créé.
-    return res.json({
-      message: "La recette a bien été ajoutée à votre menu .",
-      data: menuRecipe,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
 /* Modification d'un Menu */
 exports.updateMenu = async (req, res, next) => {
   try {
@@ -302,6 +180,132 @@ exports.deleteMenu = async (req, res, next) => {
 
     // Réponse du hard delete
     return res.status(204).json({});
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+/* Ajout d'un Repas dans un Menu */
+exports.addMealInMenu = async (req, res, next) => {
+  try {
+    let mealID = parseInt(req.params.id);
+    const { menu_id, count } = req.body;
+    // Validation des données reçues
+    if (!mealID || !menu_id || !count ) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
+    // Vérification de l'existance du Menu
+    if (menu === null) {
+      throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
+    }
+    let meal = await Meal.findOne({ where: { id: mealID } });
+    // Vérification de l'existance du Repas
+    if (meal === null) {
+      throw new RecipeError("Ce repas n'existe pas .", 0);
+    }
+    // Ajout du Repas dans le Menu
+    let menuMeal = await menu.addMeal(meal);
+    // Réponse du Menu créé.
+    return res.json({
+      message: "Ce repas a bien été ajoutée à votre menu .",
+      data: menuMeal,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* Ajout d'un Jour dans un Menu */
+exports.addDayOfWeekInMenu = async (req, res, next) => {
+  try {
+    let dayOfWeekID = parseInt(req.params.id);
+    const { menu_id, count } = req.body;
+    // Validation des données reçues
+    if (!dayOfWeekID || !menu_id || !count ) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
+    // Vérification de l'existance du Menu
+    if (menu === null) {
+      throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
+    }
+    let dayOfWeek = await DayOfWeek.findOne({ where: { id: dayOfWeekID } });
+    // Vérification de l'existance du Jour
+    if (dayOfWeek === null) {
+      throw new RecipeError("Ce jour n'existe pas .", 0);
+    }
+    // Ajout du Jour dans le Menu
+    let menuDayOfWeek = await menu.addDayOfWeek(dayOfWeek);
+    // Réponse du Menu créé.
+    return res.json({
+      message: "Ce jour a bien été ajoutée à votre menu .",
+      data: menuDayOfWeek,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* Ajout d'un Plat dans un Menu */
+exports.addCourseInMenu = async (req, res, next) => {
+  try {
+    let courseID = parseInt(req.params.id);
+    const { menu_id, count } = req.body;
+    // Validation des données reçues
+    if (!courseID || !menu_id || !count ) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
+    // Vérification de l'existance du Menu
+    if (menu === null) {
+      throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
+    }
+    let course = await Course.findOne({ where: { id: courseID } });
+    // Vérification de l'existance du Plat
+    if (course === null) {
+      throw new RecipeError("Ce plat n'existe pas .", 0);
+    }
+    // Ajout du Plat dans le Menu
+    let menuCourse = await menu.addCourse(course);
+    // Réponse du Menu créé.
+    return res.json({
+      message: "Ce plat a bien été ajoutée à votre menu .",
+      data: menuCourse,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* Ajout d'une Recette dans un Menu */
+exports.addRecipeInMenu = async (req, res, next) => {
+  try {
+    const { recipe_id, menu_id, count } = req.body;
+    // Validation des données reçues
+    if (!recipe_id || !menu_id || !count ) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
+    // Vérification de l'existance du menu
+    if (menu === null) {
+      throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
+    }
+    let recipe = await Recipe.findOne({ where: { id: recipe_id } });
+    // Vérification de l'existance de la Recette
+    if (recipe === null) {
+      throw new RecipeError("Cette recette n'existe pas .", 0);
+    }
+    // Ajout de la Recette dans le menu
+    let menuRecipe = await menu.addRecipe(recipe, {
+      through: { count: count },
+    });
+    // Réponse du menu créé.
+    return res.json({
+      message: "La recette a bien été ajoutée à votre menu .",
+      data: menuRecipe,
+    });
   } catch (err) {
     next(err);
   }

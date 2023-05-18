@@ -38,7 +38,7 @@ exports.getTheme = async (req, res, next) => {
 };
 
 /* Récupération des Recettes d'un Theme */
-exports.getRecipesForTheme = async (req, res, next) => {
+exports.getRecipesInTheme = async (req, res, next) => {
   let themeID = parseInt(req.params.id);
   // Verifie si le champ id est présent + cohérent
   if (!themeID) {

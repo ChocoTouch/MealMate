@@ -19,6 +19,12 @@ router.get("/", recipeController.getAllRecipes);
 /* GET ID */
 router.get("/:id", recipeController.getRecipe);
 
+/* GET ID */
+router.get("/menus/:id", recipeController.getMenusForRecipe);
+
+/* GET */
+router.get("/ingredients/:id", recipeController.getIngredientsInRecipe);
+
 /* PUT */
 router.put("", recipeController.addRecipe); //checkTokenMW
 
@@ -34,13 +40,14 @@ router.delete("/trash/:id", recipeController.trashRecipe); //checkTokenMW
 /* HARD DELETE ID*/
 router.delete("/:id", recipeController.deleteRecipe); //checkTokenMW
 
-/* GET ID */
-router.get("/menus/:id", recipeController.getMenusForRecipe);
+/* PUT */
+router.put("/ingredient/:id", recipeController.addIngredientInRecipe); //checkTokenMW
 
 /* PUT */
-router.put("/ingredients", recipeController.addIngredientInRecipe); //checkTokenMW
+router.put("/diet/:id", recipeController.addDietInRecipe); //checkTokenMW
 
-/* GET */
-router.get("/ingredients/:id", recipeController.getIngredientsInRecipe);
+/* PUT */
+router.put("/theme/:id", recipeController.addThemeInRecipe); //checkTokenMW
+
 
 module.exports = router;

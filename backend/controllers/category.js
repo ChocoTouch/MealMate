@@ -58,36 +58,6 @@ exports.addCategory = async (req, res, next) => {
   }
 };
 
-/* Ajout d'un Ingrédient dans une Recette */
-exports.addIngredientInCategory = async (req, res, next) => {
-  try {
-    const { category_id, ingredient_id } = req.body;
-    // Validation des données reçues
-    if (!category_id || !ingredient_id ) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    let category = await Category.findOne({ where: { id: category_id } });
-    // Vérification de l'existance de la Catégorie
-    if (category === null) {
-      throw new RecipeError("Cette Catégorie n'existe pas .", 0);
-    }
-    let ingredient = await Ingredient.findOne({ where: { id: ingredient_id } });
-    // Vérification de l'existance de l'ingredient
-    if (ingredient === null) {
-      throw new IngredientError("Cette Ingredient n'existe pas .", 0);
-    }
-    // Ajout de l'ingredient dans la Catégorie
-    let categoryIngredient = await category.addIngredient(ingredient);
-    // Réponse du menu créé.
-    return res.json({
-      message: "L'ingrédient a bien été ajoutée à la Catégorie .",
-      data: categoryIngredient,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
 /* PATCH ID & BODY*/
 exports.updateCategory = async (req, res, next) => {
   try {
@@ -177,6 +147,37 @@ exports.deleteCategory = async (req, res, next) => {
 
     // Réponse du hard delete
     return res.status(204).json({});
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* Ajout d'un Ingrédient dans une Recette */
+exports.addIngredientInCategory = async (req, res, next) => {
+  try {
+    let ingredientID = parseInt(req.params.id);
+    const { category_id } = req.body;
+    // Validation des données reçues
+    if (!category_id || !ingredientID ) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    let category = await Category.findOne({ where: { id: category_id } });
+    // Vérification de l'existance de la Catégorie
+    if (category === null) {
+      throw new RecipeError("Cette Catégorie n'existe pas .", 0);
+    }
+    let ingredient = await Ingredient.findOne({ where: { id: ingredientID } });
+    // Vérification de l'existance de l'ingredient
+    if (ingredient === null) {
+      throw new IngredientError("Cette Ingredient n'existe pas .", 0);
+    }
+    // Ajout de l'ingredient dans la Catégorie
+    let categoryIngredient = await category.addIngredient(ingredient);
+    // Réponse du menu créé.
+    return res.json({
+      message: "L'ingrédient a bien été ajoutée à la Catégorie .",
+      data: categoryIngredient,
+    });
   } catch (err) {
     next(err);
   }
