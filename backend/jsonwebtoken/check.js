@@ -19,7 +19,7 @@ const checkTokenMW = (req, res, next) => {
     req.headers.authorization && extractBearer(req.headers.authorization);
   if (!token) {
     return res
-      .status(401)
+      .status(403)
       .json({ message: "Pas de Token d'authentification ." });
   }
 
@@ -27,9 +27,12 @@ const checkTokenMW = (req, res, next) => {
   jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
     if (err) {
       return res
-        .status(401)
+        .status(500)
         .json({ message: "Token d'authentification invalide ." });
     }
+    req.loggedUser = {
+      id: decodedToken.id
+    };
     next(err);
   });
 };

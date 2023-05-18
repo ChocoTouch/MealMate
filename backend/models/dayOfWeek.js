@@ -3,20 +3,24 @@ const { DataTypes, UniqueConstraintError } = require("sequelize");
 
 /* Définition du modèle */
 module.exports = (sequelize) => {
-  const Menu_recipe = sequelize.define(
-    "Menu_recipe",
+  const DayOfWeek = sequelize.define(
+    "DayOfWeek",
     {
       id: {
         type: DataTypes.INTEGER(10),
         primaryKey: true,
         autoIncrement: true,
       },
-      count: {
-        type: DataTypes.INTEGER(4),
+      name: {
+        type: DataTypes.STRING(30),
+        allowNull: false,
+      },
+      slug: {
+        type: DataTypes.STRING(50),
         allowNull: false,
       }
     },
     { paranoid: true } // softDelete
   );
-  return Menu_recipe;
+  return DayOfWeek;
 };

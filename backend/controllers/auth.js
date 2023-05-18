@@ -28,19 +28,21 @@ exports.login = async (req, res, next) => {
       throw new AuthenticationError("Mot de passe incorrect .", 2);
     }
 
+    // Charge Utile
+    const payload = {
+      id: user.id,
+      name: user.name,
+      firstname: user.firstname,
+      email: user.email,
+      roles: user.roles,
+      username: user.username,
+      telephone: user.telephone,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    }
     // Génération du token et envoi
     const token = jwt.sign(
-      {
-        id: user.id,
-        name: user.name,
-        firstname: user.firstname,
-        email: user.email,
-        roles: user.roles,
-        username: user.username,
-        telephone: user.telephone,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      },
+      payload,
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_DURING }
     );

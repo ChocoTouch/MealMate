@@ -97,15 +97,15 @@ exports.addMenu = async (req, res, next) => {
 /* Ajout d'une Recipe dans un Menu */
 exports.addRecipeInMenu = async (req, res, next) => {
   try {
-    const { recipe_id, menu_id, count } = req.body;
+    const { recipe_id, menu_id, count, course } = req.body;
     // Validation des données reçues
-    if (!recipe_id || !menu_id || !count) {
+    if (!recipe_id || !menu_id || !count || !course ) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    let menu = await Menu.findOne({ where: { id: menu_id } });
+    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
     // Vérification de l'existance du menu
     if (menu === null) {
-      throw new MenuError("Ce menu n'existe pas .", 0);
+      throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
     }
     let recipe = await Recipe.findOne({ where: { id: recipe_id } });
     // Vérification de l'existance de la Recipe
