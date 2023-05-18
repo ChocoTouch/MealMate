@@ -1,7 +1,9 @@
+/***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const Category = DB.Category;
-const { RequestError, CategoryError } = require("../error/customError");
+const Ingredient = DB.Ingredient;
+const { RequestError, CategoryError ,RecipeError, IngredientError } = require("../error/customError");
 
 /* Routage de la ressource Category (Ensemble des Categories) */
 exports.getAllCategories = (req, res, next) => {
@@ -50,6 +52,36 @@ exports.addCategory = async (req, res, next) => {
     return res.json({
       message: "La category a bien été créée .",
       data: category,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* Ajout d'un Ingrédient dans une Recette */
+exports.addIngredientInCategory = async (req, res, next) => {
+  try {
+    const { category_id, ingredient_id } = req.body;
+    // Validation des données reçues
+    if (!category_id || !ingredient_id ) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    let category = await Category.findOne({ where: { id: category_id } });
+    // Vérification de l'existance de la Catégorie
+    if (category === null) {
+      throw new RecipeError("Cette Catégorie n'existe pas .", 0);
+    }
+    let ingredient = await Ingredient.findOne({ where: { id: ingredient_id } });
+    // Vérification de l'existance de l'ingredient
+    if (ingredient === null) {
+      throw new IngredientError("Cette Ingredient n'existe pas .", 0);
+    }
+    // Ajout de l'ingredient dans la Catégorie
+    let categoryIngredient = await category.addIngredient(ingredient);
+    // Réponse du menu créé.
+    return res.json({
+      message: "L'ingrédient a bien été ajoutée à la Catégorie .",
+      data: categoryIngredient,
     });
   } catch (err) {
     next(err);

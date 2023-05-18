@@ -36,24 +36,40 @@ exports.getComment = async (req, res, next) => {
 };
 
 /* PUT */
-exports.addComment = async (req, res, next) => {
+exports.addCommentMenu = async (req, res, next) => {
   try {
-    const { texte, user_id, recette_id, menu_id } = req.body;
+    const { texte, menu_id } = req.body;
     // Validation des données reçues
-    if (!texte) {
+    if (!texte || !menu_id) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    if (!recette_id && !menu_id) {
-      throw new RequestError(
-        "Paramètre(s) manquant(s) 'recette_id' ou 'menu_id'."
-      );
-    }
     // Création du Commentaire
-    let comment = await Comment.create(req.body);
+    let comment = await Comment.create(req.body, user_id = decodedToken.id, recipe_id = null); // TEST
 
     // Réponse du Commentaire créé.
     return res.json({
-      message: "Le comment a bien été créé .",
+      message: "Le commentaire a bien été créé .",
+      data: comment,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* PUT */
+exports.addCommentRecipe = async (req, res, next) => {
+  try {
+    const { texte, recipe_id } = req.body;
+    // Validation des données reçues
+    if (!texte || !recipe_id) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    // Création du Commentaire
+    let comment = await Comment.create(req.body, user_id = decodedToken.id, menu_id = null); // TEST
+
+    // Réponse du Commentaire créé.
+    return res.json({
+      message: "Le commentaire a bien été créé .",
       data: comment,
     });
   } catch (err) {

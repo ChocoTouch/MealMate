@@ -1,14 +1,18 @@
+/***** DONE , just missing comments******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const Recipe = DB.Recipe;
 const User = DB.User;
 const Menu = DB.Menu;
 const Ingredient = DB.Ingredient;
+const Diet = DB.Diet;
+const Theme = DB.Theme;
 const {
   RequestError,
   RecipeError,
   IngredientError,
   UserError,
+  DietError,
 } = require("../error/customError");
 
 /* Récupération de l'ensemble des Recettes */
@@ -150,15 +154,15 @@ exports.addIngredientInRecipe = async (req, res, next) => {
     if (!recipe_id || !ingredient_id || !count) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    let recipe = await Recipe.findOne({ where: { id: recipe_id } });
+    let recipe = await Recipe.findOne({ where: { id: recipe_id, user_id: decodedToken.id } });
     // Vérification de l'existance de la Recette
     if (recipe === null) {
-      throw new RecipeError("Cette Recipe n'existe pas .", 0);
+      throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas .", 0);
     }
     let ingredient = await Ingredient.findOne({ where: { id: ingredient_id } });
     // Vérification de l'existance de l'ingredient
     if (ingredient === null) {
-      throw new IngredientError("Cette Recipe n'existe pas .", 0);
+      throw new IngredientError("Cet ingredient n'existe pas .", 0);
     }
     // Ajout de l'ingredient dans la Recette
     let recipeIngredient = await recipe.addIngredient(ingredient, {
@@ -166,13 +170,78 @@ exports.addIngredientInRecipe = async (req, res, next) => {
     });
     // Réponse du menu créé.
     return res.json({
-      message: "L'ingrédient a bien été ajoutée à la Recipe .",
+      message: "L'ingrédient a bien été ajoutée à votre recette .",
       data: recipeIngredient,
     });
   } catch (err) {
     next(err);
   }
 };
+
+/* Ajout d'un Régime dans une Recette */
+exports.addDietInRecipe = async (req, res, next) => {
+  try {
+    const { recipe_id, diet_id, count } = req.body;
+    // Validation des données reçues
+    if (!recipe_id || !diet_id || !count) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    let recipe = await Recipe.findOne({ where: { id: recipe_id, user_id: decodedToken.id } });
+    // Vérification de l'existance de la Recette
+    if (recipe === null) {
+      throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas .", 0);
+    }
+    let diet = await Diet.findOne({ where: { id: diet_id } });
+    // Vérification de l'existance du Régime
+    if (diet === null) {
+      throw new DietError("Ce régime n'existe pas .", 0);
+    }
+    // Ajout du Régime dans la Recette
+    let recipeDiet = await recipe.addDiet(diet, {
+      through: { count: count },
+    });
+    // Réponse du menu créé.
+    return res.json({
+      message: "Le régime a bien été ajoutée à votre recette .",
+      data: recipeDiet,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* Ajout d'un Theme dans une Recette */
+exports.addThemeInRecipe = async (req, res, next) => {
+  try {
+    const { recipe_id, theme_id, count } = req.body;
+    // Validation des données reçues
+    if (!recipe_id || !theme_id || !count) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    let recipe = await Recipe.findOne({ where: { id: recipe_id, user_id: decodedToken.id } });
+    // Vérification de l'existance de la Recette
+    if (recipe === null) {
+      throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas .", 0);
+    }
+    let theme = await Theme.findOne({ where: { id: theme_id } });
+    // Vérification de l'existance du Theme
+    if (theme === null) {
+      throw new ThemeError("Ce thème n'existe pas .", 0);
+    }
+    // Ajout du Theme dans la Recette
+    let recipeTheme = await recipe.addTheme(theme, {
+      through: { count: count },
+    });
+    // Réponse du Theme créé.
+    return res.json({
+      message: "Ce thème a bien été ajoutée à votre recette .",
+      data: recipeTheme,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 /* Modification d'une Recette */
 exports.updateRecipe = async (req, res, next) => {

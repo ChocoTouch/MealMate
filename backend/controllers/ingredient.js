@@ -1,3 +1,4 @@
+/***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const Ingredient = DB.Ingredient;
@@ -64,9 +65,9 @@ exports.getRecipesForIngredient = async (req, res, next) => {
 /* Création d'un Ingredient */
 exports.addIngredient = async (req, res, next) => {
   try {
-    const { nom, description, calories, prix } = req.body;
+    const { name, description, calories, price } = req.body;
     // Validation des données reçues
-    if (!nom || !description || !calories || !prix) {
+    if (!name || !description || !calories || !price) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // Création de l'ingredient
@@ -108,7 +109,7 @@ exports.updateIngredient = async (req, res, next) => {
 
     // Réponse de la mise à jour
     return res.json({
-      message: "L'ingredient à bien été modifiée .",
+      message: "L'ingredient à bien été modifié .",
       data: ingredient,
     });
   } catch (err) {

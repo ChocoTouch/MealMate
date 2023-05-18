@@ -1,3 +1,4 @@
+/***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const User = DB.User;
