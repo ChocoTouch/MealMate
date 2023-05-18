@@ -34,8 +34,4 @@ router.delete("/trash/:id", dayOfWeekController.trashDayOfWeek); //checkTokenMW
 /* HARD DELETE ID*/
 router.delete("/:id", dayOfWeekController.deleteDayOfWeek); //checkTokenMW
 
-/* GET ID */
-router.get("/recipes/:id", dayOfWeekController.getRecipesInDayOfWeek);
-
-
 module.exports = router;

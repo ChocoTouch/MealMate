@@ -20,17 +20,31 @@ const user_router = require("./routes/users");
 const auth_router = require("./routes/auth");
 const recipes_router = require("./routes/recipes");
 const menus_router = require("./routes/menus");
+const categories_router = require("./routes/categories");
+const comments_router = require("./routes/comments");
+const courses_router = require("./routes/courses");
+const daysOfWeek_router = require("./routes/daysOfWeek");
+const diets_router = require("./routes/diets");
 const ingredients_router = require("./routes/ingredients");
+const meals_router = require("./routes/meals");
+const themes_router = require("./routes/themes");
 
 /* Mise en place du routage */
 app.get("/", (req, res) =>
   res.send(`Welcome to the MealMate API by Bauchet Anthony`)
 );
-app.use("/users",checkAdminTokenMW ,user_router); //checkAdminTokenMW,
+app.use("/users",user_router); //checkAdminTokenMW,
 app.use("/auth", auth_router);
-app.use("/recipes",checkTokenMW, recipes_router); //checkTokenMW
+app.use("/recipes", recipes_router); //checkTokenMW
 app.use("/ingredients", ingredients_router); //checkTokenMW
+app.use("/categories", categories_router); //checkTokenMW
+app.use("/comments", comments_router); //checkTokenMW
+app.use("/courses", courses_router); //checkTokenMW
+app.use("/daysOfWeek", daysOfWeek_router); //checkTokenMW
+app.use("/diets", diets_router); //checkTokenMW
 app.use("/menus", menus_router); //checkTokenMW
+app.use("/meals", meals_router); //checkTokenMW
+app.use("/themes", themes_router); //checkTokenMW
 app.get("*", (req, res) => res.status(501).send("Ressource non existant"));
 app.use(errorHandler);
 

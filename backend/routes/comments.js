@@ -19,9 +19,6 @@ router.get("/", commentController.getAllComments);
 /* GET ID */
 router.get("/:id", commentController.getComment);
 
-/* PUT */
-router.put("", commentController.addComment); //checkTokenMW
-
 /* PATCH ID & BODY*/
 router.patch("/:id", commentController.updateComment); //checkTokenMW
 

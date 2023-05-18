@@ -1,6 +1,7 @@
 /***** DONE , just missing comments******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
+const slugify = require("slugify");
 const Recipe = DB.Recipe;
 const User = DB.User;
 const Menu = DB.Menu;
@@ -34,7 +35,7 @@ exports.getRecipe = async (req, res, next) => {
     // Récupération de la Recette
     let recipe = await Recipe.findOne({
       where: { id: recipeID },
-      include: { model: User, attributes: ["id", "username", "email"] },
+      include: [{ model: User, attributes: ["id", "username", "email"] },{ model: Theme, attributes: ["id", "name", "description"] }],
     });
     // Test de l'existance de la Recette
     if (recipe === null) {
@@ -103,36 +104,47 @@ exports.addRecipe = async (req, res, next) => {
       name,
       user_id,
       description,
-      instructions
+      instructions,
+      difficulty,
+      theme_id
     } = req.body;
     // Validation des données reçues
     if (
       !name ||
       !user_id ||
       !description ||
-      !instructions
+      !instructions ||
+      !difficulty
     ) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-
+    // Vérification du thème
+    if(!theme_id){
+      req.body.theme_id = 2;
+    }
+    else{
+      let theme = await Theme.findOne({ where: { id: theme_id } });
+      if(!theme){
+        throw new RequestError("Ce thème n'existe pas .", 0);
+      }
+    }
+    // Vérification de la difficulté
+    if(difficulty < 1 || difficulty > 5){
+      throw new RequestError("La difficulté est incohérente .", 0);
+    }
     // Récupération de l'utilisateur
     let user = await User.findOne({ where: { id: user_id } });
     // Test de l'existance de l'utilisateur
     if (user === null) {
       throw new UserError("Cet utilisateur n'existe pas .", 0);
     }
+    req.body.slug = slugify(name);
     // Création de la Recette
-    let recipe = await Recipe.create(req.body, {
-      include: [
-        {
-          model: User,
-        },
-      ],
-    });
+    let recipe = await Recipe.create(req.body);
 
-    // Réponse de la Recipe créé.
+    // Réponse de la Recette créé.
     return res.json({
-      message: "La Recipe a bien été créée .",
+      message: "La recette a bien été créée .",
       data: recipe,
     });
   } catch (err) {
@@ -144,12 +156,25 @@ exports.addRecipe = async (req, res, next) => {
 exports.updateRecipe = async (req, res, next) => {
   try {
     let recipeID = parseInt(req.params.id);
-
+    const {name, theme_id, difficulty} = req.body;
     // Vérification si le champ id existe et cohérent
     if (!recipeID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-
+    // Vérification du thème
+    if(!theme_id){
+      req.body.theme_id = 2;
+    }
+    else{
+      let theme = await Theme.findOne({ where: { id: theme_id } });
+      if(!theme){
+        throw new RequestError("Ce thème n'existe pas .", 0);
+      }
+    }
+    // Vérification de la difficulté
+    if(difficulty < 1 || difficulty > 5){
+      throw new RequestError("La difficulté est incohérente .", 0);
+    }
     // Recherche de la Recipe
     let recipe = await Recipe.findOne({
       where: { id: recipeID },
@@ -160,7 +185,7 @@ exports.updateRecipe = async (req, res, next) => {
     if (recipe === null) {
       throw new RecipeError("Cette Recipe n'existe pas .", 0);
     }
-
+    req.body.slug = slugify(name);
     // Mise à jour de la Recipe
     await Recipe.update(req.body, { where: { id: recipeID } });
 
@@ -298,35 +323,3 @@ exports.addDietInRecipe = async (req, res, next) => {
   }
 };
 
-/* Ajout d'un Theme dans une Recette */
-exports.addThemeInRecipe = async (req, res, next) => {
-  try {
-    let themeID = parseInt(req.params.id);
-    const { recipe_id, count } = req.body;
-    // Validation des données reçues
-    if (!recipe_id || !themeID || !count) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    let recipe = await Recipe.findOne({ where: { id: recipe_id, user_id: decodedToken.id } });
-    // Vérification de l'existance de la Recette
-    if (recipe === null) {
-      throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas .", 0);
-    }
-    let theme = await Theme.findOne({ where: { id: themeID } });
-    // Vérification de l'existance du Theme
-    if (theme === null) {
-      throw new ThemeError("Ce thème n'existe pas .", 0);
-    }
-    // Ajout du Theme dans la Recette
-    let recipeTheme = await recipe.addTheme(theme, {
-      through: { count: count },
-    });
-    // Réponse du Theme créé.
-    return res.json({
-      message: "Ce thème a bien été ajoutée à votre recette .",
-      data: recipeTheme,
-    });
-  } catch (err) {
-    next(err);
-  }
-};

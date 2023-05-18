@@ -1,6 +1,7 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
+const slugify = require("slugify");
 const Theme = DB.Theme;
 const Recipe = DB.Recipe;
 const { RequestError, ThemeError } = require("../error/customError");
@@ -70,6 +71,7 @@ exports.addTheme = async (req, res, next) => {
     if (!name || !description ) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
+    req.body.slug = slugify(name); 
     // Création du Theme
     let theme = await Theme.create(req.body);
 
@@ -87,7 +89,7 @@ exports.addTheme = async (req, res, next) => {
 exports.updateTheme = async (req, res, next) => {
   try {
     let themeID = parseInt(req.params.id);
-
+    const name = req.body.name;
     // Vérification si le champ id existe et cohérent
     if (!themeID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
@@ -103,6 +105,7 @@ exports.updateTheme = async (req, res, next) => {
     if (theme === null) {
       throw new ThemeError("Ce Theme n'existe pas .", 0);
     }
+    req.body.slug = slugify(name);
 
     // Mise à jour du Theme
     await Theme.update(req.body, { where: { id: themeID } });

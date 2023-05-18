@@ -1,6 +1,7 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
+const slugify = require("slugify");
 const User = DB.User;
 const Recipe = DB.Recipe;
 const Menu = DB.Menu;
@@ -45,7 +46,7 @@ exports.addUser = async (req, res, next) => {
     if (!name || !firstname || !username || !email || !password || !roles) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-
+    req.body.slug = slugify(username);
     // Récupération de l'utilisateur
     let user = await User.findOne({ where: { email: email }, raw: true });
 
@@ -89,6 +90,8 @@ exports.updateUser = async (req, res, next) => {
       throw new UserError("Cet utilisateur n'existe pas .", 0);
     }
 
+    req.body.slug = slugify(req.body.name);
+    
     // Mise à jour de l'user
     await User.update(req.body, { where: { id: userID } });
 

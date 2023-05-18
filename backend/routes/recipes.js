@@ -46,8 +46,6 @@ router.put("/ingredient/:id", recipeController.addIngredientInRecipe); //checkTo
 /* PUT */
 router.put("/diet/:id", recipeController.addDietInRecipe); //checkTokenMW
 
-/* PUT */
-router.put("/theme/:id", recipeController.addThemeInRecipe); //checkTokenMW
 
 
 module.exports = router;

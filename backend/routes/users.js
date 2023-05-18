@@ -34,7 +34,7 @@ router.delete("/trash/:id", userController.trashUser);
 router.delete("/:id", userController.deleteUser);
 
 /* GET ID*/
-router.get("/recettes/:id", userController.getRecipesForUser);
+router.get("/recipes/:id", userController.getRecipesForUser);
 
 /* GET ID*/
 router.get("/menus/:id", userController.getMenusForUser);
