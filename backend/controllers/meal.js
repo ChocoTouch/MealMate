@@ -1,8 +1,8 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
-const DB = require("../../db.config");
+const DB = require("../db.config");
 const Meal = DB.Meal;
-const { RequestError, MealError } = require("../../error/customError");
+const { RequestError, MealError } = require("../error/customError");
 
 /* Récupération de l'ensemble des Repas */
 exports.getAllMeals = (req, res, next) => {

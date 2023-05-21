@@ -1,9 +1,10 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
-const DB = require("../../db.config");
+const DB = require("../db.config");
 const slugify = require("slugify");
 const Diet = DB.Diet;
-const { RequestError, DietError } = require("../../error/customError");
+const Recipe = DB.Recipe;
+const { RequestError, DietError } = require("../error/customError");
 
 /* Récupération de l'ensemble des Régimes */
 exports.getAllDiets = (req, res, next) => {
@@ -36,6 +37,32 @@ exports.getDiet = async (req, res, next) => {
     next(err);
   }
 };
+
+/* Récupération des Recettes d'un Régime */
+exports.getRecipesForDiet = async (req, res, next) => {
+  let dietID = parseInt(req.params.id);
+  // Verifie si le champ id est présent + cohérent
+  if (!dietID) {
+    throw new RequestError("Paramètre(s) manquant(s) .");
+  }
+  try {
+    // Récupération du régime
+    let diet = await Diet.findOne({
+      where: { id: dietID },
+      include: Recipe,
+    });
+    // Test de l'existance du régime
+    if (diet === null) {
+      throw new DietError("Ce régime n'existe pas .", 0);
+    }
+    let recipes = diet.Recipes;
+    // Recettes et régime trouvé
+    return res.json({ data: recipes });
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 /* Création d'un Régime */
 exports.addDiet = async (req, res, next) => {

@@ -1,9 +1,9 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
-const DB = require("../../db.config");
+const DB = require("../db.config");
 const slugify = require("slugify");
 const Course = DB.Course;
-const { RequestError, CourseError } = require("../../error/customError");
+const { RequestError, CourseError } = require("../error/customError");
 
 /* Récupération de l'ensemble des Plats */
 exports.getAllCourses = (req, res, next) => {

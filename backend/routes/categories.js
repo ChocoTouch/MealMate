@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
 const express = require("express");
 const check = require("../jsonwebtoken/check");
-const categoryController = require("../controllers/admin/category");
+const categoryController = require("../controllers/category");
 
 /* Récupération du router d'express */
 let router = express.Router();
@@ -9,7 +9,7 @@ let router = express.Router();
 /* Middleware pour log les dates des req */
 router.use((req, res, next) => {
   const event = new Date();
-  console.log("Recipe Time", event.toString());
+  console.log("INGREDIENT Time", event.toString());
   next();
 });
 
@@ -17,10 +17,12 @@ router.use((req, res, next) => {
 router.get("/", categoryController.getAllCategories);
 
 /* GET ID */
-router.get("/:id", categoryController.getCategory);
+router.get("/ingredients/:id", categoryController.getIngredientsInCategory);
 
 /* GET ID */
-router.get("/ingredients/:id", categoryController.getIngredientsInCategory);
+router.get("/:id", categoryController.getCategory);
+
+
 
 /* PUT */
 router.put("", check.checkAdminTokenMW, categoryController.addCategory);
@@ -58,6 +60,13 @@ router.put(
   "/ingredient/:id",
   check.checkAdminTokenMW,
   categoryController.addIngredientInCategory
+);
+
+/* PUT */
+router.delete(
+  "/ingredient/:id",
+  check.checkAdminTokenMW,
+  categoryController.deleteIngredientInCategory
 );
 
 module.exports = router;

@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
 const express = require("express");
 const check = require("../jsonwebtoken/check");
-const courseController = require("../controllers/admin/course");
+const courseController = require("../controllers/course");
 
 /* Récupération du router d'express */
 let router = express.Router();

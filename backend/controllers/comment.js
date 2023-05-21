@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
-const DB = require("../../db.config");
+const DB = require("../db.config");
 const Comment = DB.Comment;
-const { RequestError, RecetteError } = require("../../error/customError");
+const { RequestError, RecetteError } = require("../error/customError");
 
 /* Routage de la ressource Comment (Ensemble des Commentaires) */
 exports.getAllComments = (req, res, next) => {

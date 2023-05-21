@@ -1,6 +1,6 @@
 /* Import des modules nécessaires */
 const express = require("express");
-const themeController = require("../controllers/admin/theme");
+const themeController = require("../controllers/theme");
 const check = require("../jsonwebtoken/check");
 
 /* Récupération du router d'express */

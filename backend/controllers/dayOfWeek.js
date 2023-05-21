@@ -1,9 +1,8 @@
-/***** DONE ******/
 /* Import des modules nécessaires */
-const DB = require("../../db.config");
+const DB = require("../db.config");
 const slugify = require("slugify");
 const DayOfWeek = DB.DayOfWeek;
-const { RequestError, DayOfWeekError } = require("../../error/customError");
+const { RequestError, DayOfWeekError } = require("../error/customError");
 
 /* Récupération de l'ensemble des Jours */
 exports.getAllDayOfWeeks = (req, res, next) => {

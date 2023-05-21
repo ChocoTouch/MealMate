@@ -1,6 +1,6 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
-const DB = require("../../db.config");
+const DB = require("../db.config");
 const slugify = require("slugify");
 const Category = DB.Category;
 const Ingredient = DB.Ingredient;
@@ -9,7 +9,7 @@ const {
   CategoryError,
   RecipeError,
   IngredientError,
-} = require("../../error/customError");
+} = require("../error/customError");
 
 /* Routage de la ressource Category (Ensemble des Categories) */
 exports.getAllCategories = (req, res, next) => {
@@ -187,7 +187,7 @@ exports.deleteCategory = async (req, res, next) => {
   }
 };
 
-/* Ajout d'un Ingrédient dans une Recette */
+/* Ajout d'un Ingrédient dans une Catégorie */
 exports.addIngredientInCategory = async (req, res, next) => {
   try {
     let ingredientID = parseInt(req.params.id);
@@ -208,10 +208,40 @@ exports.addIngredientInCategory = async (req, res, next) => {
     }
     // Ajout de l'ingredient dans la Catégorie
     let categoryIngredient = await category.addIngredient(ingredient);
-    // Réponse du menu créé.
+    // Réponse de l'ingrédient ajouté.
     return res.json({
       message: "L'ingrédient a bien été ajoutée à la Catégorie .",
       data: categoryIngredient,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* Suppression d'un Ingrédient dans une Catégorie */
+exports.deleteIngredientInCategory = async (req, res, next) => {
+  try {
+    let ingredientID = parseInt(req.params.id);
+    const { category_id } = req.body;
+    // Validation des données reçues
+    if (!category_id || !ingredientID) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+    let category = await Category.findOne({ where: { id: category_id } });
+    // Vérification de l'existance de la Catégorie
+    if (category === null) {
+      throw new RecipeError("Cette Catégorie n'existe pas .", 0);
+    }
+    let ingredient = await Ingredient.findOne({ where: { id: ingredientID } });
+    // Vérification de l'existance de l'ingredient
+    if (ingredient === null) {
+      throw new IngredientError("Cette Ingredient n'existe pas .", 0);
+    }
+    // Suppression de l'ingredient dans la Catégorie
+    await category.removeIngredient(ingredient);
+    // Réponse de l'ingrédient supprimé.
+    return res.status(204).json({
+      message: "L'ingrédient a bien été supprimé de la Catégorie ."
     });
   } catch (err) {
     next(err);
