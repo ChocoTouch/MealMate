@@ -9,7 +9,7 @@ let router = express.Router();
 /* Middleware pour log les dates des req */
 router.use((req, res, next) => {
   const event = new Date();
-  console.log("Recipe Time", event.toString());
+  console.log("Course Time", event.toString());
   next();
 });
 

@@ -1,6 +1,7 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
+const slugify = require("slugify");
 const DayOfWeek = DB.DayOfWeek;
 const { RequestError, DayOfWeekError } = require("../error/customError");
 
@@ -44,6 +45,8 @@ exports.addDayOfWeek = async (req, res, next) => {
     if (!name ) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
+    req.body.slug = slugify(name);
+    
     // Création du Jour
     let dayOfWeek = await DayOfWeek.create(req.body);
 
@@ -60,10 +63,11 @@ exports.addDayOfWeek = async (req, res, next) => {
 /* Modification d'un Jour */
 exports.updateDayOfWeek = async (req, res, next) => {
   try {
+    const { name } = req.body;
     let dayOfWeekID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
-    if (!dayOfWeekID) {
+    if (!dayOfWeekID || !name) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
@@ -78,6 +82,8 @@ exports.updateDayOfWeek = async (req, res, next) => {
       throw new DayOfWeekError("Ce jour n'existe pas .", 0);
     }
 
+    req.body.slug = slugify(name);
+    
     // Mise à jour du Jour
     await DayOfWeek.update(req.body, { where: { id: dayOfWeekID } });
 

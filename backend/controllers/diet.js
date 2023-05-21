@@ -1,6 +1,7 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
+const slugify = require("slugify");
 const Diet = DB.Diet;
 const { RequestError, DietError } = require("../error/customError");
 
@@ -44,6 +45,9 @@ exports.addDiet = async (req, res, next) => {
     if (!name || !description) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
+
+    req.body.slug = slugify(name);
+
     // Création du Régime
     let diet = await Diet.create(req.body);
 
@@ -60,6 +64,7 @@ exports.addDiet = async (req, res, next) => {
 /* Modification d'un Régime */
 exports.updateDiet = async (req, res, next) => {
   try {
+    const { name } = req.body;
     let dietID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
@@ -78,6 +83,8 @@ exports.updateDiet = async (req, res, next) => {
       throw new DietError("Ce régime n'existe pas .", 0);
     }
 
+    req.body.slug = slugify(name);
+    
     // Mise à jour du Régime
     await Diet.update(req.body, { where: { id: dietID } });
 

@@ -25,6 +25,9 @@ router.get("/menus/:id", recipeController.getMenusForRecipe);
 /* GET */
 router.get("/ingredients/:id", recipeController.getIngredientsInRecipe);
 
+/* GET */
+router.get("/diets/:id", recipeController.getDietsInRecipe);
+
 /* PUT */
 router.put("", recipeController.addRecipe); //checkTokenMW
 

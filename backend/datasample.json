@@ -1,0 +1,194 @@
+{
+    "dataRECIPES": [
+        {
+            "id": 1,
+            "user_id": 1,
+            "theme_id": 2,
+            "name": "Porc au Caramel",
+            "slug": "Porc-au-Caramel",
+            "description": "Plat Royal Asiatique",
+            "instructions": "Coupez le porc, marinez le avec de la sauce soja, du vin de chine. Cuire le porc dans son bouillon, blabla bla, blablablablablabla",
+            "difficulty": 5,
+            "createdAt": "2023-05-18T15:42:09.000Z",
+            "updatedAt": "2023-05-18T15:42:09.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 2,
+            "user_id": 1,
+            "theme_id": 2,
+            "name": "Curry Thailandais",
+            "slug": "Curry-Thailandais",
+            "description": "Plat Piquant Asiatique",
+            "instructions": "Coupez le pooulet, faire la pate de curry, blabal. Cuire le poulet dans son bouillon, blabla bla, blablablablablabla",
+            "difficulty": 5,
+            "createdAt": "2023-05-18T15:47:46.000Z",
+            "updatedAt": "2023-05-18T15:47:46.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 3,
+            "user_id": 1,
+            "theme_id": 2,
+            "name": "Banh mi",
+            "slug": "Banh-mi",
+            "description": "Sandwich au porc Vietnamien",
+            "instructions": "Carottes bla balbalealzdlaz^dloa^zlda^z",
+            "difficulty": 2,
+            "createdAt": "2023-05-18T15:57:14.000Z",
+            "updatedAt": "2023-05-18T15:57:14.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 4,
+            "user_id": 1,
+            "theme_id": 2,
+            "name": "Banh mi",
+            "slug": "Banh-mi",
+            "description": "Sandwich au porc Vietnamien",
+            "instructions": "Carottes bla balbalealzdlaz^dloa^zlda^z",
+            "difficulty": 2,
+            "createdAt": "2023-05-18T15:59:40.000Z",
+            "updatedAt": "2023-05-18T15:59:40.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 5,
+            "user_id": 1,
+            "theme_id": 2,
+            "name": "Banh mi cha lou",
+            "slug": "Banh-mi-cha-lou",
+            "description": "Sandwich au porc Vietnamien",
+            "instructions": "Carottes bla balbalealzdlaz^dloa^zlda^z",
+            "difficulty": 4,
+            "createdAt": "2023-05-18T16:02:09.000Z",
+            "updatedAt": "2023-05-18T16:06:43.000Z",
+            "deletedAt": null
+        }
+    ],
+
+    "dataUSERS": [
+        {
+            "id": 1,
+            "name": "Luua",
+            "slug": "AnthonyLuu",
+            "firstname": "Anthony",
+            "username": "AnthonyLuu",
+            "email": "anthony.luu@outlook.fr",
+            "password": "test",
+            "telephone": null,
+            "roles": "ROLE_ADMIN",
+            "createdAt": "2023-05-18T15:18:23.000Z",
+            "updatedAt": "2023-05-18T15:19:40.000Z",
+            "deletedAt": null
+        }
+    ],
+    "dataINGREDIENTS": [
+        {
+            "id": 2,
+            "name": "Oeuf",
+            "slug": "Oeuf",
+            "description": "Cet ingrédient fsdfsdblablabla............",
+            "calories": 134,
+            "price": 0,
+            "createdAt": "2023-05-21T09:27:52.000Z",
+            "updatedAt": "2023-05-21T09:42:35.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 3,
+            "name": "steak haché (15% mg) cru",
+            "slug": "steak-hache-(15percent-mg)-cru",
+            "description": "Cet ingrédient fsdfsdblablabla............",
+            "calories": 199,
+            "price": 1,
+            "createdAt": "2023-05-21T09:34:22.000Z",
+            "updatedAt": "2023-05-21T09:34:22.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 4,
+            "name": "Oeufhklhjoll",
+            "slug": "Oeufhklhjoll",
+            "description": "Cet ingrédient fsdfsdblablabla............",
+            "calories": 134,
+            "price": 0,
+            "createdAt": "2023-05-21T09:42:22.000Z",
+            "updatedAt": "2023-05-21T09:46:33.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 7,
+            "name": "Oeuf2",
+            "slug": "Oeuf2",
+            "description": "Cet ingrédient fsdfsdblablabla............",
+            "calories": 134,
+            "price": 0.2,
+            "createdAt": "2023-05-21T09:51:06.000Z",
+            "updatedAt": "2023-05-21T09:51:06.000Z",
+            "deletedAt": null
+        }
+    ],
+    "dataDIETS": [
+        {
+            "id": 1,
+            "name": "Sans Gluten",
+            "slug": "Sans-Gluten",
+            "description": "Ce régime est destiné pour ceux qui ne consomment pas de gluten.",
+            "createdAt": "2023-05-21T10:10:56.000Z",
+            "updatedAt": "2023-05-21T10:11:35.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 4,
+            "name": "Végétarien",
+            "slug": "Vegetarien",
+            "description": "Ce régime est destiné pour ceux qui ne mangent pas de viande.",
+            "createdAt": "2023-05-21T10:23:45.000Z",
+            "updatedAt": "2023-05-21T10:23:45.000Z",
+            "deletedAt": null
+        }
+    ],
+    "dataDAYS": [
+        {
+            "id": 1,
+            "name": "Lundi",
+            "slug": "Lundi",
+            "createdAt": "2023-05-21T10:28:32.000Z",
+            "updatedAt": "2023-05-21T10:28:32.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 2,
+            "name": "Mardi",
+            "slug": "Mardi",
+            "createdAt": "2023-05-21T10:28:38.000Z",
+            "updatedAt": "2023-05-21T10:28:38.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 3,
+            "name": "Mercredi",
+            "slug": "Mercredi",
+            "createdAt": "2023-05-21T10:28:44.000Z",
+            "updatedAt": "2023-05-21T10:28:44.000Z",
+            "deletedAt": null
+        },
+        {
+            "id": 4,
+            "name": "Jeudi",
+            "slug": "Jeudi",
+            "createdAt": "2023-05-21T10:28:51.000Z",
+            "updatedAt": "2023-05-21T10:29:31.000Z",
+            "deletedAt": null
+        }
+    ]
+
+
+
+
+
+
+
+
+}

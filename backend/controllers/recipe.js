@@ -72,6 +72,31 @@ exports.getMenusForRecipe = async (req, res, next) => {
     next(err);
   }
 };
+/* Récupération des Régimes d'une Recette */
+exports.getDietsInRecipe = async (req, res, next) => {
+  let recipeID = parseInt(req.params.id);
+  // Verifie si le champ id est présent + cohérent
+  if (!recipeID) {
+    throw new RequestError("Paramètre(s) manquant(s) .");
+  }
+  try {
+    // Récupération de la Recette
+    let recipe = await Recipe.findOne({
+      where: { id: recipeID },
+      include: Diet,
+    });
+    // Test de l'existance de la Recette
+    if (recipe === null) {
+      throw new RecipeError("Cette Recette n'existe pas .", 0);
+    }
+    let diets = recipe.Diets;
+    // Recette et Régimes trouvé
+    return res.json({ data: diets });
+  } catch (err) {
+    next(err);
+  }
+};
+
 /* Récupération des Ingredients d'une Recette */
 exports.getIngredientsInRecipe = async (req, res, next) => {
   let recipeID = parseInt(req.params.id);
@@ -268,7 +293,8 @@ exports.addIngredientInRecipe = async (req, res, next) => {
     if (!recipe_id || !ingredientID || !count) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    let recipe = await Recipe.findOne({ where: { id: recipe_id, user_id: decodedToken.id } });
+    // user_id: decodedToken.id
+    let recipe = await Recipe.findOne({ where: { id: recipe_id } });
     // Vérification de l'existance de la Recette
     if (recipe === null) {
       throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas .", 0);
@@ -296,12 +322,13 @@ exports.addIngredientInRecipe = async (req, res, next) => {
 exports.addDietInRecipe = async (req, res, next) => {
   try {
     let dietID = parseInt(req.params.id);
-    const { recipe_id, count } = req.body;
+    const { recipe_id } = req.body;
     // Validation des données reçues
-    if (!recipe_id || !dietID || !count) {
+    if (!recipe_id || !dietID ) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    let recipe = await Recipe.findOne({ where: { id: recipe_id, user_id: decodedToken.id } });
+    // , user_id: decodedToken.id
+    let recipe = await Recipe.findOne({ where: { id: recipe_id } });
     // Vérification de l'existance de la Recette
     if (recipe === null) {
       throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas .", 0);

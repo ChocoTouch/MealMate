@@ -1,6 +1,7 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
+const slugify = require("slugify");
 const Course = DB.Course;
 const { RequestError, CourseError } = require("../error/customError");
 
@@ -39,11 +40,14 @@ exports.getCourse = async (req, res, next) => {
 /* Création d'un Plat */
 exports.addCourse = async (req, res, next) => {
   try {
-    const { name } = req.body;
+    const { name, description } = req.body;
     // Validation des données reçues
-    if (!name ) {
+    if (!name || !description ) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
+
+    req.body.slug = slugify(name);
+
     // Création du Plat
     let course = await Course.create(req.body);
 
@@ -60,10 +64,11 @@ exports.addCourse = async (req, res, next) => {
 /* Modification d'un Plat */
 exports.updateCourse = async (req, res, next) => {
   try {
+    const { name } = req.body;
     let courseID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
-    if (!courseID) {
+    if (!courseID || !name ) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
@@ -77,6 +82,8 @@ exports.updateCourse = async (req, res, next) => {
     if (course === null) {
       throw new CourseError("Ce Plat n'existe pas .", 0);
     }
+
+    req.body.slug = slugify(name);
 
     // Mise à Plat du Plat
     await Course.update(req.body, { where: { id: courseID } });

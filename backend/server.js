@@ -36,15 +36,15 @@ app.get("/", (req, res) =>
 app.use("/users",user_router); //checkAdminTokenMW,
 app.use("/auth", auth_router);
 app.use("/recipes", recipes_router); //checkTokenMW
-app.use("/ingredients", ingredients_router); //checkTokenMW
-app.use("/categories", categories_router); //checkTokenMW
-app.use("/comments", comments_router); //checkTokenMW
-app.use("/courses", courses_router); //checkTokenMW
-app.use("/daysOfWeek", daysOfWeek_router); //checkTokenMW
-app.use("/diets", diets_router); //checkTokenMW
-app.use("/menus", menus_router); //checkTokenMW
-app.use("/meals", meals_router); //checkTokenMW
-app.use("/themes", themes_router); //checkTokenMW
+app.use("/ingredients", ingredients_router);
+app.use("/categories", categories_router);
+app.use("/comments", comments_router);
+app.use("/courses", courses_router);
+app.use("/daysofweek", daysOfWeek_router);
+app.use("/diets", diets_router);
+app.use("/menus", menus_router);
+app.use("/meals", meals_router);
+app.use("/themes", themes_router);
 app.get("*", (req, res) => res.status(501).send("Ressource non existant"));
 app.use(errorHandler);
 

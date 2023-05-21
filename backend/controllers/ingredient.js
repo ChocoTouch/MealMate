@@ -1,6 +1,7 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
+const slugify = require("slugify");
 const Ingredient = DB.Ingredient;
 const Recipe = DB.Recipe;
 const { RequestError, IngredientError } = require("../error/customError");
@@ -70,6 +71,11 @@ exports.addIngredient = async (req, res, next) => {
     if (!name || !description || !calories || !price) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
+    if (price < 0) {
+      throw new RequestError("Le prix ne peut être négatif", 0);
+    }
+
+    req.body.slug = slugify(name);
     // Création de l'ingredient
     let ingredient = await Ingredient.create(req.body);
 
@@ -86,11 +92,16 @@ exports.addIngredient = async (req, res, next) => {
 /* Modification d'un Ingredient */
 exports.updateIngredient = async (req, res, next) => {
   try {
+    const { name, price } = req.body;
     let ingredientID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
     if (!ingredientID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
+    }
+
+    if (price < 0) {
+      throw new RequestError("Le prix ne peut être négatif", 0);
     }
 
     // Recherche de l'ingredient
@@ -103,7 +114,7 @@ exports.updateIngredient = async (req, res, next) => {
     if (ingredient === null) {
       throw new IngredientError("Cet ingredient n'existe pas .", 0);
     }
-
+    req.body.slug = slugify(name);
     // Mise à jour de l'ingredient
     await Ingredient.update(req.body, { where: { id: ingredientID } });
 

@@ -66,6 +66,8 @@ class MainError extends Error {
   }
 }
 
+class CourseError extends MainError {}
+
 class AuthenticationError extends MainError {}
 
 class UserError extends MainError {}
@@ -92,4 +94,5 @@ module.exports = {
   IngredientError,
   MenuError,
   RequestError,
+  CourseError,
 };

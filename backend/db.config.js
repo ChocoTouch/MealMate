@@ -145,6 +145,6 @@ db.Diet.hasMany(db.Recipe_diet);
 
 /* Synchronisation des modèles */
 //{alter:true}{force:true}
-sequelize.sync();
+sequelize.sync({alter:true});
 
 module.exports = db;

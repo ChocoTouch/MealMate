@@ -15,6 +15,7 @@ module.exports = (sequelize) => {
       name: {
         type: DataTypes.STRING(50),
         allowNull: false,
+        unique: true,
       },
       slug: {
         type: DataTypes.STRING(50),
@@ -29,7 +30,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.INTEGER(7),
+        type: DataTypes.FLOAT(7,2),
         allowNull: false,
       },
     },
