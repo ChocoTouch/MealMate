@@ -1,10 +1,10 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
-const DB = require("../db.config");
+const DB = require("../../db.config");
 const slugify = require("slugify");
 const Theme = DB.Theme;
 const Recipe = DB.Recipe;
-const { RequestError, ThemeError } = require("../error/customError");
+const { RequestError, ThemeError } = require("../../error/customError");
 
 /* Récupération de l'ensemble des Themes */
 exports.getAllThemes = (req, res, next) => {

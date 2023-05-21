@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
 const express = require("express");
 const check = require("../jsonwebtoken/check");
-const ingredientController = require("../controllers/ingredient");
+const ingredientController = require("../controllers/admin/ingredient");
 
 /* Récupération du router d'express */
 let router = express.Router();

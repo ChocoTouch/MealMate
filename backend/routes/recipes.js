@@ -1,6 +1,6 @@
 /* Import des modules nécessaires */
 const express = require("express");
-const recipeController = require("../controllers/recipe");
+const recipeController = require("../controllers/admin/recipe");
 const check = require("../jsonwebtoken/check");
 
 /* Récupération du router d'express */

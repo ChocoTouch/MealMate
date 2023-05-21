@@ -1,9 +1,9 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
-const DB = require("../db.config");
+const DB = require("../../db.config");
 const slugify = require("slugify");
 const Diet = DB.Diet;
-const { RequestError, DietError } = require("../error/customError");
+const { RequestError, DietError } = require("../../error/customError");
 
 /* Récupération de l'ensemble des Régimes */
 exports.getAllDiets = (req, res, next) => {

@@ -1,11 +1,11 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
-const DB = require("../db.config");
+const DB = require("../../db.config");
 const slugify = require("slugify");
 const User = DB.User;
 const Recipe = DB.Recipe;
 const Menu = DB.Menu;
-const { RequestError, UserError } = require("../error/customError");
+const { RequestError, UserError } = require("../../error/customError");
 
 /* Récupération de l'ensemble des Utilisateurs */
 exports.getAllUsers = (req, res, next) => {

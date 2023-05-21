@@ -1,6 +1,6 @@
 /***** DONE , just missing comments******/
 /* Import des modules nécessaires */
-const DB = require("../db.config");
+const DB = require("../../db.config");
 const Menu = DB.Menu;
 const Recipe = DB.Recipe;
 const Meal = DB.Meal;
@@ -12,13 +12,31 @@ const {
   RecipeError,
   MenuError,
   UserError,
-} = require("../error/customError");
+} = require("../../error/customError");
 
 /* Récupération de l'ensemble des Menus */
 exports.getAllMenus = (req, res, next) => {
   Menu.findAll()
     .then((menus) => res.json({ data: menus }))
     .catch((err) => next());
+};
+
+/* Récupération de l'ensemble des Menus */
+exports.getMyMenus = async (req, res, next) => {
+  try {
+    let menus = await Menu.findAll({
+      where: {
+        user_id: req.decodedToken.id,
+      },
+      include: [{ model: Recipe }],
+    });
+    if (menus === null) {
+      throw new MenuError("Aucun menu trouvé", 0);
+    }
+    return res.json({ data: menus });
+  } catch (err) {
+    next(err);
+  }
 };
 
 /* Récupération d'un Menu */

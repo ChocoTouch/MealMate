@@ -1,10 +1,10 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
-const DB = require("../db.config");
+const DB = require("../../db.config");
 const slugify = require("slugify");
 const Ingredient = DB.Ingredient;
 const Recipe = DB.Recipe;
-const { RequestError, IngredientError } = require("../error/customError");
+const { RequestError, IngredientError } = require("../../error/customError");
 
 /* Récupération de l'ensemble des Ingredients */
 exports.getAllIngredients = (req, res, next) => {

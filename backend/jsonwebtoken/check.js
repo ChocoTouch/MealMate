@@ -53,7 +53,7 @@ exports.checkAdminTokenMW = (req, res, next) => {
         .status(401)
         .json({ message: "Token d'authentification invalide ." });
     }
-    if (decodedToken.roles !== "ROLE_ADMIN") {
+    if (decodedAdminToken.roles !== "ROLE_ADMIN") {
       return res
         .status(401)
         .json({ message: "Vous n'êtes pas un administrateur ." });

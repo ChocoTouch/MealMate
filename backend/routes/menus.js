@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
 const express = require("express");
 const check = require("../jsonwebtoken/check");
-const menuController = require("../controllers/menu");
+const menuController = require("../controllers/admin/menu");
 
 /* Récupération du router d'express */
 let router = express.Router();
@@ -15,6 +15,9 @@ router.use((req, res, next) => {
 
 /* GET */
 router.get("/", menuController.getAllMenus);
+
+/* GET ID */
+router.get("/me", check.checkTokenMW, menuController.getMyMenus);
 
 /* GET ID */
 router.get("/:id", menuController.getMenu);

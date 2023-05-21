@@ -1,6 +1,6 @@
 /***** DONE , just missing comments******/
 /* Import des modules nécessaires */
-const DB = require("../db.config");
+const DB = require("../../db.config");
 const slugify = require("slugify");
 const Recipe = DB.Recipe;
 const User = DB.User;
@@ -8,13 +8,14 @@ const Menu = DB.Menu;
 const Ingredient = DB.Ingredient;
 const Diet = DB.Diet;
 const Theme = DB.Theme;
+const Comment = DB.Comment;
 const {
   RequestError,
   RecipeError,
   IngredientError,
   UserError,
   DietError,
-} = require("../error/customError");
+} = require("../../error/customError");
 
 /* Récupération de l'ensemble des Recettes */
 exports.getAllRecipes = (req, res, next) => {
@@ -24,12 +25,26 @@ exports.getAllRecipes = (req, res, next) => {
 };
 
 /* Récupération de l'ensemble des Recettes de l'utilisateur connecté */
-exports.getMyRecipes = (req, res, next) => {
-  //{ where: { user_id: decodedToken.id } }
-  Recipe.findAll({ where: { user_id: req.decodedToken.id } })
-    .then((recipes) => res.json({ data: recipes }))
-    .catch((err) => next());
+exports.getMyRecipes = async (req, res, next) => {
+  try {
+    let recipes = await Recipe.findAll({
+      where: {
+        user_id: req.decodedToken.id,
+      },
+      include: [
+        { model: Ingredient, attributes: ["id", "name", "calories", "price"] },
+        { model: Comment },
+      ],
+    });
+    if (recipes === null) {
+      throw new RecipeError("Aucune recette trouvée", 0);
+    }
+    return res.json({ data: recipes });
+  } catch (err) {
+    next(err);
+  }
 };
+
 /* Récupération d'une Recette */
 exports.getRecipe = async (req, res, next) => {
   let recipeID = parseInt(req.params.id);

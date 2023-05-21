@@ -1,6 +1,6 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
-const DB = require("../db.config");
+const DB = require("../../db.config");
 const slugify = require("slugify");
 const Category = DB.Category;
 const Ingredient = DB.Ingredient;
@@ -9,7 +9,7 @@ const {
   CategoryError,
   RecipeError,
   IngredientError,
-} = require("../error/customError");
+} = require("../../error/customError");
 
 /* Routage de la ressource Category (Ensemble des Categories) */
 exports.getAllCategories = (req, res, next) => {

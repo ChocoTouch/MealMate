@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
 const express = require("express");
 const check = require("../jsonwebtoken/check");
-const dayOfWeekController = require("../controllers/dayOfWeek");
+const dayOfWeekController = require("../controllers/admin/dayOfWeek");
 
 /* Récupération du router d'express */
 let router = express.Router();

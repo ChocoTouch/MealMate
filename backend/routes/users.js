@@ -1,6 +1,6 @@
 /* Import des modules nécessaires */
 const express = require("express");
-const userController = require("../controllers/user");
+const userController = require("../controllers/admin/user");
 const check = require("../jsonwebtoken/check");
 
 /* Récupération du router d'express */
