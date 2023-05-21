@@ -84,7 +84,7 @@ exports.updateDiet = async (req, res, next) => {
     }
 
     req.body.slug = slugify(name);
-    
+
     // Mise à jour du Régime
     await Diet.update(req.body, { where: { id: dietID } });
 

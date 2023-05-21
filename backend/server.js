@@ -1,8 +1,8 @@
 /* Import des modules */
 const express = require("express");
 const cors = require("cors");
-const checkTokenMW = require("./jsonwebtoken/check");
-const checkAdminTokenMW = require("./jsonwebtoken/checkadmin");
+const check = require("./jsonwebtoken/check");
+//const checkAdminTokenMW = require("./jsonwebtoken/checkadmin");
 const errorHandler = require("./error/errorHandler");
 
 /* Import de la connexion à la base de données */
@@ -33,7 +33,7 @@ const themes_router = require("./routes/themes");
 app.get("/", (req, res) =>
   res.send(`Welcome to the MealMate API by Bauchet Anthony`)
 );
-app.use("/users",user_router); //checkAdminTokenMW,
+app.use("/users", user_router); //checkAdminTokenMW,
 app.use("/auth", auth_router);
 app.use("/recipes", recipes_router); //checkTokenMW
 app.use("/ingredients", ingredients_router);

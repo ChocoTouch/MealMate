@@ -1,6 +1,6 @@
 /* Import des modules nécessaires */
 const express = require("express");
-const checkTokenMW = require("../jsonwebtoken/check");
+const check = require("../jsonwebtoken/check");
 const commentController = require("../controllers/comment");
 
 /* Récupération du router d'express */
@@ -14,27 +14,39 @@ router.use((req, res, next) => {
 });
 
 /* GET */
-router.get("/", commentController.getAllComments);
+router.get("/", check.checkAdminTokenMW, commentController.getAllComments);
 
 /* GET ID */
-router.get("/:id", commentController.getComment);
+router.get("/:id", check.checkAdminTokenMW, commentController.getComment);
 
 /* PATCH ID & BODY*/
-router.patch("/:id", commentController.updateComment); //checkTokenMW
+router.patch("/:id", check.checkAdminTokenMW, commentController.updateComment);
 
 /* POST UNTRASH */
-router.post("/untrash/:id", commentController.untrashComment); //checkTokenMW
+router.post(
+  "/untrash/:id",
+  check.checkAdminTokenMW,
+  commentController.untrashComment
+);
 
 /* SOFT DELETE TRASH */
-router.delete("/trash/:id", commentController.trashComment); //checkTokenMW
+router.delete(
+  "/trash/:id",
+  check.checkAdminTokenMW,
+  commentController.trashComment
+);
 
 /* HARD DELETE ID*/
-router.delete("/:id", commentController.deleteComment); //checkTokenMW
+router.delete("/:id", check.checkAdminTokenMW, commentController.deleteComment);
 
 /* PUT */
-router.put("/menu/:id", commentController.addCommentInMenu); //checkTokenMW
+router.put("/menu/:id", check.checkTokenMW, commentController.addCommentInMenu);
 
 /* PUT */
-router.put("/recipe/:id", commentController.addCommentInRecipe); //checkTokenMW
+router.put(
+  "/recipe/:id",
+  check.checkTokenMW,
+  commentController.addCommentInRecipe
+);
 
 module.exports = router;

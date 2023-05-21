@@ -41,7 +41,7 @@ exports.addMeal = async (req, res, next) => {
   try {
     const { name, description } = req.body;
     // Validation des données reçues
-    if (!name || !description ) {
+    if (!name || !description) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // Création du Repas

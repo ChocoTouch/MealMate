@@ -1,9 +1,15 @@
 /***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
+const slugify = require("slugify");
 const Category = DB.Category;
 const Ingredient = DB.Ingredient;
-const { RequestError, CategoryError ,RecipeError, IngredientError } = require("../error/customError");
+const {
+  RequestError,
+  CategoryError,
+  RecipeError,
+  IngredientError,
+} = require("../error/customError");
 
 /* Routage de la ressource Category (Ensemble des Categories) */
 exports.getAllCategories = (req, res, next) => {
@@ -37,14 +43,40 @@ exports.getCategory = async (req, res, next) => {
   }
 };
 
+/* Récupération des Ingredients d'une Catégorie */
+exports.getIngredientsInCategory = async (req, res, next) => {
+  let categoryID = parseInt(req.params.id);
+  // Verifie si le champ id est présent + cohérent
+  if (!categoryID) {
+    throw new RequestError("Paramètre(s) manquant(s) .");
+  }
+  try {
+    // Récupération de la Catégorie
+    let category = await Category.findOne({
+      where: { id: categoryID },
+      include: Ingredient,
+    });
+    // Test de l'existance de la Catégorie
+    if (category === null) {
+      throw new CategoryError("Cette Recette n'existe pas .", 0);
+    }
+    let ingredients = category.Ingredients;
+    // Catégorie et Ingredients trouvé
+    return res.json({ data: ingredients });
+  } catch (err) {
+    next(err);
+  }
+};
+
 /* PUT */
 exports.addCategory = async (req, res, next) => {
   try {
-    const { nom } = req.body;
+    const { name } = req.body;
     // Validation des données reçues
-    if (!nom) {
+    if (!name) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
+    req.body.slug = slugify(name);
     // Création de la categorie
     let category = await Category.create(req.body);
 
@@ -61,10 +93,11 @@ exports.addCategory = async (req, res, next) => {
 /* PATCH ID & BODY*/
 exports.updateCategory = async (req, res, next) => {
   try {
+    const { name } = req.body;
     let categoryID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
-    if (!categoryID) {
+    if (!categoryID || !name) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
@@ -78,6 +111,8 @@ exports.updateCategory = async (req, res, next) => {
     if (category === null) {
       throw new CategoryError("Cette category n'existe pas .", 0);
     }
+
+    req.body.slug = slugify(name);
 
     // Mise à jour de la categorie
     await Category.update(req.body, { where: { id: categoryID } });
@@ -158,7 +193,7 @@ exports.addIngredientInCategory = async (req, res, next) => {
     let ingredientID = parseInt(req.params.id);
     const { category_id } = req.body;
     // Validation des données reçues
-    if (!category_id || !ingredientID ) {
+    if (!category_id || !ingredientID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     let category = await Category.findOne({ where: { id: category_id } });

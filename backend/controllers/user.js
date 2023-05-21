@@ -91,7 +91,7 @@ exports.updateUser = async (req, res, next) => {
     }
 
     req.body.slug = slugify(req.body.name);
-    
+
     // Mise à jour de l'user
     await User.update(req.body, { where: { id: userID } });
 

@@ -42,7 +42,7 @@ exports.addCourse = async (req, res, next) => {
   try {
     const { name, description } = req.body;
     // Validation des données reçues
-    if (!name || !description ) {
+    if (!name || !description) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 
@@ -68,7 +68,7 @@ exports.updateCourse = async (req, res, next) => {
     let courseID = parseInt(req.params.id);
 
     // Vérification si le champ id existe et cohérent
-    if (!courseID || !name ) {
+    if (!courseID || !name) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
 

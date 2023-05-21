@@ -1,6 +1,6 @@
 /* Import des modules nécessaires */
 const express = require("express");
-const checkTokenMW = require("../jsonwebtoken/check");
+const check = require("../jsonwebtoken/check");
 const courseController = require("../controllers/course");
 
 /* Récupération du router d'express */
@@ -20,18 +20,26 @@ router.get("/", courseController.getAllCourses);
 router.get("/:id", courseController.getCourse);
 
 /* PUT */
-router.put("", courseController.addCourse); //checkTokenMW
+router.put("", check.checkAdminTokenMW, courseController.addCourse);
 
 /* PATCH ID & BODY*/
-router.patch("/:id", courseController.updateCourse); //checkTokenMW
+router.patch("/:id", check.checkAdminTokenMW, courseController.updateCourse);
 
 /* POST UNTRASH */
-router.post("/untrash/:id", courseController.untrashCourse); //checkTokenMW
+router.post(
+  "/untrash/:id",
+  check.checkAdminTokenMW,
+  courseController.untrashCourse
+);
 
 /* SOFT DELETE TRASH */
-router.delete("/trash/:id", courseController.trashCourse); //checkTokenMW
+router.delete(
+  "/trash/:id",
+  check.checkAdminTokenMW,
+  courseController.trashCourse
+);
 
 /* HARD DELETE ID*/
-router.delete("/:id", courseController.deleteCourse); //checkTokenMW
+router.delete("/:id", check.checkAdminTokenMW, courseController.deleteCourse);
 
 module.exports = router;

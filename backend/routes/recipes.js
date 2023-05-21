@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
 const express = require("express");
-const checkTokenMW = require("../jsonwebtoken/check");
 const recipeController = require("../controllers/recipe");
+const check = require("../jsonwebtoken/check");
 
 /* Récupération du router d'express */
 let router = express.Router();
@@ -16,11 +16,18 @@ router.use((req, res, next) => {
 /* GET */
 router.get("/", recipeController.getAllRecipes);
 
+/* GET */
+router.get("/me", check.checkTokenMW, recipeController.getMyRecipes);
+
 /* GET ID */
 router.get("/:id", recipeController.getRecipe);
 
 /* GET ID */
-router.get("/menus/:id", recipeController.getMenusForRecipe);
+router.get(
+  "/menus/:id",
+  check.checkTokenMW,
+  recipeController.getMenusForRecipe
+);
 
 /* GET */
 router.get("/ingredients/:id", recipeController.getIngredientsInRecipe);
@@ -29,26 +36,36 @@ router.get("/ingredients/:id", recipeController.getIngredientsInRecipe);
 router.get("/diets/:id", recipeController.getDietsInRecipe);
 
 /* PUT */
-router.put("", recipeController.addRecipe); //checkTokenMW
+router.put("", check.checkAdminTokenMW, recipeController.addRecipe);
 
 /* PATCH ID & BODY*/
-router.patch("/:id", recipeController.updateRecipe); //checkTokenMW
+router.patch("/:id", check.checkAdminTokenMW, recipeController.updateRecipe);
 
 /* POST UNTRASH */
-router.post("/untrash/:id", recipeController.untrashRecipe); //checkTokenMW
+router.post(
+  "/untrash/:id",
+  check.checkAdminTokenMW,
+  recipeController.untrashRecipe
+);
 
 /* SOFT DELETE TRASH */
-router.delete("/trash/:id", recipeController.trashRecipe); //checkTokenMW
+router.delete(
+  "/trash/:id",
+  check.checkAdminTokenMW,
+  recipeController.trashRecipe
+);
 
 /* HARD DELETE ID*/
-router.delete("/:id", recipeController.deleteRecipe); //checkTokenMW
+router.delete("/:id", check.checkAdminTokenMW, recipeController.deleteRecipe);
 
 /* PUT */
-router.put("/ingredient/:id", recipeController.addIngredientInRecipe); //checkTokenMW
+router.put(
+  "/ingredient/:id",
+  check.checkTokenMW,
+  recipeController.addIngredientInMyRecipe
+);
 
 /* PUT */
-router.put("/diet/:id", recipeController.addDietInRecipe); //checkTokenMW
-
-
+router.put("/diet/:id", check.checkTokenMW, recipeController.addDietInMyRecipe);
 
 module.exports = router;

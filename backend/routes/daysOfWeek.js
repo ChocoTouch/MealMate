@@ -1,6 +1,6 @@
 /* Import des modules nécessaires */
 const express = require("express");
-const checkTokenMW = require("../jsonwebtoken/check");
+const check = require("../jsonwebtoken/check");
 const dayOfWeekController = require("../controllers/dayOfWeek");
 
 /* Récupération du router d'express */
@@ -20,18 +20,34 @@ router.get("/", dayOfWeekController.getAllDayOfWeeks);
 router.get("/:id", dayOfWeekController.getDayOfWeek);
 
 /* PUT */
-router.put("", dayOfWeekController.addDayOfWeek); //checkTokenMW
+router.put("", check.checkAdminTokenMW, dayOfWeekController.addDayOfWeek);
 
 /* PATCH ID & BODY*/
-router.patch("/:id", dayOfWeekController.updateDayOfWeek); //checkTokenMW
+router.patch(
+  "/:id",
+  check.checkAdminTokenMW,
+  dayOfWeekController.updateDayOfWeek
+);
 
 /* POST UNTRASH */
-router.post("/untrash/:id", dayOfWeekController.untrashDayOfWeek); //checkTokenMW
+router.post(
+  "/untrash/:id",
+  check.checkAdminTokenMW,
+  dayOfWeekController.untrashDayOfWeek
+);
 
 /* SOFT DELETE TRASH */
-router.delete("/trash/:id", dayOfWeekController.trashDayOfWeek); //checkTokenMW
+router.delete(
+  "/trash/:id",
+  check.checkAdminTokenMW,
+  dayOfWeekController.trashDayOfWeek
+);
 
 /* HARD DELETE ID*/
-router.delete("/:id", dayOfWeekController.deleteDayOfWeek); //checkTokenMW
+router.delete(
+  "/:id",
+  check.checkAdminTokenMW,
+  dayOfWeekController.deleteDayOfWeek
+);
 
 module.exports = router;

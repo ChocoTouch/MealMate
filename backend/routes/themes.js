@@ -1,7 +1,7 @@
 /* Import des modules nécessaires */
 const express = require("express");
-const checkTokenMW = require("../jsonwebtoken/check");
 const themeController = require("../controllers/theme");
+const check = require("../jsonwebtoken/check");
 
 /* Récupération du router d'express */
 let router = express.Router();
@@ -20,22 +20,29 @@ router.get("/", themeController.getAllThemes);
 router.get("/:id", themeController.getTheme);
 
 /* PUT */
-router.put("", themeController.addTheme); //checkTokenMW
+router.put("", check.checkAdminTokenMW, themeController.addTheme);
 
 /* PATCH ID & BODY*/
-router.patch("/:id", themeController.updateTheme); //checkTokenMW
+router.patch("/:id", check.checkAdminTokenMW, themeController.updateTheme);
 
 /* POST UNTRASH */
-router.post("/untrash/:id", themeController.untrashTheme); //checkTokenMW
+router.post(
+  "/untrash/:id",
+  check.checkAdminTokenMW,
+  themeController.untrashTheme
+);
 
 /* SOFT DELETE TRASH */
-router.delete("/trash/:id", themeController.trashTheme); //checkTokenMW
+router.delete(
+  "/trash/:id",
+  check.checkAdminTokenMW,
+  themeController.trashTheme
+);
 
 /* HARD DELETE ID*/
-router.delete("/:id", themeController.deleteTheme); //checkTokenMW
+router.delete("/:id", check.checkAdminTokenMW, themeController.deleteTheme);
 
 /* GET ID */
 router.get("/recipes/:id", themeController.getRecipesInTheme);
-
 
 module.exports = router;

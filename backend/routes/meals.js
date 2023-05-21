@@ -1,6 +1,6 @@
 /* Import des modules nécessaires */
 const express = require("express");
-const checkTokenMW = require("../jsonwebtoken/check");
+const check = require("../jsonwebtoken/check");
 const mealController = require("../controllers/meal");
 
 /* Récupération du router d'express */
@@ -20,18 +20,22 @@ router.get("/", mealController.getAllMeals);
 router.get("/:id", mealController.getMeal);
 
 /* PUT */
-router.put("", mealController.addMeal); //checkTokenMW
+router.put("", check.checkAdminTokenMW, mealController.addMeal);
 
 /* PATCH ID & BODY*/
-router.patch("/:id", mealController.updateMeal); //checkTokenMW
+router.patch("/:id", check.checkAdminTokenMW, mealController.updateMeal);
 
 /* POST UNTRASH */
-router.post("/untrash/:id", mealController.untrashMeal); //checkTokenMW
+router.post(
+  "/untrash/:id",
+  check.checkAdminTokenMW,
+  mealController.untrashMeal
+);
 
 /* SOFT DELETE TRASH */
-router.delete("/trash/:id", mealController.trashMeal); //checkTokenMW
+router.delete("/trash/:id", check.checkAdminTokenMW, mealController.trashMeal);
 
 /* HARD DELETE ID*/
-router.delete("/:id", mealController.deleteMeal); //checkTokenMW
+router.delete("/:id", check.checkAdminTokenMW, mealController.deleteMeal);
 
 module.exports = router;

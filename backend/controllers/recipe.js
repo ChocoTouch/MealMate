@@ -23,6 +23,13 @@ exports.getAllRecipes = (req, res, next) => {
     .catch((err) => next());
 };
 
+/* Récupération de l'ensemble des Recettes de l'utilisateur connecté */
+exports.getMyRecipes = (req, res, next) => {
+  //{ where: { user_id: decodedToken.id } }
+  Recipe.findAll({ where: { user_id: req.decodedToken.id } })
+    .then((recipes) => res.json({ data: recipes }))
+    .catch((err) => next());
+};
 /* Récupération d'une Recette */
 exports.getRecipe = async (req, res, next) => {
   let recipeID = parseInt(req.params.id);
@@ -35,7 +42,10 @@ exports.getRecipe = async (req, res, next) => {
     // Récupération de la Recette
     let recipe = await Recipe.findOne({
       where: { id: recipeID },
-      include: [{ model: User, attributes: ["id", "username", "email"] },{ model: Theme, attributes: ["id", "name", "description"] }],
+      include: [
+        { model: User, attributes: ["id", "username", "email"] },
+        { model: Theme, attributes: ["id", "name", "description"] },
+      ],
     });
     // Test de l'existance de la Recette
     if (recipe === null) {
@@ -125,36 +135,23 @@ exports.getIngredientsInRecipe = async (req, res, next) => {
 /* Création d'une Recette */
 exports.addRecipe = async (req, res, next) => {
   try {
-    const {
-      name,
-      user_id,
-      description,
-      instructions,
-      difficulty,
-      theme_id
-    } = req.body;
+    const { name, user_id, description, instructions, difficulty, theme_id } =
+      req.body;
     // Validation des données reçues
-    if (
-      !name ||
-      !user_id ||
-      !description ||
-      !instructions ||
-      !difficulty
-    ) {
+    if (!name || !user_id || !description || !instructions || !difficulty) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // Vérification du thème
-    if(!theme_id){
+    if (!theme_id) {
       req.body.theme_id = 2;
-    }
-    else{
+    } else {
       let theme = await Theme.findOne({ where: { id: theme_id } });
-      if(!theme){
+      if (!theme) {
         throw new RequestError("Ce thème n'existe pas .", 0);
       }
     }
     // Vérification de la difficulté
-    if(difficulty < 1 || difficulty > 5){
+    if (difficulty < 1 || difficulty > 5) {
       throw new RequestError("La difficulté est incohérente .", 0);
     }
     // Récupération de l'utilisateur
@@ -181,23 +178,22 @@ exports.addRecipe = async (req, res, next) => {
 exports.updateRecipe = async (req, res, next) => {
   try {
     let recipeID = parseInt(req.params.id);
-    const {name, theme_id, difficulty} = req.body;
+    const { name, theme_id, difficulty } = req.body;
     // Vérification si le champ id existe et cohérent
     if (!recipeID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // Vérification du thème
-    if(!theme_id){
+    if (!theme_id) {
       req.body.theme_id = 2;
-    }
-    else{
+    } else {
       let theme = await Theme.findOne({ where: { id: theme_id } });
-      if(!theme){
+      if (!theme) {
         throw new RequestError("Ce thème n'existe pas .", 0);
       }
     }
     // Vérification de la difficulté
-    if(difficulty < 1 || difficulty > 5){
+    if (difficulty < 1 || difficulty > 5) {
       throw new RequestError("La difficulté est incohérente .", 0);
     }
     // Recherche de la Recipe
@@ -285,19 +281,24 @@ exports.deleteRecipe = async (req, res, next) => {
 };
 
 /* Ajout d'un Ingrédient dans une Recette */
-exports.addIngredientInRecipe = async (req, res, next) => {
+exports.addIngredientInMyRecipe = async (req, res, next) => {
   try {
     let ingredientID = parseInt(req.params.id);
-    const { recipe_id,  count } = req.body;
+    const { recipe_id, count } = req.body;
     // Validation des données reçues
     if (!recipe_id || !ingredientID || !count) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // user_id: decodedToken.id
-    let recipe = await Recipe.findOne({ where: { id: recipe_id } });
+    let recipe = await Recipe.findOne({
+      where: { id: recipe_id, user_id: req.decodedToken.id },
+    });
     // Vérification de l'existance de la Recette
     if (recipe === null) {
-      throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas .", 0);
+      throw new RecipeError(
+        "Cette recette n'existe pas ou ne vous appartient pas .",
+        0
+      );
     }
     let ingredient = await Ingredient.findOne({ where: { id: ingredientID } });
     // Vérification de l'existance de l'ingredient
@@ -319,19 +320,24 @@ exports.addIngredientInRecipe = async (req, res, next) => {
 };
 
 /* Ajout d'un Régime dans une Recette */
-exports.addDietInRecipe = async (req, res, next) => {
+exports.addDietInMyRecipe = async (req, res, next) => {
   try {
     let dietID = parseInt(req.params.id);
     const { recipe_id } = req.body;
     // Validation des données reçues
-    if (!recipe_id || !dietID ) {
+    if (!recipe_id || !dietID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     // , user_id: decodedToken.id
-    let recipe = await Recipe.findOne({ where: { id: recipe_id } });
+    let recipe = await Recipe.findOne({
+      where: { id: recipe_id, user_id: req.decodedToken.id },
+    });
     // Vérification de l'existance de la Recette
     if (recipe === null) {
-      throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas .", 0);
+      throw new RecipeError(
+        "Cette recette n'existe pas ou ne vous appartient pas .",
+        0
+      );
     }
     let diet = await Diet.findOne({ where: { id: dietID } });
     // Vérification de l'existance du Régime
@@ -349,4 +355,3 @@ exports.addDietInRecipe = async (req, res, next) => {
     next(err);
   }
 };
-

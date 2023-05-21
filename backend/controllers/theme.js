@@ -8,7 +8,7 @@ const { RequestError, ThemeError } = require("../error/customError");
 
 /* Récupération de l'ensemble des Themes */
 exports.getAllThemes = (req, res, next) => {
-    Theme.findAll()
+  Theme.findAll()
     .then((themes) => res.json({ data: themes }))
     .catch((err) => next());
 };
@@ -68,10 +68,10 @@ exports.addTheme = async (req, res, next) => {
   try {
     const { name, description } = req.body;
     // Validation des données reçues
-    if (!name || !description ) {
+    if (!name || !description) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    req.body.slug = slugify(name); 
+    req.body.slug = slugify(name);
     // Création du Theme
     let theme = await Theme.create(req.body);
 

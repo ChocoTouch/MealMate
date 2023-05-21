@@ -2,7 +2,11 @@
 const jwt = require("jsonwebtoken");
 const DB = require("../db.config");
 const User = DB.User;
-const { AuthenticationError,RequestError, UserError } = require("../error/customError");
+const {
+  AuthenticationError,
+  RequestError,
+  UserError,
+} = require("../error/customError");
 
 /* Routage de la ressource auth (POST)*/
 exports.login = async (req, res, next) => {
@@ -39,13 +43,11 @@ exports.login = async (req, res, next) => {
       telephone: user.telephone,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-    }
+    };
     // Génération du token et envoi
-    const token = jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_DURING }
-    );
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_DURING,
+    });
     return res.json({ access_token: token });
   } catch (err) {
     next(err);
@@ -53,25 +55,26 @@ exports.login = async (req, res, next) => {
 };
 
 exports.register = async (req, res, next) => {
-  try{
+  try {
     const { name, firstname, username, email, password } = req.body;
-  
+
     // Validation des données reçues
-    if (!name || !firstname || !username || !email || !password || !roles) {
+    if (!name || !firstname || !username || !email || !password) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-  
+
     // Récupération de l'utilisateur
     let user = await User.findOne({ where: { email: email }, raw: true });
-  
+
     // Test de l'existance de l'utilisateur
     if (user !== null) {
       throw new RequestError(`L'adresse email ${email} est déjà utilisée.`, 1);
     }
-  
+
+    req.body.roles = "ROLE_USER";
     // Création de l'utilisateur
     let userc = await User.create(req.body);
-  
+
     // Réponse de l'utilisateur créé.
     return res.json({
       message: "Votre compte à bien été crée .",

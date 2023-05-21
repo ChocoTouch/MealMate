@@ -185,17 +185,18 @@ exports.deleteMenu = async (req, res, next) => {
   }
 };
 
-
 /* Ajout d'un Repas dans un Menu */
-exports.addMealInMenu = async (req, res, next) => {
+exports.addMealInMyMenu = async (req, res, next) => {
   try {
     let mealID = parseInt(req.params.id);
     const { menu_id, count } = req.body;
     // Validation des données reçues
-    if (!mealID || !menu_id || !count ) {
+    if (!mealID || !menu_id || !count) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
+    let menu = await Menu.findOne({
+      where: { id: menu_id, user_id: req.decodedToken.id },
+    });
     // Vérification de l'existance du Menu
     if (menu === null) {
       throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
@@ -218,15 +219,17 @@ exports.addMealInMenu = async (req, res, next) => {
 };
 
 /* Ajout d'un Jour dans un Menu */
-exports.addDayOfWeekInMenu = async (req, res, next) => {
+exports.addDayOfWeekInMyMenu = async (req, res, next) => {
   try {
     let dayOfWeekID = parseInt(req.params.id);
     const { menu_id, count } = req.body;
     // Validation des données reçues
-    if (!dayOfWeekID || !menu_id || !count ) {
+    if (!dayOfWeekID || !menu_id || !count) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
+    let menu = await Menu.findOne({
+      where: { id: menu_id, user_id: req.decodedToken.id },
+    });
     // Vérification de l'existance du Menu
     if (menu === null) {
       throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
@@ -249,15 +252,17 @@ exports.addDayOfWeekInMenu = async (req, res, next) => {
 };
 
 /* Ajout d'un Plat dans un Menu */
-exports.addCourseInMenu = async (req, res, next) => {
+exports.addCourseInMyMenu = async (req, res, next) => {
   try {
     let courseID = parseInt(req.params.id);
     const { menu_id, count } = req.body;
     // Validation des données reçues
-    if (!courseID || !menu_id || !count ) {
+    if (!courseID || !menu_id || !count) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
+    let menu = await Menu.findOne({
+      where: { id: menu_id, user_id: req.decodedToken.id },
+    });
     // Vérification de l'existance du Menu
     if (menu === null) {
       throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
@@ -280,14 +285,16 @@ exports.addCourseInMenu = async (req, res, next) => {
 };
 
 /* Ajout d'une Recette dans un Menu */
-exports.addRecipeInMenu = async (req, res, next) => {
+exports.addRecipeInMyMenu = async (req, res, next) => {
   try {
     const { recipe_id, menu_id, count } = req.body;
     // Validation des données reçues
-    if (!recipe_id || !menu_id || !count ) {
+    if (!recipe_id || !menu_id || !count) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
-    let menu = await Menu.findOne({ where: { id: menu_id, user_id: decodedToken.id } });
+    let menu = await Menu.findOne({
+      where: { id: menu_id, user_id: req.decodedToken.id },
+    });
     // Vérification de l'existance du menu
     if (menu === null) {
       throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);

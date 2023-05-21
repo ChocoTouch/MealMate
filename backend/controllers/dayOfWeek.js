@@ -42,11 +42,11 @@ exports.addDayOfWeek = async (req, res, next) => {
   try {
     const { name } = req.body;
     // Validation des données reçues
-    if (!name ) {
+    if (!name) {
       throw new RequestError("Paramètre(s) manquant(s) .");
     }
     req.body.slug = slugify(name);
-    
+
     // Création du Jour
     let dayOfWeek = await DayOfWeek.create(req.body);
 
@@ -83,7 +83,7 @@ exports.updateDayOfWeek = async (req, res, next) => {
     }
 
     req.body.slug = slugify(name);
-    
+
     // Mise à jour du Jour
     await DayOfWeek.update(req.body, { where: { id: dayOfWeekID } });
 

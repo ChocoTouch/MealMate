@@ -14,7 +14,7 @@ const extractBearer = (authorization) => {
 };
 
 /* Vérification de la présence du token */
-const checkTokenMW = (req, res, next) => {
+exports.checkTokenMW = (req, res, next) => {
   const token =
     req.headers.authorization && extractBearer(req.headers.authorization);
   if (!token) {
@@ -30,11 +30,35 @@ const checkTokenMW = (req, res, next) => {
         .status(500)
         .json({ message: "Token d'authentification invalide ." });
     }
-    req.loggedUser = {
-      id: decodedToken.id
-    };
+    req.decodedToken = decodedToken;
     next(err);
   });
 };
 
-module.exports = checkTokenMW;
+/* Vérification de la présence du token */
+exports.checkAdminTokenMW = (req, res, next) => {
+  const token =
+    req.headers.authorization && extractBearer(req.headers.authorization);
+
+  if (!token) {
+    return res
+      .status(401)
+      .json({ message: "Pas de Token d'authentification ." });
+  }
+
+  // Vérification de la validité du token
+  jwt.verify(token, process.env.JWT_SECRET, (err, decodedAdminToken) => {
+    if (err) {
+      return res
+        .status(401)
+        .json({ message: "Token d'authentification invalide ." });
+    }
+    if (decodedToken.roles !== "ROLE_ADMIN") {
+      return res
+        .status(401)
+        .json({ message: "Vous n'êtes pas un administrateur ." });
+    }
+    req.decodedAdminToken = decodedAdminToken;
+    next(err);
+  });
+};
