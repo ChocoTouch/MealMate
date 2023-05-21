@@ -29,12 +29,6 @@ router.get(
   recipeController.getMenusForRecipe
 );
 
-/* GET */
-router.get("/ingredients/:id", recipeController.getIngredientsInRecipe);
-
-/* GET */
-router.get("/diets/:id", recipeController.getDietsInRecipe);
-
 /* PUT */
 router.put("", check.checkAdminTokenMW, recipeController.addRecipe);
 

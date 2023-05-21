@@ -1,4 +1,3 @@
-/***** DONE ******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const Meal = DB.Meal;

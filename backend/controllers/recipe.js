@@ -1,4 +1,3 @@
-/***** DONE , just missing comments******/
 /* Import des modules nécessaires */
 const DB = require("../db.config");
 const slugify = require("slugify");
@@ -94,55 +93,6 @@ exports.getMenusForRecipe = async (req, res, next) => {
     let menus = recipe.Menus;
     // Recipe et Menus trouvé
     return res.json({ data: menus });
-  } catch (err) {
-    next(err);
-  }
-};
-/* Récupération des Régimes d'une Recette */
-exports.getDietsInRecipe = async (req, res, next) => {
-  let recipeID = parseInt(req.params.id);
-  // Verifie si le champ id est présent + cohérent
-  if (!recipeID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
-  try {
-    // Récupération de la Recette
-    let recipe = await Recipe.findOne({
-      where: { id: recipeID },
-      include: Diet,
-    });
-    // Test de l'existance de la Recette
-    if (recipe === null) {
-      throw new RecipeError("Cette Recette n'existe pas .", 0);
-    }
-    let diets = recipe.Diets;
-    // Recette et Régimes trouvé
-    return res.json({ data: diets });
-  } catch (err) {
-    next(err);
-  }
-};
-
-/* Récupération des Ingredients d'une Recette */
-exports.getIngredientsInRecipe = async (req, res, next) => {
-  let recipeID = parseInt(req.params.id);
-  // Verifie si le champ id est présent + cohérent
-  if (!recipeID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
-  try {
-    // Récupération de la Recette
-    let recipe = await Recipe.findOne({
-      where: { id: recipeID },
-      include: Ingredient,
-    });
-    // Test de l'existance de la Recette
-    if (recipe === null) {
-      throw new RecipeError("Cette Recette n'existe pas .", 0);
-    }
-    let ingredients = recipe.Ingredients;
-    // Recette et Ingredients trouvé
-    return res.json({ data: ingredients });
   } catch (err) {
     next(err);
   }
