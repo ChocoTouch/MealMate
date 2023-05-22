@@ -36,9 +36,9 @@ exports.getComment = async (req, res, next) => {
 exports.addMyCommentInMenu = async (req, res, next) => {
 	try {
 		let menuID = parseInt(req.params.id);
-		const { texte } = req.body;
+		const { message } = req.body;
 
-		if (!texte || !menuID) {
+		if (!message || !menuID) {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
@@ -60,9 +60,9 @@ exports.addMyCommentInMenu = async (req, res, next) => {
 exports.addMyCommentInRecipe = async (req, res, next) => {
 	try {
 		let recipeID = parseInt(req.params.id);
-		const { texte } = req.body;
+		const { message } = req.body;
 
-		if (!texte || !recipeID) {
+		if (!message || !recipeID) {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 

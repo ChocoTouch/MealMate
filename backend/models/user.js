@@ -1,5 +1,5 @@
 /* Import des modules nécessaires */
-const { DataTypes, UniqueConstraintError } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 
 /* Définition du modèle */

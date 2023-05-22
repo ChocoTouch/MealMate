@@ -34,9 +34,6 @@ db.Meal_menu = require("./models/meal_menu")(sequelize);
 db.Recipe_ingredient = require("./models/recipe_ingredient")(sequelize);
 db.Menu_recipe = require("./models/menu_recipe")(sequelize);
 db.Ingredient_category = require("./models/ingredient_category")(sequelize);
-db.Liker_menu = require("./models/like_menu")(sequelize);
-db.Liker_recipe = require("./models/like_recipe")(sequelize);
-db.Liker_comment = require("./models/like_comment")(sequelize);
 
 /* ManyToOne Theme Recipe */
 db.Theme.hasMany(db.Recipe, { foreignKey: "theme_id" });
@@ -53,30 +50,6 @@ db.Menu.belongsTo(db.User, { foreignKey: "user_id" });
 /* ManyToOne User Comment */
 db.User.hasMany(db.Comment, { foreignKey: "user_id" });
 db.Comment.belongsTo(db.User, { foreignKey: "user_id" });
-
-/* Super ManyToMany User Like Recipe */
-// db.User.belongsToMany(db.Recipe, { through: db.Liker_recipe });
-// db.Recipe.belongsToMany(db.User, { through: db.Liker_recipe });
-// db.Liker_recipe.belongsTo(db.User);
-// db.Liker_recipe.belongsTo(db.Recipe);
-// db.User.hasMany(db.Liker_recipe);
-// db.Recipe.hasMany(db.Liker_recipe);
-
-/* Super ManyToMany User Like Menu */
-// db.User.belongsToMany(db.Menu, { through: db.Liker_menu });
-// db.Menu.belongsToMany(db.User, { through: db.Liker_menu });
-// db.Liker_menu.belongsTo(db.User);
-// db.Liker_menu.belongsTo(db.Menu);
-// db.User.hasMany(db.Liker_menu);
-// db.Menu.hasMany(db.Liker_menu);
-
-/* ManyToOne User Like Comment */
-// db.User.belongsToMany(db.Comment, { through: db.Liker_comment });
-// db.Comment.belongsToMany(db.User, { through: db.Liker_comment });
-// db.Liker_comment.belongsTo(db.User);
-// db.Liker_comment.belongsTo(db.Comment);
-// db.User.hasMany(db.Liker_comment);
-// db.Comment.hasMany(db.Liker_comment);
 
 /* Super ManyToMany Recipe Ingredient */
 db.Recipe.belongsToMany(db.Ingredient, { through: db.Recipe_ingredient });

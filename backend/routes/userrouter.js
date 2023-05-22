@@ -1,15 +1,15 @@
 const express = require("express");
-const user_router = require("./users");
-const recipes_router = require("./recipes");
-const menus_router = require("./menus");
-const categories_router = require("./categories");
-const comments_router = require("./comments");
-const courses_router = require("./courses");
-const daysOfWeek_router = require("./daysOfWeek");
-const diets_router = require("./diets");
-const ingredients_router = require("./ingredients");
-const meals_router = require("./meals");
-const themes_router = require("./themes");
+const user_router = require("./user/users");
+const recipes_router = require("./user/recipes");
+const menus_router = require("./user/menus");
+const categories_router = require("./user/categories");
+const comments_router = require("./user/comments");
+const courses_router = require("./user/courses");
+const daysOfWeek_router = require("./user/daysOfWeek");
+const diets_router = require("./user/diets");
+const ingredients_router = require("./user/ingredients");
+const meals_router = require("./user/meals");
+const themes_router = require("./user/themes");
 
 let router = express.Router();
 

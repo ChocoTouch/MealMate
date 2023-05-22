@@ -16,9 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 
 /* Import des modules de routage */
 const auth_router = require("./routes/auth")
-const admin_router = require("./routes/admin/adminrouter");
-const public_router = require("./routes/public/publicrouter");
-const user_router = require("./routes/user/userrouter");
+const admin_router = require("./routes/adminrouter");
+const public_router = require("./routes/publicrouter");
+const user_router = require("./routes/userrouter");
 
 /* Mise en place du routage */
 app.get("/", (req, res) =>
@@ -28,10 +28,10 @@ app.use("/auth", auth_router);
 app.use("/public", public_router);
 app.use("/user", check.checkTokenMW, user_router);
 app.use("/admin", check.checkAdminTokenMW, admin_router); 
-app.get("*", (req, res) => res.status(501).send("Ressource non existant"));
+app.get("*", (req, res) => res.status(501).send("Ressource non existant, il n'y a rien ici ."));
 app.use(errorHandler);
 
-/* Demarrage serveur avec test DB*/
+/* Demarrage serveur avec test DB */
 DB.sequelize
   .authenticate()
   .then(() => console.log("Database connection OK"))
