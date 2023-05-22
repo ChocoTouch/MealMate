@@ -16,12 +16,6 @@ router.use((req, res, next) => {
 router.get("/", userController.getAllUsers);
 
 /* GET ID */
-router.get("/:id", userController.getUser);
-
-/* GET ID*/
-router.get("/recipes/:id", userController.getRecipesForUser);
-
-/* GET ID*/
-router.get("/menus/:id", userController.getMenusForUser);
+router.get("/:username", userController.getUser);
 
 module.exports = router;

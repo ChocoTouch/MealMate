@@ -43,6 +43,9 @@ router.delete("/:id", recipeController.deleteRecipe);
 router.put("/ingredient/:id", recipeController.addIngredientInMyRecipe);
 
 /* PUT */
+router.delete("/ingredient/:id", recipeController.deleteIngredientInMyRecipe);
+
+/* PUT */
 router.put("/diet/:id", recipeController.addDietInMyRecipe);
 
 module.exports = router;

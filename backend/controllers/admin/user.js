@@ -24,7 +24,10 @@ exports.getUser = async (req, res, next) => {
 
   try {
     // Récupération de l'utilisateur
-    let user = await User.findOne({ where: { id: userID }, raw: true });
+    let user = await User.findOne({
+      where: { id: userID },
+      include: [{ model: Recipe }, { model: Menu }],
+    });
     // Test de l'existance de l'utilisateur
     if (user === null) {
       throw new UserError("Cet utilisateur n'existe pas .", 0);
@@ -159,46 +162,6 @@ exports.deleteUser = async (req, res, next) => {
 
     // Réponse du hard delete
     return res.status(204).json({});
-  } catch (err) {
-    next(err);
-  }
-};
-
-/* Récupération des Recipes d'un Utilisateur */
-exports.getRecipesForUser = async (req, res, next) => {
-  let userID = parseInt(req.params.id);
-
-  try {
-    // Récupération de l'utilisateur
-    let recipes = await Recipe.findAll({
-      where: { user_id: userID },
-    });
-    // Test de l'existance de l'utilisateur
-    if (recipes === null) {
-      throw new UserError("Cet utilisateur n'existe pas .", 0);
-    }
-    // Utilisateur trouvé
-    return res.json({ data: recipes });
-  } catch (err) {
-    next(err);
-  }
-};
-
-/* Récupération des menus d'un Utilisateur */
-exports.getMenusForUser = async (req, res, next) => {
-  let userID = parseInt(req.params.id);
-
-  try {
-    // Récupération de l'utilisateur
-    let menus = await Menu.findAll({
-      where: { user_id: userID },
-    });
-    // Test de l'existance de l'utilisateur
-    if (menus === null) {
-      throw new UserError("Cet utilisateur n'existe pas .", 0);
-    }
-    // Utilisateur trouvé
-    return res.json({ data: menus });
   } catch (err) {
     next(err);
   }

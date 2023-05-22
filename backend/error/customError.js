@@ -76,6 +76,12 @@ class RecipeError extends MainError {}
 
 class CommentError extends MainError {}
 
+class DayOfWeekError extends MainError {}
+
+class MealError extends MainError {}
+
+class ThemeError extends MainError {}
+
 class CategoryError extends MainError {}
 
 class IngredientError extends MainError {}
@@ -95,4 +101,7 @@ module.exports = {
   MenuError,
   RequestError,
   CourseError,
+  DayOfWeekError,
+  MealError,
+  ThemeError
 };

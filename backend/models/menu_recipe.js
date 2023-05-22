@@ -16,7 +16,6 @@ module.exports = (sequelize) => {
         allowNull: false,
       }
     },
-    { paranoid: true } // softDelete
   );
   return Menu_recipe;
 };

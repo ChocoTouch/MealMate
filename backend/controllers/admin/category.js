@@ -29,7 +29,7 @@ exports.getCategory = async (req, res, next) => {
     // Récupération de la categorie
     let category = await Category.findOne({
       where: { id: categoryID },
-      raw: true,
+      include: Ingredient,
     });
     // Test de l'existance de la categorie
     if (category === null) {

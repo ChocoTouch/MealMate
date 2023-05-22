@@ -15,6 +15,10 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER(10),
         allowNull: false,
       },
+      user_username: {
+        type: DataTypes.STRING(30),
+        allowNull: false,
+      },
       name: {
         type: DataTypes.STRING(30),
         allowNull: false,

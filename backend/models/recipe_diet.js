@@ -12,7 +12,6 @@ module.exports = (sequelize) => {
         autoIncrement: true,
       }
     },
-    { paranoid: true } // softDelete
   );
   return Recipe_diet;
 };

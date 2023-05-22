@@ -39,7 +39,4 @@ router.delete(
 /* HARD DELETE ID*/
 router.delete("/:id", themeController.deleteTheme);
 
-/* GET ID */
-router.get("/recipes/:id", themeController.getRecipesForTheme);
-
 module.exports = router;

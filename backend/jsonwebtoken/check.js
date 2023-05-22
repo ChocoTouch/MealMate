@@ -47,18 +47,18 @@ exports.checkAdminTokenMW = (req, res, next) => {
   }
 
   // Vérification de la validité du token
-  jwt.verify(token, process.env.JWT_SECRET, (err, decodedAdminToken) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
     if (err) {
       return res
         .status(401)
         .json({ message: "Token d'authentification invalide ." });
     }
-    if (decodedAdminToken.roles !== "ROLE_ADMIN") {
+    if (decodedToken.roles !== "ROLE_ADMIN") {
       return res
         .status(401)
         .json({ message: "Vous n'êtes pas un administrateur ." });
     }
-    req.decodedAdminToken = decodedAdminToken;
+    req.decodedToken = decodedToken;
     next(err);
   });
 };

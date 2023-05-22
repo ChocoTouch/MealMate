@@ -1,4 +1,4 @@
-/***************** Import des modules nécessaires *****************/
+/* Import des modules nécessaires */
 const DB = require("../../db.config");
 const Menu = DB.Menu;
 const Recipe = DB.Recipe;
@@ -8,7 +8,7 @@ const {
   MenuError,
 } = require("../../error/customError");
 
-/***************** Récupération de l'ensemble des Menus *****************/
+/* Récupération de l'ensemble des Menus */
 exports.getAllMenus = (req, res, next) => {
   // Recherche des menus
   Menu.findAll()
@@ -16,10 +16,11 @@ exports.getAllMenus = (req, res, next) => {
     .catch((err) => next());
 };
 
-/****************** Récupération d'un Menu ******************/
+/* Récupération d'un Menu */
 exports.getMenu = async (req, res, next) => {
   try {
     let menuID = parseInt(req.params.id);
+    
     // Vérification de l'existance du champ
     if (!menuID) {
       throw new RequestError("Paramètre(s) manquant(s) .");
@@ -33,21 +34,21 @@ exports.getMenu = async (req, res, next) => {
     if (menu === null) {
       throw new MenuError("Ce menu n'existe pas .", 0);
     }
-    // Réponse du Menu Trouvé
+    // Réponse du Menu trouvé
     return res.json({ data: menu });
   } catch (err) {
     next(err);
   }
 };
 
-/****************** Récupération des Recettes d'un Menu ******************/
+/* Récupération des Recettes d'un Menu */
 exports.getRecipesInMenu = async (req, res, next) => {
-  let menuID = parseInt(req.params.id);
-  // Verification de l'existance du champ
-  if (!menuID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
   try {
+    let menuID = parseInt(req.params.id);
+    // Vérification de l'existance du champ
+    if (!menuID) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
     // Récupération du menu
     let menu = await Menu.findOne({ where: { id: menuID }, include: Recipe });
     // Vérification de l'existance du menu

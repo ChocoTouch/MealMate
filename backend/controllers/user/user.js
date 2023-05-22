@@ -14,63 +14,64 @@ exports.getAllUsers = (req, res, next) => {
 
 /* Récupération d'un Utilisateur */
 exports.getUser = async (req, res, next) => {
-  let userID = parseInt(req.params.id);
-
-  // Verifie si le champ id est présent + cohérent
-  if (!userID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
-
   try {
+    let userID = parseInt(req.params.id);
+    // Vérification de l'existance du champ
+    if (!userID) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
+    }
     // Récupération de l'utilisateur
     let user = await User.findOne({ where: { id: userID }, raw: true });
-    // Test de l'existance de l'utilisateur
+    // Vérification de l'existance de l'utilisateur
     if (user === null) {
       throw new UserError("Cet utilisateur n'existe pas .", 0);
     }
-    // Utilisateur trouvé
+    // Réponse de l'Utilisateur trouvé
     return res.json({ data: user });
   } catch (err) {
     next(err);
   }
 };
 
-/* Récupération des Recipes d'un Utilisateur */
+/* Récupération des Recettes d'un Utilisateur */
 exports.getRecipesForUser = async (req, res, next) => {
+  try {
     let userID = parseInt(req.params.id);
-  
-    try {
-      // Récupération de l'utilisateur
-      let recipes = await Recipe.findAll({
-        where: { user_id: userID },
-      });
-      // Test de l'existance de l'utilisateur
-      if (recipes === null) {
-        throw new UserError("Cet utilisateur n'existe pas .", 0);
-      }
-      // Utilisateur trouvé
-      return res.json({ data: recipes });
-    } catch (err) {
-      next(err);
+    // Vérification de l'existance du champ
+    if (!userID) {
+      throw new RequestError("Paramètre(s) manquant(s) .");
     }
-  };
-  
-  /* Récupération des menus d'un Utilisateur */
-  exports.getMenusForUser = async (req, res, next) => {
-    let userID = parseInt(req.params.id);
-  
-    try {
-      // Récupération de l'utilisateur
-      let menus = await Menu.findAll({
-        where: { user_id: userID },
-      });
-      // Test de l'existance de l'utilisateur
-      if (menus === null) {
-        throw new UserError("Cet utilisateur n'existe pas .", 0);
-      }
-      // Utilisateur trouvé
-      return res.json({ data: menus });
-    } catch (err) {
-      next(err);
+    // Récupération de l'utilisateur
+    let recipes = await Recipe.findAll({
+      where: { user_id: userID },
+    });
+    // Vérification de l'existance de l'utilisateur
+    if (recipes === null) {
+      throw new UserError("Cet utilisateur n'existe pas .", 0);
     }
-  };
+    // Réponse des Recettes et de l'Utilisateur trouvé
+    return res.json({ data: recipes });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* Récupération des Menus d'un Utilisateur */
+exports.getMenusForUser = async (req, res, next) => {
+  let userID = parseInt(req.params.id);
+
+  try {
+    // Récupération de l'Utilisateur
+    let menus = await Menu.findAll({
+      where: { user_id: userID },
+    });
+    // Vérification de l'existance de l'Utilisateur
+    if (menus === null) {
+      throw new UserError("Cet utilisateur n'existe pas .", 0);
+    }
+    // Réponse de l'Utilisateur trouvé
+    return res.json({ data: menus });
+  } catch (err) {
+    next(err);
+  }
+};
