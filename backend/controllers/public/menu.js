@@ -6,7 +6,7 @@ const User = DB.User;
 const {
   RequestError,
   MenuError,
-} = require("../error/customError");
+} = require("../../error/customError");
 
 /***************** Récupération de l'ensemble des Menus *****************/
 exports.getAllMenus = (req, res, next) => {

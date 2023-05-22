@@ -34,3 +34,28 @@ exports.getCategory = async (req, res, next) => {
     next(err);
   }
 };
+
+/* Récupération des Ingredients d'une Catégorie */
+exports.getIngredientsInCategory = async (req, res, next) => {
+  let categoryID = parseInt(req.params.id);
+  // Verifie si le champ id est présent + cohérent
+  if (!categoryID) {
+    throw new RequestError("Paramètre(s) manquant(s) .");
+  }
+  try {
+    // Récupération de la Catégorie
+    let category = await Category.findOne({
+      where: { id: categoryID },
+      include: Ingredient,
+    });
+    // Test de l'existance de la Catégorie
+    if (category === null) {
+      throw new CategoryError("Cette Recette n'existe pas .", 0);
+    }
+    let ingredients = category.Ingredients;
+    // Catégorie et Ingredients trouvé
+    return res.json({ data: ingredients });
+  } catch (err) {
+    next(err);
+  }
+};

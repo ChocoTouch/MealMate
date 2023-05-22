@@ -16,9 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 
 /* Import des modules de routage */
 const auth_router = require("./routes/auth")
-const admin_router = require("./routes/adminrouter");
-const public_router = require("./routes/publicrouter");
-const user_router = require("./routes/userrouter");
+const admin_router = require("./routes/admin/adminrouter");
+const public_router = require("./routes/public/publicrouter");
+const user_router = require("./routes/user/userrouter");
 
 /* Mise en place du routage */
 app.get("/", (req, res) =>

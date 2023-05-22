@@ -5,7 +5,6 @@ const User = DB.User;
 const {
   AuthenticationError,
   RequestError,
-  UserError,
 } = require("../error/customError");
 
 /* Routage de la ressource auth (POST)*/
