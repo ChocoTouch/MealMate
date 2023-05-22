@@ -10,10 +10,6 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER(10),
         primaryKey: true,
         autoIncrement: true,
-      },
-      count: {
-        type: DataTypes.INTEGER(4),
-        allowNull: false,
       }
     },
   );

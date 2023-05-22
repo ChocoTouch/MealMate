@@ -1,4 +1,3 @@
-/* Import des modules nécessaires */
 const DB = require("../../db.config");
 const slugify = require("slugify");
 const User = DB.User;
@@ -6,163 +5,167 @@ const Recipe = DB.Recipe;
 const Menu = DB.Menu;
 const { RequestError, UserError } = require("../../error/customError");
 
-/* Récupération de l'ensemble des Utilisateurs */
 exports.getAllUsers = (req, res, next) => {
-  User.findAll()
-    .then((users) => res.json({ data: users }))
-    .catch((err) => next());
+	User.findAll()
+		.then((users) => res.json({ data: users }))
+		.catch((err) => next(err));
 };
 
-/* Récupération d'un Utilisateur */
 exports.getUser = async (req, res, next) => {
-  let userID = parseInt(req.params.id);
+	try {
+		let userID = parseInt(req.params.id);
 
-  // Verifie si le champ id est présent + cohérent
-  if (!userID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
+		if (!userID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-  try {
-    // Récupération de l'utilisateur
-    let user = await User.findOne({
-      where: { id: userID },
-      include: [{ model: Recipe }, { model: Menu }],
-    });
-    // Test de l'existance de l'utilisateur
-    if (user === null) {
-      throw new UserError("Cet utilisateur n'existe pas .", 0);
-    }
-    // Utilisateur trouvé
-    return res.json({ data: user });
-  } catch (err) {
-    next(err);
-  }
+		let user = await User.findOne({
+			where: { id: userID },
+			include: [{ model: Recipe }, { model: Menu }],
+		});
+
+		if (user === null) {
+			throw new UserError("Cet utilisateur n'existe pas .", 0);
+		}
+
+		return res.json({ data: user });
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* Création d'un Utilisateur */
 exports.addUser = async (req, res, next) => {
-  try {
-    const { name, firstname, username, email, password, roles } = req.body;
+	try {
+		const { name, firstname, username, email, password, roles } = req.body;
 
-    // Validation des données reçues
-    if (!name || !firstname || !username || !email || !password || !roles) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    req.body.slug = slugify(username);
-    // Récupération de l'utilisateur
-    let user = await User.findOne({ where: { email: email }, raw: true });
+		if (!name || !firstname || !username || !email || !password || !roles) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
+		req.body.slug = slugify(username);
 
-    // Test de l'existance de l'utilisateur
-    if (user !== null) {
-      throw new RequestError(`L'adresse email ${email} est déjà utilisée.`, 1);
-    }
+		let user = await User.findOne({ where: { email: email }, raw: true });
 
-    // Hashage du mot de passe -- MOVED
-    // let hash = await bcrypt.hash(Password, parseInt(process.env.BCRYPT_SALT_ROUND))
-    // req.body.Password = hash;
+		if (user !== null) {
+			throw new RequestError(`L'adresse email ${email} est déjà utilisée.`, 1);
+		}
 
-    // Création de l'utilisateur
-    let userc = await User.create(req.body);
+		user = await User.findOne({ where: { username: username }, raw: true });
 
-    // Réponse de l'utilisateur créé.
-    return res.json({
-      message: "L'utilisateur à bien été crée .",
-      data: userc,
-    });
-  } catch (err) {
-    next(err);
-  }
+		if (user !== null) {
+			throw new RequestError(`Le pseudo ${username} est déjà utilisé.`, 1);
+		}
+		// A tester
+		if (roles !== "ROLE_USER" || roles !== "ROLE_ADMIN") {
+			throw new RequestError(`Le format du rôle est incohérent.`, 1);
+		}
+		let userc = await User.create(req.body);
+
+		return res.json({
+			message: "L'utilisateur à bien été créé .",
+			data: userc,
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* Modification d'un Utilisateur */
 exports.updateUser = async (req, res, next) => {
-  try {
-    let userID = parseInt(req.params.id);
+	try {
+		let userID = parseInt(req.params.id);
+		const { username, email, roles } = req.body;
 
-    // Vérification si le champ id existe et cohérent
-    if (!userID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+		if (username) {
+			let user = await User.findOne({ where: { username: username }, raw: true });
+			if (user === null) {
+				throw new UserError(`Le pseudo ${username} est déjà utilisé .`, 0);
+			}
+		}
 
-    // Recherche de l'utilisateur
-    let user = await User.findOne({ where: { id: userID }, raw: true });
+		if (email) {
+			let user = await User.findOne({ where: { email: email }, raw: true });
+			if (user === null) {
+				throw new UserError(`L'adresse e-mail ${email} est déjà utilisée .`, 0);
+			}
+		}
 
-    // Vérification de l'existance de l'utilisateur
-    if (user === null) {
-      throw new UserError("Cet utilisateur n'existe pas .", 0);
-    }
+		if (!userID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    req.body.slug = slugify(req.body.name);
+		let user = await User.findOne({ where: { id: userID }, raw: true });
 
-    // Mise à jour de l'user
-    await User.update(req.body, { where: { id: userID } });
+		if (user === null) {
+			throw new UserError("Cet utilisateur n'existe pas .", 0);
+		}
+		// A tester
+		if (roles !== "ROLE_USER" || roles !== "ROLE_ADMIN") {
+			throw new RequestError(`Le format du rôle est incohérent.`, 1);
+		}
 
-    // Réponse de la mise à jour
-    return res.json({
-      message: "L'utilisateur à bien été modifié .",
-      data: user,
-    });
-  } catch (err) {
-    next(err);
-  }
+		req.body.slug = slugify(req.body.name);
+
+		let useru = await User.update(req.body, { where: { id: userID } });
+
+		return res.json({
+			message: "L'utilisateur à bien été modifié .",
+			data: useru,
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* Annulation de suppression d'un Utilisateur (Soft Delete) */
 exports.untrashUser = async (req, res, next) => {
-  try {
-    let userID = parseInt(req.params.id);
+	try {
+		let userID = parseInt(req.params.id);
 
-    // Vérification si champ id présent et cohérent
-    if (!userID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+		if (!userID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    // Restauration de l'utilisateur
-    await User.restore({ where: { id: userID } });
+		let user = await User.restore({ where: { id: userID } });
 
-    // Réponse de la Restauration
-    return res.status(204).json({});
-  } catch (err) {
-    next(err);
-  }
+		return res.status(204).json({
+			message: "L'utilisateur a bien été restauré .",
+			data: user,
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* Suppression d'un Utilisateur (Soft Delete) */
 exports.trashUser = async (req, res, next) => {
-  try {
-    let userID = parseInt(req.params.id);
+	try {
+		let userID = parseInt(req.params.id);
 
-    // Vérification si le champ id existe et cohérent
-    if (!userID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+		if (!userID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    // Suppression de l'utilisateur (soft delete without force: true)
-    await User.destroy({ where: { id: userID } });
+		await User.destroy({ where: { id: userID } });
 
-    // Réponse du soft delete
-    return res.status(204).json({});
-  } catch (err) {
-    next(err);
-  }
+		return res.status(204).json({
+			message: "L'utilisateur a bien été mis dans la corbeille",
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* Suppression d'un Utilisateur (Hard Delete) */
 exports.deleteUser = async (req, res, next) => {
-  try {
-    let userID = parseInt(req.params.id);
+	try {
+		let userID = parseInt(req.params.id);
 
-    // Vérification si le champ id existe et cohérent
-    if (!userID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+		if (!userID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    // Suppression de l'utilisateur (hard delete with force: true)
-    await User.destroy({ where: { id: userID }, force: true });
+		await User.destroy({ where: { id: userID }, force: true });
 
-    // Réponse du hard delete
-    return res.status(204).json({});
-  } catch (err) {
-    next(err);
-  }
+		return res.status(204).json({
+			message: "L'utilisateur a bien été définitivement supprimé .",
+		});
+	} catch (err) {
+		next(err);
+	}
 };

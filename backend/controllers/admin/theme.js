@@ -1,155 +1,153 @@
-/* Import des modules nécessaires */
 const DB = require("../../db.config");
 const slugify = require("slugify");
 const Theme = DB.Theme;
 const Recipe = DB.Recipe;
 const { RequestError, ThemeError } = require("../../error/customError");
 
-/* Récupération de l'ensemble des Themes */
 exports.getAllThemes = (req, res, next) => {
-  Theme.findAll()
-    .then((themes) => res.json({ data: themes }))
-    .catch((err) => next());
+	Theme.findAll()
+		.then((themes) => res.json({ data: themes }))
+		.catch((err) => next(err));
 };
 
-/* Récupération d'un Theme */
 exports.getTheme = async (req, res, next) => {
-  let themeID = parseInt(req.params.id);
-  // Verifie si le champ id est présent + cohérent
-  if (!themeID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
+	try {
+		let themeID = parseInt(req.params.id);
 
-  try {
-    // Récupération du Theme
-    let theme = await Theme.findOne({
-      where: { id: themeID },
-      include: Recipe
-    });
-    // Test de l'existance du Theme
-    if (theme === null) {
-      throw new ThemeError("Ce Theme n'existe pas .", 0);
-    }
-    // Theme trouvé
-    return res.json({ data: theme });
-  } catch (err) {
-    next(err);
-  }
+		if (!themeID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
+
+		let theme = await Theme.findOne({
+			where: { id: themeID },
+			include: Recipe,
+		});
+
+		if (theme === null) {
+			throw new ThemeError("Ce Theme n'existe pas .", 0);
+		}
+
+		return res.json({ data: theme });
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* Création d'un Theme */
 exports.addTheme = async (req, res, next) => {
-  try {
-    const { name, description } = req.body;
-    // Validation des données reçues
-    if (!name || !description) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    req.body.slug = slugify(name);
-    // Création du Theme
-    let theme = await Theme.create(req.body);
+	try {
+		const { name, description } = req.body;
 
-    // Réponse du Theme créé.
-    return res.json({
-      message: "Le Theme a bien été créé .",
-      data: theme,
-    });
-  } catch (err) {
-    next(err);
-  }
+		if (!name || !description) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
+
+		let theme = await Theme.findOne({ where: { name: name } });
+
+		if (theme !== null) {
+			throw new RequestError(`Le Thème ${name} existe déjà .`);
+		}
+
+		req.body.slug = slugify(name);
+
+		let themec = await Theme.create(req.body);
+
+		return res.json({
+			message: "Le Theme a bien été créé .",
+			data: themec,
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* Modification d'un Theme */
 exports.updateTheme = async (req, res, next) => {
-  try {
-    let themeID = parseInt(req.params.id);
-    const name = req.body.name;
-    // Vérification si le champ id existe et cohérent
-    if (!themeID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+	try {
+		let themeID = parseInt(req.params.id);
+		const name = req.body.name;
 
-    // Recherche du Theme
-    let theme = await Theme.findOne({
-      where: { id: themeID },
-      raw: true,
-    });
+		if (!themeID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    // Vérification de l'existance du Theme
-    if (theme === null) {
-      throw new ThemeError("Ce Theme n'existe pas .", 0);
-    }
-    req.body.slug = slugify(name);
+		let theme = await Theme.findOne({
+			where: { id: themeID },
+			raw: true,
+		});
 
-    // Mise à jour du Theme
-    await Theme.update(req.body, { where: { id: themeID } });
+		if (theme === null) {
+			throw new ThemeError("Ce Theme n'existe pas .", 0);
+		}
 
-    // Réponse de la mise à jour
-    return res.json({
-      message: "Le Theme à bien été modifiée .",
-      data: theme,
-    });
-  } catch (err) {
-    next(err);
-  }
+		theme = await Theme.findOne({ where: { name: name } });
+
+		if (theme !== null) {
+			throw new RequestError(`Le Thème ${name} existe déjà .`);
+		}
+
+		req.body.slug = slugify(name);
+
+		let themeu = await Theme.update(req.body, { where: { id: themeID } });
+
+		return res.json({
+			message: "Le Theme à bien été modifié .",
+			data: themeu,
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* Annulation de suppression d'un Theme (Soft Delete) */
 exports.untrashTheme = async (req, res, next) => {
-  try {
-    let themeID = parseInt(req.params.id);
+	try {
+		let themeID = parseInt(req.params.id);
 
-    // Vérification si champ id présent et cohérent
-    if (!themeID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+		if (!themeID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    // Restauration du Theme
-    await Theme.restore({ where: { id: themeID } });
+		let theme = await Theme.restore({ where: { id: themeID } });
 
-    // Réponse de la Restauration
-    return res.status(204).json({});
-  } catch (err) {
-    next(err);
-  }
+		return res.status(204).json({
+			message: "L'utilisateur a bien été restauré .",
+			data: theme,
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* Suppression d'un Theme (Soft Delete) */
 exports.trashTheme = async (req, res, next) => {
-  try {
-    let themeID = parseInt(req.params.id);
+	try {
+		let themeID = parseInt(req.params.id);
 
-    // Vérification si le champ id existe et cohérent
-    if (!themeID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+		if (!themeID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    // Suppression du Theme (soft delete without force: true)
-    await Theme.destroy({ where: { id: themeID } });
+		await Theme.destroy({ where: { id: themeID } });
 
-    // Réponse du soft delete
-    return res.status(204).json({});
-  } catch (err) {
-    next(err);
-  }
+		return res.status(204).json({
+			message: "L'utilisateur a bien été mis dans la corbeille",
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* Suppression d'un Theme (Hard Delete) */
 exports.deleteTheme = async (req, res, next) => {
-  try {
-    let themeID = parseInt(req.params.id);
+	try {
+		let themeID = parseInt(req.params.id);
 
-    // Vérification si le champ id existe et cohérent
-    if (!themeID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+		if (!themeID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    // Suppression du Theme (hard delete with force: true)
-    await Theme.destroy({ where: { id: themeID }, force: true });
+		await Theme.destroy({ where: { id: themeID }, force: true });
 
-    // Réponse du hard delete
-    return res.status(204).json({});
-  } catch (err) {
-    next(err);
-  }
+		return res.status(204).json({
+			message: "L'utilisateur a bien été définitivement supprimé .",
+		});
+	} catch (err) {
+		next(err);
+	}
 };

@@ -1,182 +1,163 @@
-/* Import des modules nécessaires */
 const DB = require("../../db.config");
 const Comment = DB.Comment;
-const { RequestError, RecetteError } = require("../../error/customError");
+const Menu = DB.Menu;
+const Recipe = DB.Recipe;
+const { RequestError, CommentError } = require("../../error/customError");
 
-/* Routage de la ressource Comment (Ensemble des Commentaires) */
 exports.getAllComments = (req, res, next) => {
-  Comment.findAll()
-    .then((comments) => res.json({ data: comments }))
-    .catch((err) => next());
+	Comment.findAll()
+		.then((comments) => res.json({ data: comments }))
+		.catch((err) => next(err));
 };
 
-/* GET ID (Commentaire spécifique)*/
 exports.getComment = async (req, res, next) => {
-  let commentID = parseInt(req.params.id);
-  // Verifie si le champ id est présent + cohérent
-  if (!commentID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
+	try {
+		let commentID = parseInt(req.params.id);
 
-  try {
-    // Récupération du Commentaire
-    let comment = await Comment.findOne({
-      where: { id: commentID },
-      raw: true,
-    });
-    // Test de l'existance du Commentaire
-    if (comment === null) {
-      throw new RecetteError("Ce Commentaire n'existe pas .", 0);
-    }
-    // Commentaire trouvée
-    return res.json({ data: comment });
-  } catch (err) {
-    next(err);
-  }
+		if (!commentID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
+
+		let comment = await Comment.findOne({
+			where: { id: commentID },
+			include: [{ model: Menu }, { model: Recipe }],
+		});
+
+		if (comment === null) {
+			throw new CommentError("Ce Commentaire n'existe pas .", 0);
+		}
+
+		return res.json({ data: comment });
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* PUT */
-exports.addCommentInMenu = async (req, res, next) => {
-  try {
-    let menuID = parseInt(req.params.id);
-    const { texte } = req.body;
-    // Validation des données reçues
-    if (!texte || !menuID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    // Création du Commentaire
-    let comment = await Comment.create(
-      req.body,
-      (user_id = decodedToken.id),
-      (recipe_id = null)
-    ); // TEST
+exports.addMyCommentInMenu = async (req, res, next) => {
+	try {
+		let menuID = parseInt(req.params.id);
+		const { texte } = req.body;
 
-    // Réponse du Commentaire créé.
-    return res.json({
-      message: "Le commentaire a bien été créé .",
-      data: comment,
-    });
-  } catch (err) {
-    next(err);
-  }
+		if (!texte || !menuID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
+
+		req.body.user_id = req.decodedToken.id;
+
+		req.body.recipe_id = null;
+
+		let comment = await Comment.create(req.body);
+
+		return res.json({
+			message: "Le menu a bien été commenté .",
+			data: comment,
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* PUT */
-exports.addCommentInRecipe = async (req, res, next) => {
-  try {
-    let recipeID = parseInt(req.params.id);
-    const { texte } = req.body;
-    // Validation des données reçues
-    if (!texte || !recipeID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    // Création du Commentaire
-    let comment = await Comment.create(
-      req.body,
-      (user_id = decodedToken.id),
-      (menu_id = null)
-    ); // TEST
+exports.addMyCommentInRecipe = async (req, res, next) => {
+	try {
+		let recipeID = parseInt(req.params.id);
+		const { texte } = req.body;
 
-    // Réponse du Commentaire créé.
-    return res.json({
-      message: "Le commentaire a bien été créé .",
-      data: comment,
-    });
-  } catch (err) {
-    next(err);
-  }
+		if (!texte || !recipeID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
+
+		req.body.user_id = req.decodedToken.id;
+
+		req.body.menu_id = null;
+
+		let comment = await Comment.create(req.body);
+
+		return res.json({
+			message: "La recette a bien été commentée .",
+			data: comment,
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* PATCH ID & BODY*/
-exports.updateComment = async (req, res, next) => {
-  try {
-    let commentID = parseInt(req.params.id);
-
-    // Vérification si le champ id existe et cohérent
-    if (!commentID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-
-    // Recherche du Commentaire
-    let comment = await Comment.findOne({
-      where: { id: commentID },
-      raw: true,
-    });
-
-    // Vérification de l'existance du Commentaire
-    if (comment === null) {
-      throw new RecetteError("Ce comment n'existe pas .", 0);
-    }
-
-    // Mise à jour du Commentaire
-    await Comment.update(req.body, { where: { id: commentID } });
-
-    // Réponse de la mise à jour
-    return res.json({
-      message: "Le comment à bien été modifiée .",
-      data: comment,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-/* POST UNTRASH */
 exports.untrashComment = async (req, res, next) => {
-  try {
-    let commentID = parseInt(req.params.id);
+	try {
+		let commentID = parseInt(req.params.id);
 
-    // Vérification si champ id présent et cohérent
-    if (!commentID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+		if (!commentID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    // Restauration du Commentaire
-    await Comment.restore({ where: { id: commentID } });
+		let comment = await Comment.restore({ where: { id: commentID } });
 
-    // Réponse de la Restauration
-    return res.status(204).json({});
-  } catch (err) {
-    next(err);
-  }
+		return res.status(204).json({
+			message: "Le commentaire a bien été restauré .",
+			data: comment,
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* SOFT DELETE TRASH */
 exports.trashComment = async (req, res, next) => {
-  try {
-    let commentID = parseInt(req.params.id);
+	try {
+		let commentID = parseInt(req.params.id);
 
-    // Vérification si le champ id existe et cohérent
-    if (!commentID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+		if (!commentID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    // Suppression du comment (soft delete without force: true)
-    await Comment.destroy({ where: { id: commentID } });
+		await Comment.destroy({ where: { id: commentID } });
 
-    // Réponse du soft delete
-    return res.status(204).json({});
-  } catch (err) {
-    next(err);
-  }
+		return res.status(204).json({
+			message: "Le commentaire a bien été mis dans la corbeille .",
+		});
+	} catch (err) {
+		next(err);
+	}
 };
 
-/* HARD DELETE ID*/
 exports.deleteComment = async (req, res, next) => {
-  try {
-    let commentID = parseInt(req.params.id);
+	try {
+		let commentID = parseInt(req.params.id);
 
-    // Vérification si le champ id existe et cohérent
-    if (!commentID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
+		if (!commentID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-    // Suppression du comment (hard delete with force: true)
-    await Comment.destroy({ where: { id: commentID }, force: true });
+		await Comment.destroy({ where: { id: commentID }, force: true });
 
-    // Réponse du hard delete
-    return res.status(204).json({});
-  } catch (err) {
-    next(err);
-  }
+		return res.status(204).json({
+			message: "Le commentaire a bien été définitivement supprimé .",
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+exports.deleteMyComment = async (req, res, next) => {
+	try {
+		let commentID = parseInt(req.params.id);
+
+		if (!commentID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
+
+		let comment  = await Comment.findOne({
+			where: { id: commentID, user_id: req.decodedToken.id },
+		});
+
+		if (comment === null) {
+			throw new CommentError("Ce commentaire n'existe pas ou ne vous appartient pas.", 0);
+		}
+
+		await Comment.destroy({ where: { id: commentID }, force: true });
+
+		return res.status(204).json({
+			message: "Votre commentaire a bien été définitivement supprimé .",
+		});
+	} catch (err) {
+		next(err);
+	}
 };

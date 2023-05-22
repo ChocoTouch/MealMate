@@ -1,4 +1,3 @@
-/* Import des modules nécessaires */
 const express = require("express");
 const user_router = require("./users");
 const recipes_router = require("./recipes");
@@ -12,16 +11,15 @@ const ingredients_router = require("./ingredients");
 const meals_router = require("./meals");
 const themes_router = require("./themes");
 
-/* Récupération du router d'express */
 let router = express.Router();
 
-/* Middleware pour log les dates des req */
 router.use((req, res, next) => {
-  const event = new Date();
-  console.log("PUBLIC ROUTER Time", event.toString());
-  next();
+	const event = new Date();
+	console.log("PUBLIC ROUTER Time", event.toString());
+	next();
 });
 
+router.get("/", (req, res) => res.send(`Welcome to the Public Router !`));
 router.use("/users", user_router);
 router.use("/recipes", recipes_router);
 router.use("/ingredients", ingredients_router);
