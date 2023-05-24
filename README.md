@@ -45,7 +45,10 @@ npm i sequelize-cli
 npx sequelize-cli db:seed:all
 ``` 
 
-Créer votre administrateur en vous connectant avec l'admin créé. (route: /auth/login, authorization: bearer)
+Créer votre administrateur en vous connectant avec l'admin créé. (authorization: bearer)
+```
+/auth/login
+```
 
 Annuler la seed :
 ```sh
@@ -62,17 +65,27 @@ Entrer la route à utiliser.
 ****
 # Liste des routes :
 ### Liste des Router :
+#### Home API
 ```
 /
 ```
+#### admin
 ```
 /admin
 ```
+#### user
 ```
 /user
 ```
+#### public
 ```
 /public
+```
+```
+/auth/login
+```
+```
+/auth/register
 ```
 ### Liste des Routes :
 ```
@@ -109,42 +122,7 @@ Entrer la route à utiliser.
 /users
 ```
 ### Liste des Controllers :
-#### admin
 ##### get
-getAll
-```
-/
-```
-getOne
-```
-/:id
-```
-##### put
-add
-```
-/
-```
-##### patch
-update
-```
-/:id
-```
-##### post
-untrash
-```
-/untrash/:id
-```
-##### delete
-trash
-```
-/trash/:id
-```
-delete
-```
-/:id
-```
-#### user
-##### **get**
 getAll
 ```
 /
@@ -157,49 +135,60 @@ getMe
 ```
 /me
 ```
-##### **put**
+##### put
 add
+```
+/
+```
+
+addMy
 ```
 /me
 ```
+
 addIn
 ```
 /route/:id
 ```
-##### **patch**
+##### patch
 update
+```
+/:id
+```
+updateMy
 ```
 /me/:id
 ```
-##### **post**
+##### post
 untrash
+```
+/untrash/:id
+```
+untrashMy
 ```
 /me/untrash/:id
 ```
-##### **delete**
+##### delete
 trash
 ```
-/me/trash/:id
+/trash/:id
 ```
 delete
 ```
 /:id
 ```
+trashMy
+```
+/me/trash/:id
+```
+deleteMy
+```
+/me/:id
+```
 deleteIn
 ```
 /route/:id
 ```
-#### public
-##### **get**
-getAll
-```
-/
-```
-getOne
-```
-/:id
-```
-****
 # EXEMPLE
 ```http://localhost:8888/admin/menus/recipe/10``` en **PUT** permet d'ajouter la recette avec l'id ```10``` à un menu.
 
