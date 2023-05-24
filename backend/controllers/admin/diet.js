@@ -2,6 +2,7 @@ const DB = require("../../db.config");
 const slugify = require("slugify");
 const Diet = DB.Diet;
 const Recipe = DB.Recipe;
+const Theme = DB.Theme;
 const { RequestError, DietError } = require("../../error/customError");
 
 exports.getAllDiets = (req, res, next) => {
@@ -20,7 +21,7 @@ exports.getDiet = async (req, res, next) => {
 
 		let diet = await Diet.findOne({
 			where: { id: dietID },
-			include: [{ model: Recipe }],
+			include: [{ model: Recipe,include: Theme }],
 		});
 
 		if (diet === null) {
@@ -86,11 +87,10 @@ exports.updateDiet = async (req, res, next) => {
 
 		req.body.slug = slugify(name);
 
-		let dietu = await Diet.update(req.body, { where: { id: dietID } });
+		await Diet.update(req.body, { where: { id: dietID } });
 
 		return res.json({
-			message: "Le régime à bien été modifié .",
-			data: dietu,
+			message: "Le régime à bien été modifié ."
 		});
 	} catch (err) {
 		next(err);
@@ -105,12 +105,9 @@ exports.untrashDiet = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let diet = await Diet.restore({ where: { id: dietID } });
+		await Diet.restore({ where: { id: dietID } });
 
-		return res.status(204).json({
-			message: "Le régime a bien été restauré .",
-			data: diet,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -126,9 +123,7 @@ exports.trashDiet = async (req, res, next) => {
 
 		await Diet.destroy({ where: { id: dietID } });
 
-		return res.status(204).json({
-			message: "Le régime a bien été mis dans la corbeille",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -144,9 +139,7 @@ exports.deleteDiet = async (req, res, next) => {
 
 		await Diet.destroy({ where: { id: dietID }, force: true });
 
-		return res.status(204).json({
-			message: "Le régime a bien été définitivement supprimé .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}

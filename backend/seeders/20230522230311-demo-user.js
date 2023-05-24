@@ -1,10 +1,16 @@
 "use strict";
-const DB = require("../db.config");
-const User = DB.User;
-const { Op } = require("sequelize");
+const bcrypt = require("bcrypt");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, Sequelize) {
+		let hashadmin = await bcrypt.hash(
+			"testadmin",
+			parseInt(process.env.BCRYPT_SALT_ROUND)
+		);
+		let hashuser = await bcrypt.hash(
+			"testuser",
+			parseInt(process.env.BCRYPT_SALT_ROUND)
+		);
 		await queryInterface.bulkInsert(
 			"Users",
 			[
@@ -14,7 +20,7 @@ module.exports = {
 					slug: "testadminNAME",
 					firstname: "testadminFIRSTNAME",
 					username: "testadminUSERNAME",
-					password: "testadmin",
+					password: hashadmin,
 					roles: "ROLE_ADMIN",
 				},
 				{
@@ -23,7 +29,7 @@ module.exports = {
 					slug: "testuserNAME",
 					firstname: "testuserFIRSTNAME",
 					username: "testuserUSERNAME",
-					password: "testuser",
+					password: hashuser,
 					roles: "ROLE_USER",
 				},
 			],
@@ -36,6 +42,6 @@ module.exports = {
 		// 	model: "Users",
 		// 	where: { name: { [Op.or]: ["testadminNAME", "testuserNAME"] } },
 		// });
-		return queryInterface.bulkDelete('Users', null, {});
+		await queryInterface.bulkDelete("Users", { name: ["testuserNAME","testadminNAME"] } );
 	},
 };

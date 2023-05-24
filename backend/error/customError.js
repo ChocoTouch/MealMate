@@ -88,6 +88,8 @@ class IngredientError extends MainError {}
 
 class MenuError extends MainError {}
 
+class DietError extends MainError {}
+
 class RequestError extends MainError {}
 
 module.exports = {
@@ -103,5 +105,6 @@ module.exports = {
   CourseError,
   DayOfWeekError,
   MealError,
-  ThemeError
+  ThemeError,
+  DietError
 };

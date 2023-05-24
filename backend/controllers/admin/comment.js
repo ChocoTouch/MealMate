@@ -46,6 +46,8 @@ exports.addMyCommentInMenu = async (req, res, next) => {
 
 		req.body.recipe_id = null;
 
+		req.body.user_username = req.decodedToken.username;
+		
 		let comment = await Comment.create(req.body);
 
 		return res.json({
@@ -70,6 +72,8 @@ exports.addMyCommentInRecipe = async (req, res, next) => {
 
 		req.body.menu_id = null;
 
+		req.body.user_username = req.decodedToken.username;
+
 		let comment = await Comment.create(req.body);
 
 		return res.json({
@@ -91,10 +95,7 @@ exports.untrashComment = async (req, res, next) => {
 
 		let comment = await Comment.restore({ where: { id: commentID } });
 
-		return res.status(204).json({
-			message: "Le commentaire a bien été restauré .",
-			data: comment,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -110,9 +111,7 @@ exports.trashComment = async (req, res, next) => {
 
 		await Comment.destroy({ where: { id: commentID } });
 
-		return res.status(204).json({
-			message: "Le commentaire a bien été mis dans la corbeille .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -128,9 +127,7 @@ exports.deleteComment = async (req, res, next) => {
 
 		await Comment.destroy({ where: { id: commentID }, force: true });
 
-		return res.status(204).json({
-			message: "Le commentaire a bien été définitivement supprimé .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -154,9 +151,7 @@ exports.deleteMyComment = async (req, res, next) => {
 
 		await Comment.destroy({ where: { id: commentID }, force: true });
 
-		return res.status(204).json({
-			message: "Votre commentaire a bien été définitivement supprimé .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}

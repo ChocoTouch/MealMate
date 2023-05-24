@@ -54,10 +54,11 @@ exports.addUser = async (req, res, next) => {
 		if (user !== null) {
 			throw new RequestError(`Le pseudo ${username} est déjà utilisé.`, 1);
 		}
-		// A tester
-		if (roles !== "ROLE_USER" || roles !== "ROLE_ADMIN") {
-			throw new RequestError(`Le format du rôle est incohérent.`, 1);
+
+		if (roles !== "ROLE_ADMIN" && roles !== "ROLE_USER") {
+				throw new RequestError(`Le format du rôle est incohérent.`, 1);
 		}
+
 		let userc = await User.create(req.body);
 
 		return res.json({
@@ -97,18 +98,17 @@ exports.updateUser = async (req, res, next) => {
 		if (user === null) {
 			throw new UserError("Cet utilisateur n'existe pas .", 0);
 		}
-		// A tester
-		if (roles !== "ROLE_USER" || roles !== "ROLE_ADMIN") {
+
+		if (roles !== "ROLE_ADMIN" && roles !== "ROLE_USER") {
 			throw new RequestError(`Le format du rôle est incohérent.`, 1);
 		}
 
 		req.body.slug = slugify(req.body.name);
 
-		let useru = await User.update(req.body, { where: { id: userID } });
+		await User.update(req.body, { where: { id: userID } });
 
 		return res.json({
 			message: "L'utilisateur à bien été modifié .",
-			data: useru,
 		});
 	} catch (err) {
 		next(err);
@@ -123,12 +123,9 @@ exports.untrashUser = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let user = await User.restore({ where: { id: userID } });
+		await User.restore({ where: { id: userID } });
 
-		return res.status(204).json({
-			message: "L'utilisateur a bien été restauré .",
-			data: user,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -144,9 +141,7 @@ exports.trashUser = async (req, res, next) => {
 
 		await User.destroy({ where: { id: userID } });
 
-		return res.status(204).json({
-			message: "L'utilisateur a bien été mis dans la corbeille",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -162,9 +157,7 @@ exports.deleteUser = async (req, res, next) => {
 
 		await User.destroy({ where: { id: userID }, force: true });
 
-		return res.status(204).json({
-			message: "L'utilisateur a bien été définitivement supprimé .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}

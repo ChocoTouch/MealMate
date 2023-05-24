@@ -85,11 +85,10 @@ exports.updateDayOfWeek = async (req, res, next) => {
 
 		req.body.slug = slugify(name);
 
-		let dayOfWeeku = await DayOfWeek.update(req.body, { where: { id: dayOfWeekID } });
+		await DayOfWeek.update(req.body, { where: { id: dayOfWeekID } });
 
 		return res.json({
-			message: "Le jour à bien été modifié .",
-			data: dayOfWeeku,
+			message: "Le jour à bien été modifié ."
 		});
 	} catch (err) {
 		next(err);
@@ -104,12 +103,9 @@ exports.untrashDayOfWeek = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let dayOfWeek = await DayOfWeek.restore({ where: { id: dayOfWeekID } });
+		await DayOfWeek.restore({ where: { id: dayOfWeekID } });
 
-		return res.status(204).json({
-			message: "Le jour a bien été restauré .",
-			data: dayOfWeek,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -125,9 +121,7 @@ exports.trashDayOfWeek = async (req, res, next) => {
 
 		await DayOfWeek.destroy({ where: { id: dayOfWeekID } });
 
-		return res.status(204).json({
-			message: "Le jour a bien été mis dans la corbeille",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -143,9 +137,7 @@ exports.deleteDayOfWeek = async (req, res, next) => {
 
 		await DayOfWeek.destroy({ where: { id: dayOfWeekID }, force: true });
 
-		return res.status(204).json({
-			message: "L'ingrédient a bien été mis dans la corbeille",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}

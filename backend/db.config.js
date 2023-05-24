@@ -1,4 +1,4 @@
-/* Import des modules nécesss */
+/* Import des modules nécessaires */
 const { Sequelize } = require("sequelize");
 
 /* Connexion à la base de données */

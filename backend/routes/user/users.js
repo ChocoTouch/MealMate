@@ -18,10 +18,4 @@ router.get("/", userController.getAllUsers);
 /* GET ID */
 router.get("/:id", userController.getUser);
 
-/* GET ID*/
-router.get("/recipes/:id", userController.getRecipesForUser);
-
-/* GET ID*/
-router.get("/menus/:id", userController.getMenusForUser);
-
 module.exports = router;

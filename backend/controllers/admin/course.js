@@ -85,11 +85,10 @@ exports.updateCourse = async (req, res, next) => {
 
 		req.body.slug = slugify(name);
 
-		let courseu = await Course.update(req.body, { where: { id: courseID } });
+		await Course.update(req.body, { where: { id: courseID } });
 
 		return res.json({
 			message: "Le Plat à bien été modifié .",
-			data: courseu,
 		});
 	} catch (err) {
 		next(err);
@@ -104,12 +103,9 @@ exports.untrashCourse = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let course = await Course.restore({ where: { id: courseID } });
+		await Course.restore({ where: { id: courseID } });
 
-		return res.status(204).json({
-			message: "Le plat a bien été restauré .",
-			data: course,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -125,9 +121,7 @@ exports.trashCourse = async (req, res, next) => {
 
 		await Course.destroy({ where: { id: courseID } });
 
-		return res.status(204).json({
-			message: "Le plat a bien été mis dans la corbeille .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -143,9 +137,7 @@ exports.deleteCourse = async (req, res, next) => {
 
 		await Course.destroy({ where: { id: courseID }, force: true });
 
-		return res.status(204).json({
-			message: "Le plat a bien été définitivement supprimé .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}

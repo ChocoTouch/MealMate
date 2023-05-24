@@ -1,62 +1,56 @@
-/* Import des modules nécessaires */
 const DB = require("../../db.config");
 const Ingredient = DB.Ingredient;
 const Recipe = DB.Recipe;
+const Category = DB.Category;
+const Theme = DB.Theme;
+const Diet = DB.Diet;
 const { RequestError, IngredientError } = require("../../error/customError");
 
-/* Récupération de l'ensemble des Ingredients */
 exports.getAllIngredients = (req, res, next) => {
-  Ingredient.findAll()
-    .then((ingredients) => res.json({ data: ingredients }))
-    .catch((err) => next());
+	Ingredient.findAll({ attributes: ["id", "name", "slug", "description", "calories", "price"] })
+		.then((ingredients) => res.json({ data: ingredients }))
+		.catch((err) => next(err));
 };
 
-/* Récupération d'un Ingredient */
 exports.getIngredient = async (req, res, next) => {
-  let ingredientID = parseInt(req.params.id);
-  // Verifie si le champ id est présent + cohérent
-  if (!ingredientID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
+	try {
+		let ingredientID = parseInt(req.params.id);
 
-  try {
-    // Récupération de l'ingredient
-    let ingredient = await Ingredient.findOne({
-      where: { id: ingredientID },
-      raw: true,
-    });
-    // Test de l'existance de l'ingredient
-    if (ingredient === null) {
-      throw new IngredientError("Cet ingrédient n'existe pas .", 0);
-    }
-    // Ingredient trouvée
-    return res.json({ data: ingredient });
-  } catch (err) {
-    next(err);
-  }
-};
+		if (!ingredientID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-/* Récupération des Recettes d'un Ingredient */
-exports.getRecipesForIngredient = async (req, res, next) => {
-  let ingredientID = parseInt(req.params.id);
-  // Verifie si le champ id est présent + cohérent
-  if (!ingredientID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
-  try {
-    // Récupération de l'ingredient
-    let ingredient = await Ingredient.findOne({
-      where: { id: ingredientID },
-      include: Recipe,
-    });
-    // Test de l'existance de l'ingredient
-    if (ingredient === null) {
-      throw new IngredientError("Cet ingrédient n'existe pas .", 0);
-    }
-    let recipes = ingredient.Recipes;
-    // Recettes et Ingredient trouvé
-    return res.json({ data: recipes });
-  } catch (err) {
-    next(err);
-  }
+		let ingredient = await Ingredient.findOne({
+			where: { id: ingredientID },
+			include: [
+				{ model: Category, attributes: ["id", "name", "slug"], through: { attributes: [] } },
+				{
+					model: Recipe,
+					attributes: ["id", "name", "slug", "user_username", "description", "difficulty"],
+					include: [
+						{ model: Theme, attributes: ["id", "name", "slug", "description"] },
+						{
+							model: Diet,
+							attributes: ["id", "name", "slug", "description"],
+							through: {
+								attributes: [],
+							},
+						},
+					],
+					through: {
+						attributes: [],
+					},
+				},
+			],
+			attributes: ["id", "name", "slug", "description", "calories", "price"],
+		});
+
+		if (ingredient === null) {
+			throw new IngredientError("Cet ingrédient n'existe pas .", 0);
+		}
+
+		return res.json({ data: ingredient });
+	} catch (err) {
+		next(err);
+	}
 };

@@ -97,11 +97,10 @@ exports.updateIngredient = async (req, res, next) => {
 
 		req.body.slug = slugify(name);
 
-		let ingredientu = await Ingredient.update(req.body, { where: { id: ingredientID } });
+		await Ingredient.update(req.body, { where: { id: ingredientID } });
 
 		return res.json({
 			message: "L'ingredient à bien été modifié .",
-			data: ingredientu,
 		});
 	} catch (err) {
 		next(err);
@@ -116,12 +115,9 @@ exports.untrashIngredient = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let ingredient = await Ingredient.restore({ where: { id: ingredientID } });
+		await Ingredient.restore({ where: { id: ingredientID } });
 
-		return res.status(204).json({
-			message: "L'ingrédient a bien été restauré .",
-			data: ingredient,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}

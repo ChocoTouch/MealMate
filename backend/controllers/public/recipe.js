@@ -1,4 +1,3 @@
-/* Import des modules nécessaires */
 const DB = require("../../db.config");
 const Recipe = DB.Recipe;
 const User = DB.User;
@@ -6,69 +5,63 @@ const Menu = DB.Menu;
 const Ingredient = DB.Ingredient;
 const Diet = DB.Diet;
 const Theme = DB.Theme;
-const {
-  RequestError,
-  RecipeError,
-} = require("../../error/customError");
+const Comment = DB.Comment;
+const { RequestError, RecipeError } = require("../../error/customError");
 
-/* Récupération de l'ensemble des Recettes */
 exports.getAllRecipes = (req, res, next) => {
-  Recipe.findAll()
-    .then((recipes) => res.json({ data: recipes }))
-    .catch((err) => next());
+	Recipe.findAll({
+		include: [{ model: Theme, attributes: ["id", "name", "slug", "description"] }],
+		attributes: ["id", "name", "slug", "description", "difficulty", "user_username", "createdAt"],
+	})
+		.then((recipes) => res.json({ data: recipes }))
+		.catch((err) => next(err));
 };
 
-/* Récupération d'une Recette */
 exports.getRecipe = async (req, res, next) => {
-  let recipeID = parseInt(req.params.id);
-  // Verifie si le champ id est présent + cohérent
-  if (!recipeID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
+	try {
+		let recipeID = parseInt(req.params.id);
 
-  try {
-    // Récupération de la Recette
-    let recipe = await Recipe.findOne({
-      where: { id: recipeID },
-      include: [
-        { model: User, attributes: ["id", "username", "email"] },
-        { model: Theme, attributes: ["id", "name", "description"] },
-        { model: Diet },
-        { model: Ingredient },
-      ],
-    });
-    // Test de l'existance de la Recette
-    if (recipe === null) {
-      throw new RecipeError("Cette recette n'existe pas .", 0);
-    }
-    // Recette trouvée
-    return res.json({ data: recipe });
-  } catch (err) {
-    next(err);
-  }
-};
+		if (!recipeID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
 
-/* Récupération des Menus d'une Recette */
-exports.getMenusForRecipe = async (req, res, next) => {
-  let recipeID = parseInt(req.params.id);
-  // Verifie si le champ id est présent + cohérent
-  if (!recipeID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
-  try {
-    // Récupération de
-    let recipe = await Recipe.findOne({
-      where: { id: recipeID },
-      include: Menu,
-    });
-    // Test de l'existance de la Recette
-    if (recipe === null) {
-      throw new RecipeError("Cette Recette n'existe pas .", 0);
-    }
-    let menus = recipe.Menus;
-    // Recipe et Menus trouvé
-    return res.json({ data: menus });
-  } catch (err) {
-    next(err);
-  }
+		let recipe = await Recipe.findOne({
+			where: { id: recipeID },
+			include: [
+				{ model: User, attributes: ["id", "username", "slug"] },
+				{ model: Theme, attributes: ["id", "name", "slug", "description"] },
+				{ model: Comment, attributes: ["id", "message", "user_username"] },
+				{
+					model: Ingredient,
+					attributes: ["id", "name", "slug", "description", "calories", "price"],
+					through: {
+						attributes: ["count"],
+					},
+				},
+				{
+					model: Menu,
+					attributes: ["id", "name", "slug", "description", "user_username", "createdAt"],
+					through: {
+						attributes: [],
+					},
+				},
+				{
+					model: Diet,
+					attributes: ["id", "name", "slug", "description"],
+					through: {
+						attributes: [],
+					},
+				},
+			],
+			attributes: ["id", "name", "slug", "description", "difficulty", "instructions", "createdAt"],
+		});
+
+		if (recipe === null) {
+			throw new RecipeError("Cette recette n'existe pas .", 0);
+		}
+
+		return res.json({ data: recipe });
+	} catch (err) {
+		next(err);
+	}
 };

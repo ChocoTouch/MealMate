@@ -12,9 +12,6 @@ router.use((req, res, next) => {
   next();
 });
 
-/* GET */
-router.get("/", commentController.getAllComments);
-
 /* GET ID */
 router.get("/:id", commentController.getComment);
 

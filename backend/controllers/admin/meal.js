@@ -94,7 +94,6 @@ exports.updateMeal = async (req, res, next) => {
 
 		return res.json({
 			message: "Le repas à bien été modifié .",
-			data: meal,
 		});
 	} catch (err) {
 		next(err);
@@ -109,12 +108,9 @@ exports.untrashMeal = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let meal = await Meal.restore({ where: { id: mealID } });
+		await Meal.restore({ where: { id: mealID } });
 
-		return res.status(204).json({
-			message: "Le repas a bien été restauré .",
-			data: meal,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -130,9 +126,7 @@ exports.trashMeal = async (req, res, next) => {
 
 		await Meal.destroy({ where: { id: mealID } });
 
-		return res.status(204).json({
-			message: "Le repas a bien été mis dans la corbeille",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -148,9 +142,7 @@ exports.deleteMeal = async (req, res, next) => {
 
 		await Meal.destroy({ where: { id: mealID }, force: true });
 
-		return res.status(204).json({
-			message: "Le repas a bien été définitivement supprimé .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}

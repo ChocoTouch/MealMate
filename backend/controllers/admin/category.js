@@ -86,11 +86,10 @@ exports.updateCategory = async (req, res, next) => {
 
 		req.body.slug = slugify(name);
 
-		let categoryu = await Category.update(req.body, { where: { id: categoryID } });
+		await Category.update(req.body, { where: { id: categoryID } });
 
 		return res.json({
-			message: "La category à bien été modifiée .",
-			data: categoryu,
+			message: "La category à bien été modifiée ."
 		});
 	} catch (err) {
 		next(err);
@@ -105,12 +104,9 @@ exports.untrashCategory = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let category = await Category.restore({ where: { id: categoryID } });
+		await Category.restore({ where: { id: categoryID } });
 
-		return res.status(204).json({
-			message: "L'ingrédient a bien été restaurée .",
-			data: category,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -126,9 +122,7 @@ exports.trashCategory = async (req, res, next) => {
 
 		await Category.destroy({ where: { id: categoryID } });
 
-		return res.status(204).json({
-			message: "La catégorie a bien été mise dans la corbeille .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -144,9 +138,7 @@ exports.deleteCategory = async (req, res, next) => {
 
 		await Category.destroy({ where: { id: categoryID }, force: true });
 
-		return res.status(204).json({
-			message: "La catégorie a bien été définitivement supprimée .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -203,9 +195,7 @@ exports.deleteIngredientInCategory = async (req, res, next) => {
 
 		await category.removeIngredient(ingredient);
 
-		return res.status(204).json({
-			message: "L'ingrédient a bien été supprimé de la catégorie .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}

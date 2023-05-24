@@ -18,7 +18,4 @@ router.get("/", themeController.getAllThemes);
 /* GET ID */
 router.get("/:id", themeController.getTheme);
 
-/* GET ID */
-router.get("/recipes/:id", themeController.getRecipesForTheme);
-
 module.exports = router;

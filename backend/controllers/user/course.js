@@ -1,36 +1,32 @@
-/* Import des modules nécessaires */
 const DB = require("../../db.config");
 const Course = DB.Course;
 const { RequestError, CourseError } = require("../../error/customError");
 
-/* Récupération de l'ensemble des Plats */
 exports.getAllCourses = (req, res, next) => {
-  Course.findAll()
-    .then((courses) => res.json({ data: courses }))
-    .catch((err) => next());
+	Course.findAll({ attributes: ["id", "name", "description", "slug"] })
+		.then((courses) => res.json({ data: courses }))
+		.catch((err) => next(err));
 };
 
-/* Récupération d'un Plat */
 exports.getCourse = async (req, res, next) => {
-  let courseID = parseInt(req.params.id);
-  // Verifie si le champ id est présent + cohérent
-  if (!courseID) {
-    throw new RequestError("Paramètre(s) manquant(s) .");
-  }
+	try {
+		let courseID = parseInt(req.params.id);
 
-  try {
-    // Récupération du Plat
-    let course = await Course.findOne({
-      where: { id: courseID },
-      raw: true,
-    });
-    // Test de l'existance du Plat
-    if (course === null) {
-      throw new CourseError("Ce Plat n'existe pas .", 0);
-    }
-    // Plat trouvé
-    return res.json({ data: course });
-  } catch (err) {
-    next(err);
-  }
+		if (!courseID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
+
+		let course = await Course.findOne({
+			where: { id: courseID },
+			attributes: ["id", "name", "description", "slug"],
+		});
+
+		if (course === null) {
+			throw new CourseError("Ce Plat n'existe pas .", 0);
+		}
+
+		return res.json({ data: course });
+	} catch (err) {
+		next(err);
+	}
 };

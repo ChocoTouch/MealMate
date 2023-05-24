@@ -1,64 +1,75 @@
-/* Import des modules nécessaires */
 const DB = require("../../db.config");
 const Menu = DB.Menu;
 const Recipe = DB.Recipe;
+const Meal = DB.Meal;
 const User = DB.User;
-const {
-  RequestError,
-  MenuError,
-} = require("../../error/customError");
+const Course = DB.Course;
+const Theme = DB.Theme;
+const DayOfWeek = DB.DayOfWeek;
+const Comment = DB.Comment;
+const { RequestError, MenuError} = require("../../error/customError");
 
-/* Récupération de l'ensemble des Menus */
 exports.getAllMenus = (req, res, next) => {
-  // Recherche des menus
-  Menu.findAll()
-    .then((menus) => res.json({ data: menus }))
-    .catch((err) => next());
+	Menu.findAll({ attributes: ["id", "name", "slug", "description", "user_username", "createdAt"] })
+		.then((menus) => res.json({ data: menus }))
+		.catch((err) => next(err));
 };
 
-/* Récupération d'un Menu */
 exports.getMenu = async (req, res, next) => {
-  try {
-    let menuID = parseInt(req.params.id);
-    
-    // Vérification de l'existance du champ
-    if (!menuID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    // Récupération du menu
-    let menu = await Menu.findOne({
-      where: { id: menuID },
-      include: { model: User, attributes: ["id", "username", "email"] },
-    });
-    // Vérification de l'existance du menu
-    if (menu === null) {
-      throw new MenuError("Ce menu n'existe pas .", 0);
-    }
-    // Réponse du Menu trouvé
-    return res.json({ data: menu });
-  } catch (err) {
-    next(err);
-  }
-};
+	try {
+		let menuID = parseInt(req.params.id);
 
-/* Récupération des Recettes d'un Menu */
-exports.getRecipesInMenu = async (req, res, next) => {
-  try {
-    let menuID = parseInt(req.params.id);
-    // Vérification de l'existance du champ
-    if (!menuID) {
-      throw new RequestError("Paramètre(s) manquant(s) .");
-    }
-    // Récupération du menu
-    let menu = await Menu.findOne({ where: { id: menuID }, include: Recipe });
-    // Vérification de l'existance du menu
-    if (menu === null) {
-      throw new MenuError("Ce menu n'existe pas .", 0);
-    }
-    let recipes = menu.Recipes;
-    // Réponse des Recettes et du Menu trouvés
-    return res.json({ data: recipes });
-  } catch (err) {
-    next(err);
-  }
+		if (!menuID) {
+			throw new RequestError("Paramètre(s) manquant(s) .");
+		}
+
+		let menu = await Menu.findOne({
+			where: { id: menuID },
+			include: [
+				{
+					model: Recipe,
+					attributes: ["id", "name", "slug", "description", "user_username", "createdAt"],
+					through: {
+						attributes: [],
+					},
+					include: [{ model: Theme, attributes: ["id", "name", "slug", "description"] }],
+				},
+				{
+					model: Meal,
+					attributes: ["id", "name", "slug", "description"],
+					through: {
+						attributes: [],
+					},
+				},
+				{
+					model: DayOfWeek,
+					attributes: ["id", "name", "slug"],
+					through: {
+						attributes: [],
+					},
+				},
+				{
+					model: Course,
+					attributes: ["id", "name", "slug", "description"],
+					through: {
+						attributes: [],
+					},
+				},
+				{
+					model: Comment,
+					attributes: ["id", "message", "user_username"],
+				},
+				{ model: User, attributes: ["id", "username", "slug"] },
+			],
+			attributes: ["id", "name", "slug", "description", "user_username", "createdAt"],
+		});
+
+		if (menu === null) {
+			throw new MenuError("Ce menu n'existe pas .", 0);
+		}
+
+		return res.json({ data: menu });
+	} catch (err) {
+		next(err);
+	}
 };

@@ -19,7 +19,7 @@ exports.getMyRecipes = async (req, res, next) => {
 	try {
 		let recipes = await Recipe.findAll({
 			where: { user_id: req.decodedToken.id },
-			include: [{ model: Ingredient, as: "Ingredients" }, { model: Comment }, { model: Theme }],
+			include: [{ model: Ingredient }, { model: Comment }, { model: Theme }],
 		});
 		return res.json({ data: recipes });
 	} catch (err) {
@@ -37,7 +37,7 @@ exports.getRecipe = async (req, res, next) => {
 
 		let recipe = await Recipe.findOne({
 			where: { id: recipeID },
-			include: [{ model: User }, { model: Theme }, { model: Ingredient }, {model: Menu}],
+			include: [{ model: User }, { model: Theme }, { model: Ingredient }, {model: Menu}, {model: Diet}],
 		});
 
 		if (recipe === null) {
@@ -81,11 +81,11 @@ exports.addRecipe = async (req, res, next) => {
 
 		req.body.slug = slugify(name);
 
-		let recipe = await Recipe.create(req.body);
+		let recipec = await Recipe.create(req.body);
 
 		return res.json({
 			message: "La recette a bien été créée .",
-			data: recipe,
+			data: recipec,
 		});
 	} catch (err) {
 		next(err);
@@ -135,7 +135,6 @@ exports.updateRecipe = async (req, res, next) => {
 
 		return res.json({
 			message: "La recette à bien été modifiée .",
-			data: recipe,
 		});
 	} catch (err) {
 		next(err);
@@ -150,12 +149,9 @@ exports.untrashRecipe = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let user = await Recipe.restore({ where: { id: recipeID } });
+		await Recipe.restore({ where: { id: recipeID } });
 
-		return res.status(204).json({
-			message: "La recette a bien été restaurée .",
-			data: user,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -171,9 +167,7 @@ exports.trashRecipe = async (req, res, next) => {
 
 		await Recipe.destroy({ where: { id: recipeID } });
 
-		return res.status(204).json({
-			message: "La recette a bien été mise dans la corbeille .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -189,9 +183,7 @@ exports.deleteRecipe = async (req, res, next) => {
 
 		await Recipe.destroy({ where: { id: recipeID }, force: true });
 
-		return res.status(204).json({
-			message: "La recette a bien été définitivement supprimée .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -254,9 +246,7 @@ exports.deleteIngredientInMyRecipe = async (req, res, next) => {
 
 		await recipe.removeIngredient(ingredient);
 
-		return res.status(204).json({
-			message: "L'ingredient a bien été supprimé de votre recette .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -318,9 +308,7 @@ exports.deleteDietInMyRecipe = async (req, res, next) => {
 
 		await recipe.removeDiet(diet);
 
-		return res.status(204).json({
-			message: "Le régime a bien été supprimé de votre recette .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -347,17 +335,22 @@ exports.addMyRecipe = async (req, res, next) => {
 			throw new RequestError("La difficulté est incohérente .", 0);
 		}
 
-		let user = await User.findOne({ where: { id: req.decodedToken.id } });
-		req.body.user_id = user.id;
-		req.body.user_username = user.username;
+		let recipe = await Recipe.findOne({ where: { user_id: req.decodedToken.id, name: name}});
+
+		if (recipe !== null){
+			throw new RequestError(`Vous avez déjà une recette nommée ${name} .`, 0);
+		}
+	
+		req.body.user_id = req.decodedToken.id;
+		req.body.user_username = req.decodedToken.username;
 
 		req.body.slug = slugify(name);
 
-		let recipe = await Recipe.create(req.body);
+		let recipec = await Recipe.create(req.body);
 
 		return res.json({
 			message: "Votre recette a bien été créée .",
-			data: recipe,
+			data: recipec,
 		});
 	} catch (err) {
 		next(err);
@@ -395,15 +388,24 @@ exports.updateMyRecipe = async (req, res, next) => {
 			throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas.", 0);
 		}
 
+		recipe = await Recipe.findOne({ where: { user_id: req.decodedToken.id, name: name}});
+
+		if (recipe !== null){
+			throw new RequestError(`Vous avez déjà une recette nommée ${name} .`, 0);
+		}
+
+		req.body.user_username = req.decodedToken.username;
+
+		req.body.user_id = req.decodedToken.id;
+
 		req.body.slug = slugify(name);
 
-		let recipeu = await Recipe.update(req.body, {
+		await Recipe.update(req.body, {
 			where: { id: recipeID },
 		});
 
 		return res.json({
 			message: "Votre recette à bien été modifiée .",
-			data: recipeu,
 		});
 	} catch (err) {
 		next(err);
@@ -431,9 +433,7 @@ exports.trashMyRecipe = async (req, res, next) => {
 			where: { id: recipeID, user_id: req.decodedToken.id },
 		});
 
-		return res.status(204).json({
-			message: "Votre recette a bien été supprimée .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -460,10 +460,7 @@ exports.untrashMyRecipe = async (req, res, next) => {
 			where: { id: recipeID },
 		});
 
-		return res.status(204).json({
-			message: "Votre recette a bien été restaurée .",
-			data: recipe,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}

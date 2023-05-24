@@ -12,16 +12,13 @@ router.use((req, res, next) => {
   next();
 });
 
-/* GET */
-router.get("/", commentController.getAllComments);
-
 /* GET ID */
 router.get("/:id", commentController.getComment);
 
 /* PUT */
-router.put("/menu/:id", commentController.addCommentInMenu);
+router.put("/menu/:id", commentController.addMyCommentInMenu);
 
 /* PUT */
-router.put("/recipe/:id", commentController.addCommentInRecipe);
+router.put("/recipe/:id", commentController.addMyCommentInRecipe);
 
 module.exports = router;

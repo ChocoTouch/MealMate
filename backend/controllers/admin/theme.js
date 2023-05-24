@@ -86,11 +86,10 @@ exports.updateTheme = async (req, res, next) => {
 
 		req.body.slug = slugify(name);
 
-		let themeu = await Theme.update(req.body, { where: { id: themeID } });
+		await Theme.update(req.body, { where: { id: themeID } });
 
 		return res.json({
 			message: "Le Theme à bien été modifié .",
-			data: themeu,
 		});
 	} catch (err) {
 		next(err);
@@ -105,12 +104,9 @@ exports.untrashTheme = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let theme = await Theme.restore({ where: { id: themeID } });
+		await Theme.restore({ where: { id: themeID } });
 
-		return res.status(204).json({
-			message: "L'utilisateur a bien été restauré .",
-			data: theme,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -126,9 +122,7 @@ exports.trashTheme = async (req, res, next) => {
 
 		await Theme.destroy({ where: { id: themeID } });
 
-		return res.status(204).json({
-			message: "L'utilisateur a bien été mis dans la corbeille",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -144,9 +138,7 @@ exports.deleteTheme = async (req, res, next) => {
 
 		await Theme.destroy({ where: { id: themeID }, force: true });
 
-		return res.status(204).json({
-			message: "L'utilisateur a bien été définitivement supprimé .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}

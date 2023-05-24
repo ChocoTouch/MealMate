@@ -18,7 +18,4 @@ router.get("/", recipeController.getAllRecipes);
 /* GET ID */
 router.get("/:id", recipeController.getRecipe);
 
-/* GET ID */
-router.get("/menus/:id", recipeController.getMenusForRecipe);
-
 module.exports = router;

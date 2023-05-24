@@ -16,6 +16,6 @@ router.use((req, res, next) => {
 router.get("/", userController.getAllUsers);
 
 /* GET ID */
-router.get("/:username", userController.getUser);
+router.get("/:id", userController.getUser);
 
 module.exports = router;

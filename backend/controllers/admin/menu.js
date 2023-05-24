@@ -6,6 +6,7 @@ const Meal = DB.Meal;
 const User = DB.User;
 const Course = DB.Course;
 const DayOfWeek = DB.DayOfWeek;
+const Comment = DB.Comment;
 const { RequestError, RecipeError, MenuError, UserError, CourseError } = require("../../error/customError");
 
 exports.getAllMenus = (req, res, next) => {
@@ -20,7 +21,7 @@ exports.getMyMenus = async (req, res, next) => {
 			where: {
 				user_id: req.decodedToken.id,
 			},
-			include: [{ model: Recipe }, { model: Meal }, { model: DayOfWeek }, { model: Course }],
+			include: [{ model: Recipe }, { model: Meal }, { model: DayOfWeek }, { model: Course }, { model: Comment }],
 		});
 
 		return res.json({ data: menus });
@@ -70,9 +71,9 @@ exports.addMenu = async (req, res, next) => {
 
 		req.body.slug = slugify(name);
 
-		let menu = await Menu.create(req.body);
+		let menuc = await Menu.create(req.body);
 
-		return res.json({ message: "Le menu a bien été créé .", data: menu });
+		return res.json({ message: "Le menu a bien été créé .", data: menuc });
 	} catch (err) {
 		next(err);
 	}
@@ -80,7 +81,7 @@ exports.addMenu = async (req, res, next) => {
 
 exports.updateMenu = async (req, res, next) => {
 	try {
-		const { name } = req.body;
+		const { name, user_id } = req.body;
 		let menuID = parseInt(req.params.id);
 
 		if (!menuID) {
@@ -93,11 +94,23 @@ exports.updateMenu = async (req, res, next) => {
 			throw new MenuError("Ce menu n'existe pas .", 0);
 		}
 
-		req.body.slug = slugify(name);
+		if (user_id) {
+			let user = await User.findOne({ where: { id: user_id } });
 
-		let menuu = await Menu.update(req.body, { where: { id: menuID } });
+			if (user === null) {
+				throw new UserError("Cet utilisateur n'existe pas .", 0);
+			}
 
-		return res.json({ message: "Le menu à bien été modifié .", data: menuu });
+			req.body.user_username = user.username;
+		}
+		
+		if(name){		
+			req.body.slug = slugify(name);
+		}
+
+		await Menu.update(req.body, { where: { id: menuID } });
+
+		return res.json({ message: "Le menu à bien été modifié ." });
 	} catch (err) {
 		next(err);
 	}
@@ -111,12 +124,9 @@ exports.untrashMenu = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let menu = await Menu.restore({ where: { id: menuID } });
+		await Menu.restore({ where: { id: menuID } });
 
-		return res.status(204).json({
-			message: "Le menu a bien été restauré .",
-			data: menu,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -132,9 +142,7 @@ exports.trashMenu = async (req, res, next) => {
 
 		await Menu.destroy({ where: { id: menuID } });
 
-		return res.status(204).json({
-			message: "Le menu a bien été mis dans la corbeille",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -150,9 +158,7 @@ exports.deleteMenu = async (req, res, next) => {
 
 		await Menu.destroy({ where: { id: menuID }, force: true });
 
-		return res.status(204).json({
-			message: "Le menu a bien été définitivement supprimé .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -217,9 +223,7 @@ exports.deleteMealInMyMenu = async (req, res, next) => {
 
 		await menu.removeMeal(meal);
 
-		return res.status(204).json({
-			message: "Ce repas a bien été supprimé de votre menu .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -283,9 +287,7 @@ exports.deleteDayOfWeekInMyMenu = async (req, res, next) => {
 
 		await menu.removeDayOfWeek(dayOfWeek);
 
-		return res.status(204).json({
-			message: "Le jour a bien été supprimé de votre menu .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -294,9 +296,9 @@ exports.deleteDayOfWeekInMyMenu = async (req, res, next) => {
 exports.addCourseInMyMenu = async (req, res, next) => {
 	try {
 		let courseID = parseInt(req.params.id);
-		const { menu_id, count } = req.body;
+		const { menu_id } = req.body;
 
-		if (!courseID || !menu_id || !count) {
+		if (!courseID || !menu_id ) {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
@@ -350,9 +352,7 @@ exports.deleteCourseInMyMenu = async (req, res, next) => {
 
 		await menu.removeCourse(course);
 
-		return res.status(204).json({
-			message: "Le plat a bien été supprimé de votre menu .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -360,9 +360,10 @@ exports.deleteCourseInMyMenu = async (req, res, next) => {
 
 exports.addRecipeInMyMenu = async (req, res, next) => {
 	try {
-		const { recipe_id, menu_id } = req.body;
+		let recipeID = parseInt(req.params.id);
+		const { menu_id } = req.body;
 
-		if (!recipe_id || !menu_id) {
+		if (!recipeID || !menu_id) {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
@@ -374,7 +375,7 @@ exports.addRecipeInMyMenu = async (req, res, next) => {
 			throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
 		}
 
-		let recipe = await Recipe.findOne({ where: { id: recipe_id } });
+		let recipe = await Recipe.findOne({ where: { id: recipeID } });
 
 		if (recipe === null) {
 			throw new RecipeError("Cette recette n'existe pas .", 0);
@@ -416,9 +417,7 @@ exports.deleteRecipeInMyMenu = async (req, res, next) => {
 
 		await menu.removeRecipe(recipe);
 
-		return res.status(204).json({
-			message: "La recette a bien été supprimée de votre menu .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -432,13 +431,21 @@ exports.addMyMenu = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
+		let menu = await Menu.findOne({ where: { user_id: req.decodedToken.id, name: name}});
+
+		if (menu !== null){
+			throw new RequestError(`Vous avez déjà un menu nommé ${name} .`, 0);
+		}
+
+		req.body.user_username = req.decodedToken.username;
+
 		req.body.user_id = req.decodedToken.id;
 
 		req.body.slug = slugify(name);
 
-		let menu = await Menu.create(req.body);
+		let menuc = await Menu.create(req.body);
 
-		return res.json({ message: "Votre menu a bien été crée .", data: menu });
+		return res.json({ message: "Votre menu a bien été crée .", data: menuc });
 	} catch (err) {
 		next(err);
 	}
@@ -461,13 +468,24 @@ exports.updateMyMenu = async (req, res, next) => {
 		if (menu === null) {
 			throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
 		}
+
+		menu = await Menu.findOne({ where: { user_id: req.decodedToken.id, name: name}});
+
+		if (menu !== null){
+			throw new RequestError(`Vous avez déjà un menu nommé ${name} .`, 0);
+		}
+
+		req.body.user_username = req.decodedToken.username;
+
+		req.body.user_id = req.decodedToken.id;
+
 		req.body.slug = slugify(name);
 
-		let menuu = await Menu.update(req.body, {
+		await Menu.update(req.body, {
 			where: { id: menuID },
 		});
 
-		return res.json({ message: "Votre menu à bien été modifié .", data: menuu });
+		return res.json({ message: "Votre menu à bien été modifié ." });
 	} catch (err) {
 		next(err);
 	}
@@ -492,9 +510,7 @@ exports.trashMyMenu = async (req, res, next) => {
 
 		await Menu.destroy({ where: { id: menuID } });
 
-		return res.status(204).json({
-			message: "Votre menu a bien été supprimé .",
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
@@ -519,10 +535,7 @@ exports.untrashMyMenu = async (req, res, next) => {
 
 		await Menu.destroy({ where: { id: menuID } });
 
-		return res.status(204).json({
-			message: "Votre menu a bien été restaurée .",
-			data: menu,
-		});
+		return res.status(204).json({});
 	} catch (err) {
 		next(err);
 	}
