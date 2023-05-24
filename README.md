@@ -59,7 +59,7 @@ Installer l'utilitaire Postman.
 Une fois l'API configurée, lancer Postman.
 
 Entrer la route à utiliser.
-
+****
 # Liste des routes :
 ### Liste des Router :
 ```
@@ -199,3 +199,9 @@ getOne
 ```
 /:id
 ```
+****
+# EXEMPLE
+```http://localhost:8888/admin/menus/recipe/10``` en **PUT** permet d'ajouter la recette avec l'id ```10``` à un menu.
+
+**Attention !** 
+Certains paramètres comme ```menu_id``` sont à entrer dans le body (x-www-form-urlencoded)
