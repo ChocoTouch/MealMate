@@ -39,6 +39,13 @@ exports.getMyRecipes = async (req, res, next) => {
 				},
 				{ model: Comment, attributes: ["id", "message", "user_username"] },
 				{ model: Theme, attributes: ["id", "name", "description"] },
+				{
+					model: Diet,
+					attributes: ["id", "name", "description", "slug"],
+					through: {
+						attributes: [],
+					},
+				},
 			],
 
 			attributes: ["id", "name", "slug", "description", "difficulty", "instructions", "createdAt"],

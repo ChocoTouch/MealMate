@@ -86,7 +86,7 @@ exports.register = async (req, res, next) => {
     req.body.roles = "ROLE_USER";
 
     // Génération du Slug
-    req.body.slug = slugify(name);
+    req.body.slug = slugify(username);
 
     // Création de l'utilisateur
     await User.create(req.body);

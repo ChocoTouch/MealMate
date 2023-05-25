@@ -41,7 +41,6 @@ exports.addUser = async (req, res, next) => {
 		if (!name || !firstname || !username || !email || !password || !roles) {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
-		req.body.slug = slugify(username);
 
 		let user = await User.findOne({ where: { email: email }, raw: true });
 
@@ -59,6 +58,8 @@ exports.addUser = async (req, res, next) => {
 				throw new RequestError(`Le format du rôle est incohérent.`, 1);
 		}
 
+		req.body.slug = slugify(username);
+		
 		let userc = await User.create(req.body);
 
 		return res.json({
@@ -103,7 +104,7 @@ exports.updateUser = async (req, res, next) => {
 			throw new RequestError(`Le format du rôle est incohérent.`, 1);
 		}
 
-		req.body.slug = slugify(req.body.name);
+		req.body.slug = slugify(req.body.username);
 
 		await User.update(req.body, { where: { id: userID } });
 
@@ -158,6 +159,37 @@ exports.deleteUser = async (req, res, next) => {
 		await User.destroy({ where: { id: userID }, force: true });
 
 		return res.status(204).json({});
+	} catch (err) {
+		next(err);
+	}
+};
+
+exports.updateMyProfile = async (req, res, next) => {
+	try {
+		const { username, email } = req.body;
+
+		if (username) {
+			let user = await User.findOne({ where: { username: username }, raw: true });
+			if (user === null) {
+				throw new UserError(`Le pseudo ${username} est déjà utilisé .`, 0);
+			}
+		}
+
+		if (email) {
+			let user = await User.findOne({ where: { email: email }, raw: true });
+			if (user === null) {
+				throw new UserError(`L'adresse e-mail ${email} est déjà utilisée .`, 0);
+			}
+		}
+
+		req.body.roles = "ROLE_USER";
+		req.body.slug = slugify(req.body.username);
+
+		await User.update(req.body, { where: { id: req.decodedToken.id } });
+
+		return res.json({
+			message: "Votre profil à bien été modifié .",
+		});
 	} catch (err) {
 		next(err);
 	}

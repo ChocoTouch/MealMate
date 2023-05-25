@@ -19,7 +19,7 @@ exports.getMyRecipes = async (req, res, next) => {
 	try {
 		let recipes = await Recipe.findAll({
 			where: { user_id: req.decodedToken.id },
-			include: [{ model: Ingredient }, { model: Comment }, { model: Theme }],
+			include: [{ model: Ingredient }, { model: Comment }, { model: Theme }, { model: Diet }],
 		});
 		return res.json({ data: recipes });
 	} catch (err) {
@@ -37,7 +37,7 @@ exports.getRecipe = async (req, res, next) => {
 
 		let recipe = await Recipe.findOne({
 			where: { id: recipeID },
-			include: [{ model: User }, { model: Theme }, { model: Ingredient }, {model: Menu}, {model: Diet}],
+			include: [{ model: User }, { model: Theme }, { model: Ingredient }, { model: Menu }, { model: Diet }],
 		});
 
 		if (recipe === null) {
@@ -335,12 +335,12 @@ exports.addMyRecipe = async (req, res, next) => {
 			throw new RequestError("La difficulté est incohérente .", 0);
 		}
 
-		let recipe = await Recipe.findOne({ where: { user_id: req.decodedToken.id, name: name}});
+		let recipe = await Recipe.findOne({ where: { user_id: req.decodedToken.id, name: name } });
 
-		if (recipe !== null){
+		if (recipe !== null) {
 			throw new RequestError(`Vous avez déjà une recette nommée ${name} .`, 0);
 		}
-	
+
 		req.body.user_id = req.decodedToken.id;
 		req.body.user_username = req.decodedToken.username;
 
@@ -388,9 +388,9 @@ exports.updateMyRecipe = async (req, res, next) => {
 			throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas.", 0);
 		}
 
-		recipe = await Recipe.findOne({ where: { user_id: req.decodedToken.id, name: name}});
+		recipe = await Recipe.findOne({ where: { user_id: req.decodedToken.id, name: name } });
 
-		if (recipe !== null){
+		if (recipe !== null) {
 			throw new RequestError(`Vous avez déjà une recette nommée ${name} .`, 0);
 		}
 

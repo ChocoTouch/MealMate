@@ -41,3 +41,33 @@ exports.getUser = async (req, res, next) => {
 		next(err);
 	}
 };
+exports.updateMyProfile = async (req, res, next) => {
+	try {
+		const { username, email } = req.body;
+
+		if (username) {
+			let user = await User.findOne({ where: { username: username }, raw: true });
+			if (user === null) {
+				throw new UserError(`Le pseudo ${username} est déjà utilisé .`, 0);
+			}
+		}
+
+		if (email) {
+			let user = await User.findOne({ where: { email: email }, raw: true });
+			if (user === null) {
+				throw new UserError(`L'adresse e-mail ${email} est déjà utilisée .`, 0);
+			}
+		}
+
+		req.body.roles = "ROLE_USER";
+		req.body.slug = slugify(req.body.username);
+
+		await User.update(req.body, { where: { id: req.decodedToken.id } });
+
+		return res.json({
+			message: "Votre profil à bien été modifié .",
+		});
+	} catch (err) {
+		next(err);
+	}
+};

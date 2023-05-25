@@ -9,14 +9,16 @@ Application web de gestion de recettes et de menus.
 - Extraire sa liste de courses et calculer ses calories et son prix total
 - Commenter les menus et les plats des autres amateurs de cuisines
 
-# Installation
+# Installation de l'API
+MealMate nécessite [Node.js](https://nodejs.org/) 18 au fonctionnement.
 
-Ouvrir le projet dans un terminal dans le dossier backend et installer les modules.
+Ouvrir le projet dans un terminal dans le dossier backend et installer les dépendances et lancer le serveur.
 ```sh
+cd backend
 npm install
 ```
 
-Créer un fichier .env dans le projet avec les variables d'environnements correspondantes aux informations de connexion vers la base de données, le port de l'API, les informations du jsonwebtoken ainsi que le sallage bcrypt. 
+Créer un fichier .env dans le projet avec les variables d'environnements correspondantes aux informations de connexion vers la base de données, le port de l'API, les configurations jsonwebtoken et bcrypt. 
 ```sh
 SERVER_PORT=8888
 DB_HOST
@@ -39,7 +41,7 @@ npm run dev
 # Lancer la seed avec l'admin par défaut
 Ouvrir et configurer le fichier config.json comprenant les environnements.
 
-Entrer dans le terminal dans le dossier backend.
+Entrer dans le terminal dans le dossier backend pour générer un administrateur par défaut.
 ```
 npm i sequelize-cli
 npx sequelize-cli db:seed:all
@@ -55,7 +57,7 @@ Annuler la seed :
 npx sequelize-cli db:seed:undo
 ``` 
 
-# **Utilisation de l'API (avec l'utilitaire Postman)**
+# Utilisation de l'API (avec l'utilitaire Postman)
 
 Installer l'utilitaire Postman.
 
@@ -63,7 +65,7 @@ Une fois l'API configurée, lancer Postman.
 
 Entrer la route à utiliser.
 ****
-# Liste des routes :
+# Routage :
 ### Liste des Router :
 #### Home API
 ```
@@ -122,7 +124,7 @@ Entrer la route à utiliser.
 /users
 ```
 ### Liste des Controllers :
-##### get
+### get
 getAll
 ```
 /
@@ -135,7 +137,7 @@ getMe
 ```
 /me
 ```
-##### put
+### put
 add
 ```
 /
@@ -150,7 +152,7 @@ addIn
 ```
 /route/:id
 ```
-##### patch
+### patch
 update
 ```
 /:id
@@ -159,7 +161,7 @@ updateMy
 ```
 /me/:id
 ```
-##### post
+### post
 untrash
 ```
 /untrash/:id
@@ -168,7 +170,7 @@ untrashMy
 ```
 /me/untrash/:id
 ```
-##### delete
+### delete
 trash
 ```
 /trash/:id
@@ -189,6 +191,7 @@ deleteIn
 ```
 /route/:id
 ```
+****
 # EXEMPLE
 ```http://localhost:8888/admin/menus/recipe/10``` en **PUT** permet d'ajouter la recette avec l'id ```10``` à un menu.
 
