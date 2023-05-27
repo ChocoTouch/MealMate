@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { userService } from '@/_services/user.service';
+import { userService } from '@/_services/admin/user.service';
 
 const UserEdit = () => {
-    const { uid } = useParams();
+    const { id } = useParams();
     let navigate = useNavigate();
 
     const [user, setUser] = useState([]);
-    const flag = useRef(false)
+    const flag = useRef(false);
 
     const onChange = (e) => {
         setUser({
@@ -18,7 +18,6 @@ const UserEdit = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(user);
         userService.updateUser(user)
             .then(res => {
                 navigate('../index')
@@ -27,10 +26,9 @@ const UserEdit = () => {
     }
     useEffect(()=>{
         if (flag.current === false) {
-            userService.getUser(uid)
+            userService.getUser(id)
                 .then(res => {
                     setUser(res.data.data);
-                    console.log(res.data.data)
                 })
                 .catch(err => console.log(err))
         }
@@ -45,23 +43,23 @@ const UserEdit = () => {
             <form onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
-                    <input type="text" name="name" value={user.name} onChange={onChange} />
+                    <input type="text" name="name" id="name" value={user.name} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="firstname">Prénom</label>
-                    <input type="text" name="firstname" value={user.firstname} onChange={onChange} />
+                    <input type="text" name="firstname" id="firstname" value={user.firstname} onChange={onChange}/>
                 </div>
                 <div className="group">
                     <label htmlFor="username">Pseudo</label>
-                    <input type="text" name="username" value={user.username} onChange={onChange} />
+                    <input type="text" name="username" id="username" value={user.username} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="email">Email</label>
-                    <input type="email" name="email" value={user.email} onChange={onChange} />
+                    <input type="email" name="email" id="email" value={user.email} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="roles">Rôles</label>
-                    <input type="text" name="roles" value={user.roles} onChange={onChange} />
+                    <input type="text" name="roles" id="roles" value={user.roles} onChange={onChange}/>
                 </div>
                 <div className="group">
                     <button>Modifier</button>

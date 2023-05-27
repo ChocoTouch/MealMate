@@ -1,4 +1,4 @@
-import Axios from './caller.service'
+import Axios from '../caller.service'
 
 /**
  * Récupératoin de la liste des utilisateurs

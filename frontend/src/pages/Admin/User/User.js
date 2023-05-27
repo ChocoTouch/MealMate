@@ -1,19 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 //import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-import { userService } from '@/_services/user.service';
+import { userService } from '@/_services/admin/user.service';
 
 const User = () => {
-    // let navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const flag = useRef(false)
-
-    // const {isLoading, data} = useQuery('users',() => userService.getAllUsers())
-    // const users = data || {"data": []};
-
-    // if(isLoading){
-    //     return <div>Chargement...</div>
-    // }
 
     useEffect(() => {
         if (flag.current === false) {
@@ -28,7 +20,6 @@ const User = () => {
     }, [])
 
     const delUser = (userId) => {
-        console.log(userId)
         userService.deleteUser(userId)
             .then(res =>{
                 setUsers((current) => current.filter(user => user.id !== userId))

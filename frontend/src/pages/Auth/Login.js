@@ -32,11 +32,11 @@ const Login = () => {
         <form onSubmit={onSubmit}>
             <div className='group'>
                 <label htmlFor='email'>Adresse E-mail</label>
-                <input type="email" name="email" value={credentials.email} onChange={onChange} />
+                <input type="email" name="email" id="email" value={credentials.email} onChange={onChange} autoComplete="off"/>
             </div>
             <div className='group'>
                 <label htmlFor='password'>Mot de passe</label>
-                <input type="password" name="password" value={credentials.password} onChange={onChange} />
+                <input type="password" name="password" id="password" value={credentials.password} onChange={onChange} autoComplete="off"/>
             </div>
             <div className='group'>
                 <button>Connexion</button>

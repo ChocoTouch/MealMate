@@ -25,52 +25,52 @@ const AdminRouter = () => {
                     <Route path="user">
                         <Route path="index" element={<User/>}/>
                         <Route path="add" element={<UserAdd/>}/>
-                        <Route path="edit/:uid" element={<UserEdit/>}/>
+                        <Route path="edit/:id" element={<UserEdit/>}/>
                     </Route>
                     <Route path="recipe">
                         <Route path="index" element={<Recipe/>}/>
                         <Route path="add" element={<RecipeAdd/>}/>
-                        <Route path="edit" element={<RecipeEdit/>}/>
+                        <Route path="edit/:id" element={<RecipeEdit/>}/>
                     </Route>
                     <Route path="menu">
                         <Route path="index" element={<Menu/>}/>
                         <Route path="add" element={<MenuAdd/>}/>
-                        <Route path="edit" element={<MenuEdit/>}/>
+                        <Route path="edit/:id" element={<MenuEdit/>}/>
                     </Route>
                     <Route path="theme">
                         <Route path="index" element={<Theme/>}/>
                         <Route path="add" element={<ThemeAdd/>}/>
-                        <Route path="edit" element={<ThemeEdit/>}/>
+                        <Route path="edit/:id" element={<ThemeEdit/>}/>
                     </Route>
                     <Route path="meal">
                         <Route path="index" element={<Meal/>}/>
                         <Route path="add" element={<MealAdd/>}/>
-                        <Route path="edit" element={<MealEdit/>}/>
+                        <Route path="edit/:id" element={<MealEdit/>}/>
                     </Route>
                     <Route path="ingredient">
                         <Route path="index" element={<Ingredient/>}/>
                         <Route path="add" element={<IngredientAdd/>}/>
-                        <Route path="edit" element={<IngredientEdit/>}/>
+                        <Route path="edit/:id" element={<IngredientEdit/>}/>
                     </Route>
                     <Route path="diet">
                         <Route path="index" element={<Diet/>}/>
                         <Route path="add" element={<DietAdd/>}/>
-                        <Route path="edit" element={<DietEdit/>}/>
+                        <Route path="edit/:id" element={<DietEdit/>}/>
                     </Route>
                     <Route path="day">
                         <Route path="index" element={<Days/>}/>
                         <Route path="add" element={<DaysAdd/>}/>
-                        <Route path="edit" element={<DaysEdit/>}/>
+                        <Route path="edit/:id" element={<DaysEdit/>}/>
                     </Route>
                     <Route path="course">
                         <Route path="index" element={<Course/>}/>
                         <Route path="add" element={<CourseAdd/>}/>
-                        <Route path="edit" element={<CourseEdit/>}/>
+                        <Route path="edit/:id" element={<CourseEdit/>}/>
                     </Route>
                     <Route path="category">
                         <Route path="index" element={<Category/>}/>
                         <Route path="add" element={<CategoryAdd/>}/>
-                        <Route path="edit" element={<CategoryEdit/>}/>
+                        <Route path="edit/:id" element={<CategoryEdit/>}/>
                     </Route>
                     
                     <Route path="*" element={<Error />} />
