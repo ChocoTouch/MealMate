@@ -1,17 +1,40 @@
-import React, { useEffect, useState } from 'react';
-//Limport { useNavigate } from 'react-router-dom';
-import { userService } from '../../../_services/user.services';
+import React, { useEffect, useRef, useState } from 'react';
+//import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
+import { userService } from '@/_services/user.service';
 
 const User = () => {
-    //let navigate = useNavigate();
+    // let navigate = useNavigate();
     const [users, setUsers] = useState([]);
+    const flag = useRef(false)
+
+    // const {isLoading, data} = useQuery('users',() => userService.getAllUsers())
+    // const users = data || {"data": []};
+
+    // if(isLoading){
+    //     return <div>Chargement...</div>
+    // }
+
     useEffect(() => {
-        userService.getAllUsers()
-            .then(res => {
-                setUsers(res.data.data);
+        if (flag.current === false) {
+            userService.getAllUsers()
+                .then(res => {
+                    setUsers(res.data.data);
+                })
+                .catch(err => console.log(err))
+        }
+
+        return () => flag.current = true
+    }, [])
+
+    const delUser = (userId) => {
+        console.log(userId)
+        userService.deleteUser(userId)
+            .then(res =>{
+                setUsers((current) => current.filter(user => user.id !== userId))
             })
             .catch(err => console.log(err))
-    }, [])
+    }
 
 
     return (
@@ -30,13 +53,14 @@ const User = () => {
                         <th>Date de création</th>
                         <th>Date d'édition</th>
                         <th>Date de suppression</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         users.map(user => (
                             <tr key={user.id}>
-                                <td >{user.id}</td>
+                                <td><Link to={`../edit/${user.id}` }>{user.id}</Link></td>
                                 <td>{user.email}</td>
                                 <td>{user.firstname}</td>
                                 <td>{user.name}</td>
@@ -46,6 +70,7 @@ const User = () => {
                                 <td>{user.createdAt}</td>
                                 <td>{user.updatedAt}</td>
                                 <td>{user.deletedAt}</td>
+                                <td><span className='del_ubtn' onClick={() => delUser(user.id)}>Supprimer</span></td>
                             </tr>
                         ))
                     }
