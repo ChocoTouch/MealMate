@@ -12,7 +12,6 @@ const Recipe = () => {
             recipeService.getAllRecipes()
                 .then(res => {
                     setRecipes(res.data.data);
-                    console.log(res.data.data)
                 })
                 .catch(err => console.log(err))
         }
@@ -33,7 +32,7 @@ const Recipe = () => {
 
     return (
         <div className='Recipe'>
-            RECIPE LIST
+            liste des recettes :
             <table>
                 <thead>
                     <tr>

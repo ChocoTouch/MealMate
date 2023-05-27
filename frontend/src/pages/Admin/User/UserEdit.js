@@ -39,27 +39,27 @@ const UserEdit = () => {
 
     return (
         <div className='UserEdit'>
-            USER EDIT
+            édition d'un utilisateur :
             <form onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
-                    <input type="text" name="name" id="name" value={user.name} onChange={onChange} autoComplete="off"/>
+                    <input type="text" name="name" id="name" defaultValue={user.name} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="firstname">Prénom</label>
-                    <input type="text" name="firstname" id="firstname" value={user.firstname} onChange={onChange}/>
+                    <input type="text" name="firstname" id="firstname" defaultValue={user.firstname} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="username">Pseudo</label>
-                    <input type="text" name="username" id="username" value={user.username} onChange={onChange} autoComplete="off"/>
+                    <input type="text" name="username" id="username" defaultValue={user.username} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="email">Email</label>
-                    <input type="email" name="email" id="email" value={user.email} onChange={onChange} autoComplete="off"/>
+                    <input type="email" name="email" id="email" defaultValue={user.email} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="roles">Rôles</label>
-                    <input type="text" name="roles" id="roles" value={user.roles} onChange={onChange}/>
+                    <input type="text" name="roles" id="roles" defaultValue={user.roles} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <button>Modifier</button>

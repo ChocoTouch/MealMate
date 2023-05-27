@@ -30,7 +30,7 @@ const User = () => {
 
     return (
         <div className='User'>
-            USER LIST
+            liste des utilisateurs
             <table>
                 <thead>
                     <tr>

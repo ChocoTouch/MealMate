@@ -35,7 +35,6 @@ const RecipeEdit = () => {
                     setRecipe(res.data.data);
                     setIngredients(res.data.data.Ingredients);
                     setDiets(res.data.data.Diets);
-
                 })
                 .catch(err => console.log(err))
         }
@@ -46,30 +45,30 @@ const RecipeEdit = () => {
 
     return (
         <div className='RecipeEdit'>
-            Recipe EDIT
+            édition d'une recette :
             <form onSubmit={onSubmit}>
                 <div className="group">
                     <p>Créateur : {recipe.user_username}</p>
                 </div>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
-                    <input type="text" name="name" id="name" value={recipe.name} onChange={onChange} />
+                    <input type="text" name="name" id="name" defaultValue={recipe.name} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="description">Description</label>
-                    <input type="text" name="description" id="description" value={recipe.description} onChange={onChange} />
+                    <input type="text" name="description" id="description" defaultValue={recipe.description} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="instructions">Instructions</label>
-                    <input type="text" name="instructions" id="instructions" value={recipe.instructions} onChange={onChange} />
+                    <input type="text" name="instructions" id="instructions" defaultValue={recipe.instructions} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="difficulty">Difficulté</label>
-                    <input type="text" name="difficulty" id="difficulty" value={recipe.difficulty} onChange={onChange} />
+                    <input type="text" name="difficulty" id="difficulty" defaultValue={recipe.difficulty} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <label htmlFor="theme_id">ID Thème</label>
-                    <input type="text" name="theme_id" id="theme_id" value={recipe.theme_id} onChange={onChange} />
+                    <input type="text" name="theme_id" id="theme_id" defaultValue={recipe.theme_id} onChange={onChange} autoComplete="off"/>
                 </div>
                 {/* <div className="group">
                     <label htmlFor="ingredients">Ingrédients</label>
