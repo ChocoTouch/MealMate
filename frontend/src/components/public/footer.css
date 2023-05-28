@@ -1,4 +1,16 @@
-.PFooter{
+.pfooter{
     text-align: center;
-    border: solid 1px black;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.pfooter .image{
+    width: 100%;
+}
+
+.pfooter .container{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }

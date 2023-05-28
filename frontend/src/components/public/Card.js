@@ -5,7 +5,7 @@ const Card = ({recipe, image}) => {
     return (
 
         <article className='card_article'>
-            <img src={image}/>
+            <img src={image} alt="random"/>
             <div>{recipe.description}</div>
         </article>
 

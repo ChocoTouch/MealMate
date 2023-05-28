@@ -1,0 +1,33 @@
+.searchbar-input{
+    padding: 1vw 3vw;
+    font-size: 1vw;
+    border-radius: 5vw;
+    border: none;
+}
+
+.searchbar-title{
+    font-size: 2vw;
+    margin: auto;
+    width: 80%;
+    line-height: 3vw;
+}
+.searchbar-text{
+    font-size: 1vw;
+    padding: 0 3vw;
+    margin: 0.8vw 0 2.8vw;
+}
+
+.searchbar-image{
+    width: 100%;
+}
+
+.searchbar-container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: absolute;
+    color: white;
+    top: 13vw;
+    left: 30%;
+    width: 40%;
+}

@@ -1,12 +1,16 @@
 import React from 'react';
 import './footer.css'
-
+import footerimage from '../../assets/images/FooterImage.png'
 const Footer = () => {
     return (
-        <footer className='PFooter'>
-            <p>Concepteur & Développeur : Anthony Bauchet</p>
-            <p>Designer Graphique : Tony Myrtil</p>
-            <p>© All Rights Reserved</p>
+        <footer className='pfooter'>
+            <img className='image' src={footerimage} />
+            <div className='container'>
+                <p className='text'>Concepteur & Développeur : Anthony Bauchet</p>
+                <p className='text'>Designer Graphique : Tony Myrtil</p>
+                <p className='text'>© All Rights Reserved</p>
+            </div>
+
         </footer>
     );
 };

@@ -13,8 +13,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<PublicRouter />} />
-
-
           <Route path="/admin/*" element={
             <AuthGuard>
               <AdminRouter />
