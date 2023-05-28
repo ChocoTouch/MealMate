@@ -10,7 +10,19 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER(10),
         primaryKey: true,
         autoIncrement: true,
-      }
+      },
+      course_id: {
+        type: DataTypes.INTEGER(10),
+        allowNull:false,
+      },
+      meal_id: {
+        type: DataTypes.INTEGER(10),
+        allowNull:false,
+      },
+      day_id: {
+        type: DataTypes.INTEGER(10),
+        allowNull:false,
+      },
     },
   );
   return Menu_recipe;

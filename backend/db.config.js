@@ -26,14 +26,27 @@ db.Theme = require("./models/theme")(sequelize);
 db.Diet = require("./models/diet")(sequelize);
 db.Recipe_diet = require("./models/recipe_diet")(sequelize);
 db.Course = require("./models/course")(sequelize);
-db.Course_menu = require("./models/course_menu")(sequelize);
+//db.Course_menu = require("./models/course_menu")(sequelize);
 db.DayOfWeek = require("./models/dayOfWeek")(sequelize);
-db.DayOfWeek_menu = require("./models/dayOfWeek_menu")(sequelize);
+//db.DayOfWeek_menu = require("./models/dayOfWeek_menu")(sequelize);
 db.Meal = require("./models/meal")(sequelize);
-db.Meal_menu = require("./models/meal_menu")(sequelize);
+//db.Meal_menu = require("./models/meal_menu")(sequelize);
 db.Recipe_ingredient = require("./models/recipe_ingredient")(sequelize);
 db.Menu_recipe = require("./models/menu_recipe")(sequelize);
 db.Ingredient_category = require("./models/ingredient_category")(sequelize);
+
+
+/* ManyToOne Course Menu_Recipe */
+db.Course.hasMany(db.Menu_recipe, { foreignKey: "course_id" });
+db.Menu_recipe.belongsTo(db.Course, { foreignKey: "course_id" });
+
+/* ManyToOne DayOfWeek Menu_Recipe */
+db.DayOfWeek.hasMany(db.Menu_recipe, { foreignKey: "day_id" });
+db.Menu_recipe.belongsTo(db.DayOfWeek, { foreignKey: "day_id" });
+
+/* ManyToOne Meal Menu_Recipe */
+db.Meal.hasMany(db.Menu_recipe, { foreignKey: "meal_id" });
+db.Menu_recipe.belongsTo(db.Meal, { foreignKey: "meal_id" });
 
 /* ManyToOne Theme Recipe */
 db.Theme.hasMany(db.Recipe, { foreignKey: "theme_id" });
@@ -85,28 +98,28 @@ db.Comment.belongsTo(db.Menu, { foreignKey: "menu_id" });
 
 
 /* Super ManyToMany Menu Course */
-db.Course.belongsToMany(db.Menu, { through: db.Course_menu });
-db.Menu.belongsToMany(db.Course, { through: db.Course_menu });
-db.Course_menu.belongsTo(db.Course);
-db.Course_menu.belongsTo(db.Menu);
-db.Course.hasMany(db.Course_menu);
-db.Menu.hasMany(db.Course_menu);
+// db.Course.belongsToMany(db.Menu, { through: db.Course_menu });
+// db.Menu.belongsToMany(db.Course, { through: db.Course_menu });
+// db.Course_menu.belongsTo(db.Course);
+// db.Course_menu.belongsTo(db.Menu);
+// db.Course.hasMany(db.Course_menu);
+// db.Menu.hasMany(db.Course_menu);
 
 /* Super ManyToMany DayOfWeek Menu */
-db.DayOfWeek.belongsToMany(db.Menu, { through: db.DayOfWeek_menu });
-db.Menu.belongsToMany(db.DayOfWeek, { through: db.DayOfWeek_menu });
-db.DayOfWeek_menu.belongsTo(db.DayOfWeek);
-db.DayOfWeek_menu.belongsTo(db.Menu);
-db.DayOfWeek.hasMany(db.DayOfWeek_menu);
-db.Menu.hasMany(db.DayOfWeek_menu);
+// db.DayOfWeek.belongsToMany(db.Menu, { through: db.DayOfWeek_menu });
+// db.Menu.belongsToMany(db.DayOfWeek, { through: db.DayOfWeek_menu });
+// db.DayOfWeek_menu.belongsTo(db.DayOfWeek);
+// db.DayOfWeek_menu.belongsTo(db.Menu);
+// db.DayOfWeek.hasMany(db.DayOfWeek_menu);
+// db.Menu.hasMany(db.DayOfWeek_menu);
 
 /* Super ManyToMany Meal Menu */
-db.Meal.belongsToMany(db.Menu, { through: db.Meal_menu });
-db.Menu.belongsToMany(db.Meal, { through: db.Meal_menu });
-db.Meal_menu.belongsTo(db.Meal);
-db.Meal_menu.belongsTo(db.Menu);
-db.Meal.hasMany(db.Meal_menu);
-db.Menu.hasMany(db.Meal_menu);
+// db.Meal.belongsToMany(db.Menu, { through: db.Meal_menu });
+// db.Menu.belongsToMany(db.Meal, { through: db.Meal_menu });
+// db.Meal_menu.belongsTo(db.Meal);
+// db.Meal_menu.belongsTo(db.Menu);
+// db.Meal.hasMany(db.Meal_menu);
+// db.Menu.hasMany(db.Meal_menu);
 
 /* Super ManyToMany Recipe Diet */
 db.Recipe.belongsToMany(db.Diet, { through: db.Recipe_diet });

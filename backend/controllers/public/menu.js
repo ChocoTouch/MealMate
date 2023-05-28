@@ -7,6 +7,7 @@ const Course = DB.Course;
 const Theme = DB.Theme;
 const DayOfWeek = DB.DayOfWeek;
 const Comment = DB.Comment;
+const Menu_Recipe = DB.Menu_recipe;
 const { RequestError, MenuError} = require("../../error/customError");
 
 exports.getAllMenus = (req, res, next) => {
@@ -32,29 +33,21 @@ exports.getMenu = async (req, res, next) => {
 					through: {
 						attributes: [],
 					},
-					include: [{ model: Theme, attributes: ["id", "name", "slug", "description"] }],
+					include: [
+						{ model: Theme, attributes: ["id", "name", "slug", "description"] },
+						{ model: User, attributes: ["id", "username", "slug"] },
+						{
+							model: Menu_Recipe,
+							attributes: ["id"],
+							include: [
+								{ model: Course, attributes: ["id", "name", "slug", "description"] },
+								{ model: Meal, attributes: ["id", "name", "slug", "description"] },
+								{ model: DayOfWeek, attributes: ["id", "name", "slug"] },
+							],
+						},
+					],
 				},
-				{
-					model: Meal,
-					attributes: ["id", "name", "slug", "description"],
-					through: {
-						attributes: [],
-					},
-				},
-				{
-					model: DayOfWeek,
-					attributes: ["id", "name", "slug"],
-					through: {
-						attributes: [],
-					},
-				},
-				{
-					model: Course,
-					attributes: ["id", "name", "slug", "description"],
-					through: {
-						attributes: [],
-					},
-				},
+
 				{
 					model: Comment,
 					attributes: ["id", "message", "user_username"],

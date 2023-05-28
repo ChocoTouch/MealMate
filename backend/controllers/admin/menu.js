@@ -7,7 +7,16 @@ const User = DB.User;
 const Course = DB.Course;
 const DayOfWeek = DB.DayOfWeek;
 const Comment = DB.Comment;
-const { RequestError, RecipeError, MenuError, UserError, CourseError } = require("../../error/customError");
+const Menu_Recipe = DB.Menu_recipe;
+const {
+	RequestError,
+	RecipeError,
+	MenuError,
+	UserError,
+	CourseError,
+	MealError,
+	DayOfWeekError,
+} = require("../../error/customError");
 
 exports.getAllMenus = (req, res, next) => {
 	Menu.findAll()
@@ -21,7 +30,16 @@ exports.getMyMenus = async (req, res, next) => {
 			where: {
 				user_id: req.decodedToken.id,
 			},
-			include: [{ model: Recipe }, { model: Meal }, { model: DayOfWeek }, { model: Course }, { model: Comment }],
+			include: [
+				{
+					model: Recipe,
+					include: [{ model: Menu_Recipe, include: [Course, Meal, DayOfWeek] }],
+					through: {
+						attributes: [],
+					},
+				},
+				{ model: Comment },
+			],
 		});
 
 		return res.json({ data: menus });
@@ -40,7 +58,17 @@ exports.getMenu = async (req, res, next) => {
 
 		let menu = await Menu.findOne({
 			where: { id: menuID },
-			include: [{ model: User }, { model: Recipe }, { model: Meal }, { model: DayOfWeek }, { model: Course }],
+			include: [
+				{ model: User },
+				{
+					model: Recipe,
+					include: [{ model: Menu_Recipe, include: [Course, Meal] }],
+					through: {
+						attributes: [],
+					},
+				},
+				{ model: Comment },
+			],
 		});
 
 		if (menu === null) {
@@ -103,8 +131,8 @@ exports.updateMenu = async (req, res, next) => {
 
 			req.body.user_username = user.username;
 		}
-		
-		if(name){		
+
+		if (name) {
 			req.body.slug = slugify(name);
 		}
 
@@ -164,12 +192,12 @@ exports.deleteMenu = async (req, res, next) => {
 	}
 };
 
-exports.addMealInMyMenu = async (req, res, next) => {
+exports.addRecipeInMyMenu = async (req, res, next) => {
 	try {
-		let mealID = parseInt(req.params.id);
-		const { menu_id } = req.body;
+		let recipeID = parseInt(req.params.id);
+		const { menu_id, course_id, meal_id, day_id } = req.body;
 
-		if (!mealID || !menu_id) {
+		if (!recipeID || !menu_id || !course_id || !meal_id || !day_id) {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
@@ -181,198 +209,28 @@ exports.addMealInMyMenu = async (req, res, next) => {
 			throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
 		}
 
-		let meal = await Meal.findOne({ where: { id: mealID } });
-
-		if (meal === null) {
-			throw new RecipeError("Ce repas n'existe pas .", 0);
-		}
-
-		let menuMeal = await menu.addMeal(meal);
-
-		return res.json({
-			message: "Ce repas a bien été ajoutée à votre menu .",
-			data: menuMeal,
+		let course = await Course.findOne({
+			where: { id: course_id },
 		});
-	} catch (err) {
-		next(err);
-	}
-};
-
-exports.deleteMealInMyMenu = async (req, res, next) => {
-	try {
-		let mealID = parseInt(req.params.id);
-		const { menu_id } = req.body;
-
-		if (!menu_id || !mealID) {
-			throw new RequestError("Paramètre(s) manquant(s) .");
-		}
-
-		let menu = await Menu.findOne({
-			where: { id: menu_id, user_id: req.decodedToken.id },
-		});
-
-		if (menu === null) {
-			throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas .", 0);
-		}
-
-		let meal = await Meal.findOne({ where: { id: mealID } });
-
-		if (meal === null) {
-			throw new MealError("Ce repas n'existe pas .", 0);
-		}
-
-		await menu.removeMeal(meal);
-
-		return res.status(204).json({});
-	} catch (err) {
-		next(err);
-	}
-};
-
-exports.addDayOfWeekInMyMenu = async (req, res, next) => {
-	try {
-		let dayOfWeekID = parseInt(req.params.id);
-		const { menu_id } = req.body;
-
-		if (!dayOfWeekID || !menu_id) {
-			throw new RequestError("Paramètre(s) manquant(s) .");
-		}
-
-		let menu = await Menu.findOne({
-			where: { id: menu_id, user_id: req.decodedToken.id },
-		});
-
-		if (menu === null) {
-			throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
-		}
-
-		let dayOfWeek = await DayOfWeek.findOne({ where: { id: dayOfWeekID } });
-
-		if (dayOfWeek === null) {
-			throw new RecipeError("Ce jour n'existe pas .", 0);
-		}
-
-		let menuDayOfWeek = await menu.addDayOfWeek(dayOfWeek);
-
-		return res.json({
-			message: "Ce jour a bien été ajoutée à votre menu .",
-			data: menuDayOfWeek,
-		});
-	} catch (err) {
-		next(err);
-	}
-};
-
-exports.deleteDayOfWeekInMyMenu = async (req, res, next) => {
-	try {
-		let dayOfWeekID = parseInt(req.params.id);
-		const { menu_id } = req.body;
-
-		if (!menu_id || !dayOfWeekID) {
-			throw new RequestError("Paramètre(s) manquant(s) .");
-		}
-
-		let menu = await Menu.findOne({
-			where: { id: menu_id, user_id: req.decodedToken.id },
-		});
-
-		if (menu === null) {
-			throw new MenuError("Ce Menu n'existe pas ou ne vous appartient pas .", 0);
-		}
-		let dayOfWeek = await DayOfWeek.findOne({ where: { id: dayOfWeekID } });
-
-		if (dayOfWeek === null) {
-			throw new DayOfWeekError("Ce Jour n'existe pas .", 0);
-		}
-
-		await menu.removeDayOfWeek(dayOfWeek);
-
-		return res.status(204).json({});
-	} catch (err) {
-		next(err);
-	}
-};
-
-exports.addCourseInMyMenu = async (req, res, next) => {
-	try {
-		let courseID = parseInt(req.params.id);
-		const { menu_id } = req.body;
-
-		if (!courseID || !menu_id ) {
-			throw new RequestError("Paramètre(s) manquant(s) .");
-		}
-
-		let menu = await Menu.findOne({
-			where: { id: menu_id, user_id: req.decodedToken.id },
-		});
-
-		if (menu === null) {
-			throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
-		}
-
-		let course = await Course.findOne({ where: { id: courseID } });
-
-		if (course === null) {
-			throw new CourseError("Ce plat n'existe pas .", 0);
-		}
-
-		let menuCourse = await menu.addCourse(course);
-
-		return res.json({
-			message: "Ce plat a bien été ajoutée à votre menu .",
-			data: menuCourse,
-		});
-	} catch (err) {
-		next(err);
-	}
-};
-
-exports.deleteCourseInMyMenu = async (req, res, next) => {
-	try {
-		let courseID = parseInt(req.params.id);
-		const { menu_id } = req.body;
-
-		if (!menu_id || !courseID) {
-			throw new RequestError("Paramètre(s) manquant(s) .");
-		}
-
-		let menu = await Menu.findOne({
-			where: { id: menu_id, user_id: req.decodedToken.id },
-		});
-
-		if (menu === null) {
-			throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas .", 0);
-		}
-
-		let course = await Course.findOne({ where: { id: courseID } });
 
 		if (course === null) {
 			throw new CourseError("Ce Plat n'existe pas .", 0);
 		}
 
-		await menu.removeCourse(course);
-
-		return res.status(204).json({});
-	} catch (err) {
-		next(err);
-	}
-};
-
-exports.addRecipeInMyMenu = async (req, res, next) => {
-	try {
-		let recipeID = parseInt(req.params.id);
-		const { menu_id } = req.body;
-
-		if (!recipeID || !menu_id) {
-			throw new RequestError("Paramètre(s) manquant(s) .");
-		}
-
-		let menu = await Menu.findOne({
-			where: { id: menu_id, user_id: req.decodedToken.id },
+		let meal = await Meal.findOne({
+			where: { id: meal_id },
 		});
 
-		if (menu === null) {
-			throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
+		if (meal === null) {
+			throw new MealError("Ce Repas n'existe pas .", 0);
+		}
+
+		let day = await DayOfWeek.findOne({
+			where: { id: day_id },
+		});
+
+		if (day === null) {
+			throw new DayOfWeekError("Ce Jour n'existe pas .", 0);
 		}
 
 		let recipe = await Recipe.findOne({ where: { id: recipeID } });
@@ -381,7 +239,13 @@ exports.addRecipeInMyMenu = async (req, res, next) => {
 			throw new RecipeError("Cette recette n'existe pas .", 0);
 		}
 
-		let menuRecipe = await menu.addRecipe(recipe);
+		let menuRecipe = await menu.addRecipe(recipe, {
+			through: {
+				day_id: day_id,
+				course_id: course_id,
+				meal_id: meal_id,
+			},
+		});
 
 		return res.json({
 			message: "La recette a bien été ajoutée à votre menu .",
@@ -431,9 +295,9 @@ exports.addMyMenu = async (req, res, next) => {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
-		let menu = await Menu.findOne({ where: { user_id: req.decodedToken.id, name: name}});
+		let menu = await Menu.findOne({ where: { user_id: req.decodedToken.id, name: name } });
 
-		if (menu !== null){
+		if (menu !== null) {
 			throw new RequestError(`Vous avez déjà un menu nommé ${name} .`, 0);
 		}
 
@@ -469,9 +333,9 @@ exports.updateMyMenu = async (req, res, next) => {
 			throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
 		}
 
-		menu = await Menu.findOne({ where: { user_id: req.decodedToken.id, name: name}});
+		menu = await Menu.findOne({ where: { user_id: req.decodedToken.id, name: name } });
 
-		if (menu !== null){
+		if (menu !== null) {
 			throw new RequestError(`Vous avez déjà un menu nommé ${name} .`, 0);
 		}
 

@@ -25,18 +25,6 @@ router.delete("/trash/:id", menuController.trashMenu);
 
 router.delete("/:id", menuController.deleteMenu);
 
-router.put("/meal/:id", menuController.addMealInMyMenu);
-
-router.delete("/meal/:id", menuController.deleteMealInMyMenu);
-
-router.put("/day/:id", menuController.addDayOfWeekInMyMenu);
-
-router.delete("/day/:id", menuController.deleteDayOfWeekInMyMenu);
-
-router.put("/course/:id", menuController.addCourseInMyMenu);
-
-router.delete("/course/:id", menuController.deleteCourseInMyMenu);
-
 router.put("/recipe/:id", menuController.addRecipeInMyMenu);
 
 router.delete("/recipe/:id", menuController.deleteRecipeInMyMenu);
