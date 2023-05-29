@@ -7,8 +7,14 @@ const RecipeEdit = () => {
     let navigate = useNavigate();
 
     const [recipe, setRecipe] = useState([]);
-    const [ingredients, setIngredients] = useState([]);
-    const [diets, setDiets] = useState([]);
+    // const [ingredients, setIngredients] = useState([]);
+    // const [diets, setDiets] = useState([]);
+    // const [theme, setTheme] = useState([]);
+    const [tables, setTables] = useState({
+        diets : [],
+        ingredients : [],
+        theme : []
+    })
 
     const flag = useRef(false);
 
@@ -33,8 +39,15 @@ const RecipeEdit = () => {
             recipeService.getRecipe(id)
                 .then(res => {
                     setRecipe(res.data.data);
-                    setIngredients(res.data.data.Ingredients);
-                    setDiets(res.data.data.Diets);
+                    // setIngredients(res.data.data.Ingredients);
+                    // setDiets(res.data.data.Diets);
+                    setTables({
+                        diets : res.data.data.Diets,
+                        ingredients : res.data.data.Ingredients,
+                        theme : res.data.data.Theme
+                    })
+                    console.log(res.data.data)
+                    console.log(tables)
                 })
                 .catch(err => console.log(err))
         }
@@ -76,14 +89,14 @@ const RecipeEdit = () => {
                 </div> */}
                 <div className="group">
                     Ingrédients : {
-                        ingredients.map(ingredient => (
+                        tables.ingredients.map(ingredient => (
                             <p key={ingredient.id}>{ingredient.name}</p>
                         ))
                     }
                 </div>
                 <div className="group">
                     Régimes : {
-                        diets.map(diet => (
+                        tables.diets.map(diet => (
                             <p key={diet.id}>{diet.name}</p>
                         ))
                     }

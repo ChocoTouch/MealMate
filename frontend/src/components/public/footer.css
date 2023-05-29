@@ -1,16 +1,22 @@
 .pfooter{
     text-align: center;
-    position: absolute;
-    bottom: 0;
+    color: black;
     width: 100%;
+    position: relative;
+    bottom: 0;
 }
 
 .pfooter .image{
     width: 100%;
+    position: relative;
+    top: 9px;
 }
 
 .pfooter .container{
     position: absolute;
-    bottom: 0;
+    bottom: 5vw;
     width: 100%;
+}
+.container .text{
+    margin: 0;
 }

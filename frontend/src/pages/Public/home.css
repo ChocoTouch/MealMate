@@ -1,26 +1,14 @@
-.searchbar-input{
-    padding: 1vw 3vw;
-    font-size: 1vw;
-    border-radius: 5vw;
-    border: none;
+
+
+@media (max-width: 850px) {
+    .home{
+        height: 100%;
+    }
 }
 
-.searchbar-title{
-    font-size: 2vw;
-    margin: auto;
-    width: 80%;
-    line-height: 3vw;
-}
-.searchbar-text{
-    font-size: 1vw;
-    padding: 0 3vw;
-    margin: 0.8vw 0 2.8vw;
-}
-
-.searchbar-image{
+.recipes-searchbar .searchbar-image{
     width: 100%;
 }
-
 .searchbar-container{
     display: flex;
     flex-direction: column;
@@ -30,4 +18,42 @@
     top: 13vw;
     left: 30%;
     width: 40%;
+}
+
+.searchbar-container .searchbar-input{
+    padding: 1vw 3vw;
+    font-size: 1vw;
+    border-radius: 5vw;
+    border: none;
+}
+
+.searchbar-container .searchbar-title{
+    font-size: 2vw;
+    margin: auto;
+    width: 80%;
+    line-height: 3vw;
+}
+.searchbar-container .searchbar-text{
+    font-size: 1vw;
+    padding: 0 3vw;
+    margin: 0.8vw 0 2.8vw;
+}
+
+.recipes-list{
+    margin: 2vw 0 2vw 4vw;
+}
+
+.recipes-list .list-cards{
+    display:flex;
+    border-left: 2px solid #9A2727;
+}
+
+.recipes-list .list-title{
+    font-size: 2vw;
+}
+
+.recipes-list .left-bar{
+    width: 1vw;
+    background: #9A2727;
+    height: 80%;
 }

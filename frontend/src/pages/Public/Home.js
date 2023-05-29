@@ -26,20 +26,24 @@ const Home = () => {
     }
     return (
         <div className='home'>
-            <section className='section-searchbar'>
+            <section className='recipes-searchbar'>
                 <img src={searchbarimage} alt="Filet de saumon cuisiné" className='searchbar-image' />
-                <div className='searchbar-container'>
+            </section>
+            <div className='searchbar-container'>
                     <h1 className='searchbar-title'>Explorez les recettes<br />du mmmmmonde entier</h1>
                     <p className='searchbar-text'>Plongez vous dans l'univers des recettes de cuisine provenant du monde entier et créées par des milliers de personnes professionnelles ou amatrices</p>
                     <input type='text' placeholder='Recherche...' name="searchbar-input" id="searchbar-input" className='searchbar-input' />
-                </div>
-            </section>
+            </div>
             <section className='recipes-list'>
+                    <h1 className='list-title'>Dernières recettes</h1>
+                    <div className='left-bar'></div>
+                <div className='list-cards'>
                 {
                     recipes.map((recipe, id) => (
                         <Card key={id} recipe={recipe} image='https://picsum.photos/400/400?random=' />
                     ))
                 }
+                </div>
             </section>
 
         </div>

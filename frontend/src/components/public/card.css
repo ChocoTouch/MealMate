@@ -1,0 +1,34 @@
+.card-article{
+    display: flex;
+    flex-direction: column;
+    padding: 1vw;
+    width: 14vw;
+    height: 10vw;
+    margin: 2vw 3vw 1vw 3vw;
+    border-radius: 1vw;
+    box-shadow: 0 0.5vw 1vw 1vw rgb(0 0 0 / 10%);
+}
+
+.card-article p{
+    margin:1vw 0 0 0;
+    color: #9A2727;
+    font-size: 1.2vw;
+    position: relative;
+    bottom: 11vw;
+
+}
+
+.card-article .card-title{
+    font-weight: bold;
+    width: 60%;
+    font-weight: 1.5vw;
+}
+
+.card-image{
+    width: 70%;
+    position: relative;
+    left: 50%;
+    bottom: 30%;
+    border-radius: 50%;
+    box-shadow: 0 0.5vw 1vw 1vw rgb(0 0 0 / 10%);
+}
