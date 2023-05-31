@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-//import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import { recipeService } from '@/_services/admin/recipe.service';
 

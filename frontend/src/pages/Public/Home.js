@@ -120,7 +120,7 @@ const Home = () => {
 						<UserCard
 							key={id}
 							user={user}
-							image="https://picsum.photos/400/400?random=1"
+							image="https://picsum.photos/400/400?random=3"
 						/>
 					))}
 				</div>

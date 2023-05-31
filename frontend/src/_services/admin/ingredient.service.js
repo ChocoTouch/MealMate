@@ -5,45 +5,45 @@ import Axios from '../caller.service'
  * @returns {Promise}
  */
 let getAllIngredients = () => {
-    return Axios.get('/admin/meals')
+    return Axios.get('/admin/ingredients')
 }
 
 /**
  * Récupération d'un ingrédient
- * @param {number} mealId 
+ * @param {number} ingredientId 
  * @returns {Promise}
  */
-let getIngredient = (mealId) => {
-    return Axios.get('/admin/meals/' + mealId)
+let getIngredient = (ingredientId) => {
+    return Axios.get('/admin/ingredients/' + ingredientId)
 }
 
 /**
  * Ajout d'un ingrédient
- * @param {number} meal 
+ * @param {number} ingredient 
  * @returns {Promise}
  */
-let addIngredient = (meal) => {
-    return Axios.put('/admin/meals', meal)
+let addIngredient = (ingredient) => {
+    return Axios.put('/admin/ingredients', ingredient)
 }
 
 /**
  * Mise à jour d'un ingrédient
- * @param {number} meal 
+ * @param {number} ingredient 
  * @returns {Promise}
  */
-let updateIngredient = (meal) => {
-    return Axios.patch('/admin/meals/' + meal.id, meal)
+let updateIngredient = (ingredient) => {
+    return Axios.patch('/admin/ingredients/' + ingredient.id, ingredient)
 }
 
 /**
  * Suppression d'un ingrédient
- * @param {number} mealId 
+ * @param {number} ingredientId 
  * @returns {Promise}
  */
-let deleteIngredient = (mealId) => {
-    return Axios.delete('/admin/meals/' + mealId)
+let deleteIngredient = (ingredientId) => {
+    return Axios.delete('/admin/ingredients/' + ingredientId)
 }
 
-export const mealService = {
+export const ingredientService = {
     getAllIngredients, getIngredient, updateIngredient, deleteIngredient, addIngredient
 }
