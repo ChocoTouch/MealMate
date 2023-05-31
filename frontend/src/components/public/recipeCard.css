@@ -1,4 +1,4 @@
-.card-article{
+.recipecard-article{
     display: flex;
     flex-direction: column;
     padding: 1vw;
@@ -9,7 +9,7 @@
     box-shadow: 0 0.5vw 1vw 1vw rgb(0 0 0 / 10%);
 }
 
-.card-article p{
+.recipecard-article p{
     margin:1vw 0 0 0;
     color: #9A2727;
     font-size: 1.2vw;
@@ -18,13 +18,13 @@
 
 }
 
-.card-article .card-title{
+.recipecard-article .recipecard-title{
     font-weight: bold;
     width: 60%;
     font-weight: 1.5vw;
 }
 
-.card-image{
+.recipecard-image{
     width: 70%;
     position: relative;
     left: 50%;

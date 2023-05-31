@@ -9,6 +9,7 @@
 .recipes-searchbar .searchbar-image{
     width: 100%;
 }
+
 .searchbar-container{
     display: flex;
     flex-direction: column;
@@ -39,21 +40,59 @@
     margin: 0.8vw 0 2.8vw;
 }
 
+section .list-title{
+    color: #3F0000;
+    font-weight: bolder;
+}
+
+section .left-bar{
+    width: 1vw;
+    background: #9A2727;
+    height: 80%;
+}
+
 .recipes-list{
     margin: 2vw 0 2vw 4vw;
 }
 
-.recipes-list .list-cards{
+section .list-cards{
     display:flex;
     border-left: 2px solid #9A2727;
 }
 
-.recipes-list .list-title{
+section .list-title{
     font-size: 2vw;
 }
 
-.recipes-list .left-bar{
-    width: 1vw;
-    background: #9A2727;
-    height: 80%;
+.menus-list{
+    display: flex;
+    justify-content: center;
+    margin: 5vw 0;
+}
+
+.menus-list .menucard-article {
+    width: 28%;
+    height: 13.5vw;
+    padding: 0 2vw;
+}
+
+.menus-list .menucard-article .menucard-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 1vw;
+}
+
+.menus-list .menucard-article .menucard-title{
+    margin: 0;
+    margin-left: 2vw;
+    position: relative;
+    bottom: 10vw;
+    font-size: 2vw;
+    width: 50%;
+    font-weight: bolder;
+    color: white;
+}
+
+.users-list{
+    margin: 2vw 0 2vw 4vw;
 }

@@ -1,0 +1,45 @@
+.usercard-article{
+    position: relative;
+    width: 13%;
+    margin: 0 1vw 0 2vw;
+}
+
+.usercard-article .usercard-container{
+    position: absolute;
+    bottom: 4vw;
+    left: 5%;
+    width: 90%;
+}
+
+
+.usercard-article .usercard-text{
+    font-size: 0.8vw;
+    color:white;
+}
+
+.usercard-article p{
+    margin: 0;
+}
+
+.usercard-article .usercard-recipes{
+    color: #3F0000;
+    font-weight: bolder;
+    font-size: 1.2vw;
+}
+
+.usercard-article .usercard-menus{
+    color: #3F0000;
+    font-weight: bolder;
+    font-size: 1.2vw;
+}
+
+.usercard-article .usercard-title{
+    font-weight: bolder;
+    font-size: 1.2vw;
+    color:white;
+}
+
+.usercard-image{
+    width: 100%;
+    border-radius: 1vw;
+}

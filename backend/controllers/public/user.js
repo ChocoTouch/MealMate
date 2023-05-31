@@ -6,7 +6,17 @@ const Theme = DB.Theme;
 const { RequestError, UserError } = require("../../error/customError");
 
 exports.getAllUsers = (req, res, next) => {
-	User.findAll({ attributes: ["id", "name", "slug", "firstname", "username"] })
+	User.findAll({
+		attributes: ["id", "name", "slug", "firstname", "username"],
+		include: [
+			{
+				model: Recipe,
+				attributes: ["id", "name", "slug", "description"],
+				include: [{ model: Theme, attributes: ["id", "name", "slug", "description"] }],
+			},
+			{ model: Menu, attributes: ["id", "user_id", "name", "slug", "description"] },
+		],
+	})
 		.then((users) => res.json({ data: users }))
 		.catch((err) => next(err));
 };
