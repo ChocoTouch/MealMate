@@ -1,7 +1,7 @@
 import Axios from '../caller.service'
 
 /**
- * Récupératoin de la liste des recettes
+ * Récupération de la liste des recettes
  * @returns {Promise}
  */
 let getAllRecipes = () => {
