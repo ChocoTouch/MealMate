@@ -35,7 +35,6 @@ const Category = () => {
                     <tr>
                         <th>ID</th>
                         <th>Nom</th>
-                        <th>Description</th>
                         <th>Date de création</th>
                         <th>Date d'édition</th>
                         <th>Date de suppression</th>
@@ -48,7 +47,6 @@ const Category = () => {
                             <tr key={category.id}>
                                 <td><Link to={`../edit/${category.id}` }>{category.id}</Link></td>
                                 <td>{category.name}</td>
-                                <td>{category.description}</td>
                                 <td>{category.createdAt}</td>
                                 <td>{category.updatedAt}</td>
                                 <td>{category.deletedAt}</td>

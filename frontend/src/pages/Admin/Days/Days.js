@@ -35,7 +35,6 @@ const Days = () => {
                     <tr>
                         <th>ID</th>
                         <th>Nom</th>
-                        <th>Description</th>
                         <th>Date de création</th>
                         <th>Date d'édition</th>
                         <th>Date de suppression</th>
@@ -48,7 +47,6 @@ const Days = () => {
                             <tr key={day.id}>
                                 <td><Link to={`../edit/${day.id}` }>{day.id}</Link></td>
                                 <td>{day.name}</td>
-                                <td>{day.description}</td>
                                 <td>{day.createdAt}</td>
                                 <td>{day.updatedAt}</td>
                                 <td>{day.deletedAt}</td>
