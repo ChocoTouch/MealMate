@@ -78,18 +78,12 @@ exports.updateCategory = async (req, res, next) => {
 			throw new CategoryError("Cette catégorie n'existe pas .", 0);
 		}
 
-		category = await Category.findOne({ where: { name: name } });
-
-		if (category !== null) {
-			throw new RequestError(`La catégorie ${name} existe déjà .`);
-		}
-
 		req.body.slug = slugify(name);
 
 		await Category.update(req.body, { where: { id: categoryID } });
 
 		return res.json({
-			message: "La category à bien été modifiée ."
+			message: "La category à bien été modifiée .",
 		});
 	} catch (err) {
 		next(err);

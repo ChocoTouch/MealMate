@@ -78,12 +78,6 @@ exports.updateTheme = async (req, res, next) => {
 			throw new ThemeError("Ce Theme n'existe pas .", 0);
 		}
 
-		theme = await Theme.findOne({ where: { name: name } });
-
-		if (theme !== null) {
-			throw new RequestError(`Le Thème ${name} existe déjà .`);
-		}
-
 		req.body.slug = slugify(name);
 
 		await Theme.update(req.body, { where: { id: themeID } });

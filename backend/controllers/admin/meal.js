@@ -78,16 +78,7 @@ exports.updateMeal = async (req, res, next) => {
 		if (meal === null) {
 			throw new MealError("Ce repas n'existe pas .", 0);
 		}
-
-		meal = await Meal.findOne({
-			where: { name: name },
-			raw: true,
-		});
-
-		if (meal !== null) {
-			throw new RequestError(`Le Repas ${name} existe déjà.`, 1);
-		}
-
+		
 		req.body.slug = slugify(name);
 
 		await Meal.update(req.body, { where: { id: mealID } });

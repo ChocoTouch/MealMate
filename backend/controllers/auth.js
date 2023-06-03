@@ -93,7 +93,7 @@ exports.register = async (req, res, next) => {
 
     // Réponse de l'utilisateur créé.
     return res.json({
-      message: "Votre compte à bien été créé .",
+      message: "Votre compte a bien été créé .",
     });
   } catch (err) {
     next(err);

@@ -21,7 +21,7 @@ exports.getDiet = async (req, res, next) => {
 
 		let diet = await Diet.findOne({
 			where: { id: dietID },
-			include: [{ model: Recipe,include: Theme }],
+			include: [{ model: Recipe, include: Theme }],
 		});
 
 		if (diet === null) {
@@ -79,18 +79,12 @@ exports.updateDiet = async (req, res, next) => {
 			throw new DietError("Ce régime n'existe pas .", 0);
 		}
 
-		diet = await Diet.findOne({ where: { name: name } });
-
-		if (diet !== null) {
-			throw new RequestError(`Le régime ${name} existe déjà .`);
-		}
-
 		req.body.slug = slugify(name);
 
 		await Diet.update(req.body, { where: { id: dietID } });
 
 		return res.json({
-			message: "Le régime à bien été modifié ."
+			message: "Le régime à bien été modifié .",
 		});
 	} catch (err) {
 		next(err);

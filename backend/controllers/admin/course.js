@@ -77,12 +77,6 @@ exports.updateCourse = async (req, res, next) => {
 			throw new CourseError("Ce Plat n'existe pas .", 0);
 		}
 
-		course = await Course.findOne({ where: { name: name } });
-
-		if (course !== null) {
-			throw new RequestError(`Le plat ${name} existe déjà .`);
-		}
-
 		req.body.slug = slugify(name);
 
 		await Course.update(req.body, { where: { id: courseID } });

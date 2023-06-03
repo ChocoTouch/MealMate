@@ -89,12 +89,6 @@ exports.updateIngredient = async (req, res, next) => {
 			throw new IngredientError("Cet ingredient n'existe pas .", 0);
 		}
 
-		ingredient = await Ingredient.findOne({ where: { name: name } });
-
-		if (ingredient !== null) {
-			throw new RequestError(`L'ingrédient ${name} existe déjà .`);
-		}
-
 		req.body.slug = slugify(name);
 
 		await Ingredient.update(req.body, { where: { id: ingredientID } });

@@ -77,12 +77,6 @@ exports.updateDayOfWeek = async (req, res, next) => {
 			throw new DayOfWeekError("Ce jour n'existe pas .", 0);
 		}
 
-		dayOfWeek = await DayOfWeek.findOne({ where: { name: name } });
-
-		if (dayOfWeek !== null) {
-			throw new RequestError(`Le jour ${name} existe déjà .`);
-		}
-
 		req.body.slug = slugify(name);
 
 		await DayOfWeek.update(req.body, { where: { id: dayOfWeekID } });
