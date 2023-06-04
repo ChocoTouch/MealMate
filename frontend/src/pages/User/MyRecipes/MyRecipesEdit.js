@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { recipeService } from '@/_services/user/recipe.service';
 import { themeService } from '@/_services/user/theme.service';
+import { dietService } from '@/_services/user/diet.service';
 import { ingredientService } from '@/_services/user/ingredient.service';
 //import './recipeedit.css'
 
@@ -10,7 +11,7 @@ const MyRecipesEdit = () => {
     let navigate = useNavigate();
 
     const [recipe, setRecipe] = useState({
-        count:"1"
+        count: "1"
     });
     const [tables, setTables] = useState({
         diets: [],
@@ -20,12 +21,14 @@ const MyRecipesEdit = () => {
     })
     const [themes, setThemes] = useState([]);
     const [ingredients, setIngredients] = useState([]);
+    const [diets, setDiets] = useState([]);
 
     const flag = useRef(false);
 
 
     useEffect(() => {
         if (flag.current === false) {
+            getDiets()
             getRecipe()
             getThemes()
             getIngredients()
@@ -38,35 +41,40 @@ const MyRecipesEdit = () => {
 
     const getIngredients = () => {
         ingredientService.getAllIngredients()
-        .then(res => {
-            setIngredients(res.data.data);
-            console.log(res.data.data)
-        })
-        .catch(err => console.log(err))
+            .then(res => {
+                setIngredients(res.data.data);
+            })
+            .catch(err => console.log(err))
+    }
+
+    const getDiets = () => {
+        dietService.getAllDiets()
+            .then(res => {
+                setDiets(res.data.data);
+            })
+            .catch(err => console.log(err))
     }
 
     const getThemes = () => {
         themeService.getAllThemes()
-                .then(res => {
-                    setThemes(res.data.data);
-                    console.log(res.data.data)
-                })
-                .catch(err => console.log(err))
+            .then(res => {
+                setThemes(res.data.data);
+            })
+            .catch(err => console.log(err))
     }
 
     const getRecipe = () => {
         recipeService.getRecipe(id)
-                .then(res => {
-                    setRecipe(res.data.data);
-                    setTables({
-                        diets: res.data.data.Diets,
-                        ingredients: res.data.data.Ingredients,
-                        theme: res.data.data.Theme,
-                        comments: res.data.data.Comments
-                    })
-                    console.log(res.data.data)
+            .then(res => {
+                setRecipe(res.data.data);
+                setTables({
+                    diets: res.data.data.Diets,
+                    ingredients: res.data.data.Ingredients,
+                    theme: res.data.data.Theme,
+                    comments: res.data.data.Comments
                 })
-                .catch(err => console.log(err))
+            })
+            .catch(err => console.log(err))
     }
     const onChange = (e) => {
         setRecipe({
@@ -78,15 +86,11 @@ const MyRecipesEdit = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
-        if (e.target.title === "editMyRecipe") {
-            console.log(recipe);
-            recipeService.updateMyRecipe(recipe)
-                .then(res => {
-                    navigate('../index')
-                })
-                .catch(err => console.log(err))
-        }
+        recipeService.updateMyRecipe(recipe)
+            .then(res => {
+                navigate('../index')
+            })
+            .catch(err => console.log(err))
     }
 
     const addIngredient = (e) => {
@@ -97,17 +101,43 @@ const MyRecipesEdit = () => {
         })
             .then(res => {
                 getRecipe();
-                console.log(res)
             })
             .catch(err => console.log(err))
     }
+
     const delIngredient = (ingredientId) => {
         recipeService.deleteIngredientInMyRecipe(ingredientId, {
-            data:{recipe_id: recipe.id,
-            count: recipe.count}
+            data: {
+                recipe_id: recipe.id,
+                count: recipe.count
+            }
         })
             .then(res => {
-               getRecipe();
+                getRecipe();
+            })
+            .catch(err => console.log(err))
+    }
+
+    const addDiet = (e) => {
+        e.preventDefault();
+        recipeService.addDietInMyRecipe(e.target[0].value, {
+            recipe_id: recipe.id
+        })
+            .then(res => {
+                getRecipe();
+            })
+            .catch(err => console.log(err))
+    }
+
+    const delDiet = (dietId) => {
+        recipeService.deleteDietInMyRecipe(dietId, {
+            data: {
+                recipe_id: recipe.id,
+                count: recipe.count
+            }
+        })
+            .then(res => {
+                getRecipe();
             })
             .catch(err => console.log(err))
     }
@@ -116,12 +146,12 @@ const MyRecipesEdit = () => {
 
         <div className='RecipeEdit'>
             <aside className=''>
-                <form className="add_ingredient" onSubmit={addIngredient} title='addIngredientInMyRecipe'>
+
+                <div className="group">
                     <p className='add_ingredient_title'>Ingrédients :</p>
-                    <div>{
+                    {
                         tables.ingredients.map(ingredient => (
                             <div key={ingredient.id}>
-                                <p>ID : {ingredient.id}</p>
                                 <p>Nom : {ingredient.name}</p>
                                 <p>Calories : {ingredient.calories}</p>
                                 <p>Prix : {ingredient.price}</p>
@@ -129,38 +159,25 @@ const MyRecipesEdit = () => {
                                 <p className='del_ubtn' onClick={() => delIngredient(ingredient.id)}>Supprimer</p>
                             </div>
                         ))
-                    }</div>
-
-                    <select name="ingredient_id" value={tables.ingredients.ingredient_id} onChange={onChange} id="ingredient_id">
-                        {
-                            ingredients.map(ingredient => (
-                                <option key={ingredient.id} name="ingredient_id" value={ingredient.id}>{ingredient.name}</option>
-                            ))
-                        }
-                    </select>
-                    <div className="group">
-                        <label htmlFor="count">Quantité</label>
-                        <input type="number" name="count" id="count" value={recipe.count || 1} onChange={onChange} autoComplete="off" min="1" />
-                    </div>
-                    <button>Ajouter ingrédient</button>
-                </form>
-                <form className="add_diet" onSubmit={onSubmit} title='addDietInMyRecipe'>
-                    <p className='group_title'>Régimes :</p> {
+                    }
+                </div>
+                <div className="group">
+                    <p className='group_title'>Régimes :</p>
+                    {
                         tables.diets.map(diet => (
                             <div key={diet.id}>
-                                <p>ID : {diet.id}</p>
                                 <p>{diet.name}</p>
+                                <p className='del_ubtn' onClick={() => delDiet(diet.id)}>Supprimer</p>
                             </div>
                         ))
                     }
-                    <button>Ajouter Régime</button>
-                </form>
+                </div>
                 <div className="group">
                     <p className='group_title'>Commentaires :</p>
                     {
                         tables.comments.map(comment => (
                             <div key={comment.id}>
-                                <p>ID : {comment.id}</p>
+                                <p>écris par : {comment.user_username}</p>
                                 <p>Message : {comment.message}</p>
                             </div>
                         ))
@@ -183,7 +200,7 @@ const MyRecipesEdit = () => {
                 </div>
                 <div className="group">
                     <label htmlFor="difficulty">Difficulté</label>
-                    <select name="difficulty" value={recipe.difficulty} onChange={onChange}>
+                    <select name="difficulty" value={recipe.difficulty} onChange={onChange} id="difficulty">
                         <option name="difficulty" value="1">1</option>
                         <option name="difficulty" value="2">2</option>
                         <option name="difficulty" value="3">3</option>
@@ -193,7 +210,7 @@ const MyRecipesEdit = () => {
                 </div>
                 <div className="group">
                     <label htmlFor="theme">Thèmes</label>
-                    <select name="theme_id" value={recipe.theme_id} onChange={onChange}>
+                    <select name="theme_id" value={recipe.theme_id} onChange={onChange} id="theme">
                         {
                             themes.map(theme => (
                                 <option key={theme.id} name="theme_id" value={theme.id}>{theme.name}</option>
@@ -204,6 +221,38 @@ const MyRecipesEdit = () => {
                 <div className="group">
                     <button>Modifier</button>
                 </div>
+            </form>
+            <form className="add_ingredient" onSubmit={addIngredient} title='addIngredientInMyRecipe'>
+                <p className='form_title'>Ajouter un ingrédient :</p>
+                <div className="group">
+                    <label htmlFor="ingredient_id">Ingrédient</label>
+                    <select name="ingredient_id" value={tables.ingredients.ingredient_id} onChange={onChange} id="ingredient_id">
+                        {
+                            ingredients.map(ingredient => (
+                                <option key={ingredient.id} name="ingredient_id" value={ingredient.id}>{ingredient.name}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+                <div className="group">
+                    <label htmlFor="count">Quantité</label>
+                    <input type="number" name="count" id="count" value={recipe.count || 1} onChange={onChange} autoComplete="off" min="1" />
+                </div>
+                <button>Ajouter ingrédient</button>
+            </form>
+            <form className="add_diet" onSubmit={addDiet} title='addDietInMyRecipe'>
+                <p className='form_title'>Ajouter un régime :</p>
+                <div className="group">
+                    <label htmlFor="diet_id">Régime</label>
+                    <select name="diet_id" value={tables.diets.diet_id} onChange={onChange} id="diet_id">
+                        {
+                            diets.map(diet => (
+                                <option key={diet.id} name="diet_id" value={diet.id}>{diet.name}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+                <button>Ajouter Régime</button>
             </form>
         </div>
     );

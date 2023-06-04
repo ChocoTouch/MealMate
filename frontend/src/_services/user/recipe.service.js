@@ -71,7 +71,25 @@ let deleteIngredientInMyRecipe = (ingredientId, recipe_id) => {
     return Axios.delete('/user/recipes/ingredient/' + ingredientId, recipe_id)
 }
 
+/**
+ * Ajout d'un régime dans une recette de l'utilisateur connecté
+ * @param {number} dietId
+ * @returns {Promise}
+ */
+let addDietInMyRecipe = (dietId, recipe) => {
+    return Axios.put('/user/recipes/diet/' + dietId, recipe)
+}
+
+/**
+ * Suppression d'un régime dans une recette de l'utilisateur connecté
+ * @param {number} recipe_id 
+ * @param {number} dietId
+ * @returns {Promise}
+ */
+let deleteDietInMyRecipe = (dietId, recipe_id) => {
+    return Axios.delete('/user/recipes/diet/' + dietId, recipe_id)
+}
 
 export const recipeService = {
-    getAllRecipes, getRecipe, getMyRecipes, updateMyRecipe, deleteMyRecipe, addMyRecipe, addIngredientInMyRecipe,deleteIngredientInMyRecipe
+    getAllRecipes, getRecipe, getMyRecipes, updateMyRecipe, deleteMyRecipe, addMyRecipe, addIngredientInMyRecipe,deleteIngredientInMyRecipe,addDietInMyRecipe,deleteDietInMyRecipe
 }

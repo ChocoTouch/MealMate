@@ -21,7 +21,7 @@ router.delete("/ingredient/:id", recipeController.deleteIngredientInMyRecipe);
 
 router.put("/diet/:id", recipeController.addDietInMyRecipe);
 
-router.put("/diet/:id", recipeController.deleteDietInMyRecipe);
+router.delete("/diet/:id", recipeController.deleteDietInMyRecipe);
 
 router.put("/me", recipeController.addMyRecipe);
 
