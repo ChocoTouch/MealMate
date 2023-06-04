@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '@/components/user/Header';
-import SideMenu from '@/components/user/SideMenu';
+//import SideMenu from '@/components/user/SideMenu';
 
 import './user.css'
 

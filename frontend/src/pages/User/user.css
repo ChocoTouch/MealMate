@@ -32,12 +32,7 @@ form{
     height:20px;
 }
 
-.SideMenu{
-    flex-grow:1;
-    border: solid 1px black;
-}
 #user_body{
-    flex-grow:6;
     border: solid 1px black;
 }
 /***********************************/

@@ -20,8 +20,8 @@
     text-align: center;
     position: absolute;
     color: white;
-    bottom: 25%;
-    /* top: -24vw; */
+    /* bottom: 88%; */
+    top: 20%;
     left: 30%;
     /* margin: 0 auto; */
     width: 40%;
@@ -29,19 +29,19 @@
 
 .searchbar-container .searchbar-input{
     padding: 1vw 3vw;
-    font-size: 1vw;
+    font-size: 1em;
     border-radius: 5vw;
     border: none;
 }
 
 .searchbar-container .searchbar-title{
-    font-size: 2vw;
+    font-size: 2em;
     margin: auto;
     width: 80%;
     line-height: 3vw;
 }
 .searchbar-container .searchbar-text{
-    font-size: 1vw;
+    font-size: 1em;
     padding: 0 3vw;
     margin: 0.8vw 0 2.8vw;
 }
@@ -67,7 +67,7 @@ section .list-cards{
 }
 
 section .list-title{
-    font-size: 2vw;
+    font-size: 2em;
 }
 
 .menus-list{
@@ -93,7 +93,7 @@ section .list-title{
     margin-left: 2vw;
     position: relative;
     bottom: 10vw;
-    font-size: 2vw;
+    font-size: 2em;
     width: 50%;
     font-weight: bolder;
     color: white;

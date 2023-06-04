@@ -54,7 +54,7 @@ const Header = () => {
 				</ul>
 				<ul>
 					<li>
-						<Link to="menu">Profil</Link>
+						<Link to="profile">Profil</Link>
 					</li>
 				</ul>
 				<button onClick={logout}>Déconnexion</button>

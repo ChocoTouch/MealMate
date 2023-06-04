@@ -59,11 +59,6 @@ const Home = () => {
 	return (
 		<div className="home">
 			<section className="recipes-searchbar">
-				<img
-					src={searchbarimage}
-					alt="Filet de saumon cuisiné"
-					className="searchbar-image"
-				/>
 				<div className="searchbar-container">
 					<h1 className="searchbar-title">
 						Explorez les recettes
@@ -82,6 +77,11 @@ const Home = () => {
 						className="searchbar-input"
 					/>
 				</div>
+				<img
+					src={searchbarimage}
+					alt="Filet de saumon cuisiné"
+					className="searchbar-image"
+				/>
 			</section>
 
 			<section className="recipes-list">

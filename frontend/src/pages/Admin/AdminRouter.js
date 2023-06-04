@@ -26,7 +26,7 @@ const AdminRouter = () => {
                     <Route index element={<Dashboard />} />
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="user/*" element={<UserRouter />}/>
-                    <Route path="public/*" element={<PublicRouter />}/>
+                    <Route path="/*" element={<PublicRouter />}/>
                     <Route path="users">
                         <Route path="index" element={<User />} />
                         <Route path="add" element={<UserAdd />} />
