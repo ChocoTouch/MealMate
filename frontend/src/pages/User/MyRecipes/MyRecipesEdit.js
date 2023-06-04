@@ -148,7 +148,7 @@ const MyRecipesEdit = () => {
             <aside className=''>
 
                 <div className="group">
-                    <p className='add_ingredient_title'>Ingrédients :</p>
+                    <p className='group_title'>Ingrédients :</p>
                     {
                         tables.ingredients.map(ingredient => (
                             <div key={ingredient.id}>
