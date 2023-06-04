@@ -19,7 +19,7 @@ exports.checkTokenMW = (req, res, next) => {
     req.headers.authorization && extractBearer(req.headers.authorization);
   if (!token) {
     return res
-      .status(403)
+      .status(401)
       .json({ message: "Pas de Token d'authentification ." });
   }
 
@@ -27,7 +27,7 @@ exports.checkTokenMW = (req, res, next) => {
   jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
     if (err) {
       return res
-        .status(500)
+        .status(401)
         .json({ message: "Token d'authentification invalide ." });
     }
     req.decodedToken = decodedToken;

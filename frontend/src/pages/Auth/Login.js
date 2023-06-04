@@ -23,8 +23,9 @@ const Login = () => {
 		accountService
 			.login(credentials)
 			.then((res) => {
+				accountService.savePayload(res.data.payload);
 				accountService.saveToken(res.data.access_token);
-				if (res.data.roles === "ROLE_ADMIN") {
+				if (res.data.payload.roles === "ROLE_ADMIN") {
 					navigate("/admin");
 				} else {
 					navigate("/user");

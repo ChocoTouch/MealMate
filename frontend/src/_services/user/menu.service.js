@@ -5,7 +5,7 @@ import Axios from '../caller.service'
  * @returns {Promise}
  */
 let getAllMenus = () => {
-    return Axios.get('/admin/menus')
+    return Axios.get('/user/menus')
 }
 
 /**
@@ -14,15 +14,7 @@ let getAllMenus = () => {
  * @returns {Promise}
  */
 let getMenu = (menuId) => {
-    return Axios.get('/admin/menus/' + menuId)
-}
-
-/**
- * Récupération de la liste des menus de l'utilisateur connecté
- * @returns {Promise}
- */
-let getMyMenus = () => {
-    return Axios.get('/admin/menus/me')
+    return Axios.get('/user/menus/' + menuId)
 }
 
 /**
@@ -31,7 +23,7 @@ let getMyMenus = () => {
  * @returns {Promise}
  */
 let addMenu = (menu) => {
-    return Axios.put('/admin/menus', menu)
+    return Axios.put('/user/menus', menu)
 }
 
 /**
@@ -40,7 +32,7 @@ let addMenu = (menu) => {
  * @returns {Promise}
  */
 let updateMenu = (menu) => {
-    return Axios.patch('/admin/menus/' + menu.id, menu)
+    return Axios.patch('/user/menus/' + menu.id, menu)
 }
 
 /**
@@ -49,9 +41,9 @@ let updateMenu = (menu) => {
  * @returns {Promise}
  */
 let deleteMenu = (menuId) => {
-    return Axios.delete('/admin/menus/' + menuId)
+    return Axios.delete('/user/menus/' + menuId)
 }
 
 export const menuService = {
-    getAllMenus, getMenu, getMyMenus, updateMenu, deleteMenu, addMenu
+    getAllMenus, getMenu, updateMenu, deleteMenu, addMenu
 }

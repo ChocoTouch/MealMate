@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { recipeService } from '@/_services/admin/recipe.service';
+import { recipeService } from '@/_services/user/recipe.service';
 
-const Recipe = () => {
+const MyRecipes = () => {
     const [recipes, setRecipes] = useState([]);
     const flag = useRef(false);
 
     useEffect(() => {
         if (flag.current === false) {
-            recipeService.getAllRecipes()
+            recipeService.getMyRecipes()
                 .then(res => {
                     setRecipes(res.data.data);
                 })
@@ -18,20 +18,9 @@ const Recipe = () => {
         return () => flag.current = true
     }, [])
 
-    const delRecipe = (recipeId) => {
-        recipeService.deleteRecipe(recipeId)
-            .then(res => {
-                setRecipes((current) => current.filter(recipe => recipe.id !== recipeId))
-            })
-            .catch(err => console.log(err))
-    }
-
-
-
-
     return (
-        <div className='Recipe'>
-            liste des recettes :
+        <div className='MyRecipes'>
+            Mes Recettes :
             <table>
                 <thead>
                     <tr>
@@ -40,10 +29,6 @@ const Recipe = () => {
                         <th>Description</th>
                         <th>Difficulté</th>
                         <th>Thème</th>
-                        <th>Créateur</th>
-                        <th>Date de création</th>
-                        <th>Date d'édition</th>
-                        <th>Date de suppression</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -56,18 +41,15 @@ const Recipe = () => {
                                 <td>{recipe.description}</td>
                                 <td>{recipe.difficulty}</td>
                                 <td>{recipe.Theme.name}</td>
-                                <td>{recipe.user_username}</td>
-                                <td>{recipe.createdAt}</td>
-                                <td>{recipe.updatedAt}</td>
-                                <td>{recipe.deletedAt}</td>
-                                <td><span className='del_ubtn' onClick={() => delRecipe(recipe.id)}>Supprimer</span></td>
+                                {/* <td><span className='del_ubtn' onClick={() => delRecipe(recipe.id)}>Supprimer</span></td> */}
                             </tr>
                         ))
                     }
                 </tbody>
             </table>
+            <Link to={`../add`}>Création de recette</Link>
         </div>
     );
 };
 
-export default Recipe;
+export default MyRecipes;

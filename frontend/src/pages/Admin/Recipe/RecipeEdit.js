@@ -8,9 +8,6 @@ const RecipeEdit = () => {
     let navigate = useNavigate();
 
     const [recipe, setRecipe] = useState([]);
-    // const [ingredients, setIngredients] = useState([]);
-    // const [diets, setDiets] = useState([]);
-    // const [theme, setTheme] = useState([]);
     const [tables, setTables] = useState({
         diets: [],
         ingredients: [],
@@ -41,8 +38,6 @@ const RecipeEdit = () => {
             recipeService.getRecipe(id)
                 .then(res => {
                     setRecipe(res.data.data);
-                    // setIngredients(res.data.data.Ingredients);
-                    // setDiets(res.data.data.Diets);
                     setTables({
                         diets: res.data.data.Diets,
                         ingredients: res.data.data.Ingredients,
@@ -50,7 +45,6 @@ const RecipeEdit = () => {
                         comments: res.data.data.Comments
                     })
                     console.log(res.data.data)
-                    console.log(tables)
                 })
                 .catch(err => console.log(err))
         }

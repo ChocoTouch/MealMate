@@ -243,12 +243,6 @@ exports.updateMyMenu = async (req, res, next) => {
 			throw new MenuError("Ce menu n'existe pas ou ne vous appartient pas.", 0);
 		}
 
-		menu = await Menu.findOne({ where: { user_id: req.decodedToken.id, name: name } });
-
-		if (menu !== null) {
-			throw new RequestError(`Vous avez déjà un menu nommé ${name} .`, 0);
-		}
-
 		req.body.user_username = req.decodedToken.username;
 
 		req.body.user_id = req.decodedToken.id;

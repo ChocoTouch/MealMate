@@ -12,8 +12,16 @@ let saveToken = (token) => {
     localStorage.setItem('token', token)
 }
 
+let savePayload = (payload) => {
+    localStorage.setItem('payload', JSON.stringify(payload));
+}
+
 let getToken = () => {
     return localStorage.getItem('token')
+}
+
+let getPayload = () => {
+    return JSON.parse(localStorage.getItem('payload'))
 }
 
 let logout = () => {
@@ -26,5 +34,5 @@ let isLogged = () => {
 }
 
 export const accountService = {
-    saveToken, logout, isLogged, login, getToken, register
+    saveToken, savePayload, logout, isLogged, login, getToken, getPayload, register
 }

@@ -92,7 +92,7 @@ exports.getRecipe = async (req, res, next) => {
 					},
 				},
 			],
-			attributes: ["id", "name", "slug", "description", "difficulty", "instructions", "createdAt"],
+			attributes: ["id", "name", "slug", "description", "difficulty", "theme_id", "instructions", "createdAt"],
 		});
 
 		if (recipe === null) {
@@ -160,9 +160,12 @@ exports.deleteIngredientInMyRecipe = async (req, res, next) => {
 			throw new IngredientError("Cet Ingredient n'existe pas .", 0);
 		}
 
-		await recipe.removeIngredient(ingredient);
+		let ringredient = await recipe.removeIngredient(ingredient);
 
-		return res.status(204).json({});
+		return res.status(204).json({
+			message: "L'ingrédient a bien été supprimé de votre recette .",
+			data: ringredient,
+		});
 	} catch (err) {
 		next(err);
 	}
@@ -302,12 +305,6 @@ exports.updateMyRecipe = async (req, res, next) => {
 
 		if (recipe === null) {
 			throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas.", 0);
-		}
-
-		recipe = await Recipe.findOne({ where: { user_id: req.decodedToken.id, name: name } });
-
-		if (recipe !== null) {
-			throw new RequestError(`Vous avez déjà une recette nommée ${name} .`, 0);
 		}
 
 		req.body.user_username = req.decodedToken.username;

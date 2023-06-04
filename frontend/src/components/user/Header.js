@@ -54,7 +54,13 @@ const Header = () => {
 				</ul>
 				<ul>
 					<li>
-						<Link to="profile">Profil</Link>
+						<Link to="me">Profil</Link>
+					</li>
+					<li>
+						<Link to="me/recipes/index">Mes Recettes</Link>
+					</li>
+					<li>
+						<Link to="me/menus">Mes Menus</Link>
 					</li>
 				</ul>
 				<button onClick={logout}>Déconnexion</button>
