@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 
 const SideMenu = () => {
     return (
-        <div className='SideMenu'>
+        <aside className='SideMenu'>
             <ul>
-                <li><Link to="/">Accueil</Link></li>
+                <li><Link to="/admin/user">Accueil Utilisateur</Link></li>
+                <li><Link to="/admin/public">Accueil Public</Link></li>
                 <li><Link to="/admin/dashboard">Dashboard</Link></li>
                 <li>
                     Utilisateur
                     <ul>
-                        <li><Link to="/admin/user/index">Liste</Link></li>
-                        <li><Link to="/admin/user/add">Ajouter</Link></li>
+                        <li><Link to="/admin/users/index">Liste</Link></li>
+                        <li><Link to="/admin/users/add">Ajouter</Link></li>
                     </ul>
                 </li>
                 <li>
@@ -78,7 +79,7 @@ const SideMenu = () => {
                     </ul>
                 </li>
             </ul>
-        </div>
+        </aside>
     );
 };
 

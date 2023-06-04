@@ -1,8 +1,15 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import './header.css'
+import { accountService } from '../../_services/account.service';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+	let navigate = useNavigate();
+    const logout = () => {
+        accountService.logout()
+        navigate("/")
+    }
     return (
         <header className="UHeader">
 			USER HEADER
@@ -13,6 +20,9 @@ const Header = () => {
 					</li>
 					<li>
 						<Link to="contact">Contact</Link>
+					</li>
+					<li>
+						<Link to="about">A propos</Link>
 					</li>
 					<li>
 						<Link to="recipe">Recettes</Link>
@@ -42,6 +52,12 @@ const Header = () => {
 						<Link to="menu">Menus</Link>
 					</li>
 				</ul>
+				<ul>
+					<li>
+						<Link to="menu">Profil</Link>
+					</li>
+				</ul>
+				<button onClick={logout}>Déconnexion</button>
 			</nav>
 		</header>
     );

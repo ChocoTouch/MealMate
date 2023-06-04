@@ -29,8 +29,9 @@ const Login = () => {
 				} else {
 					navigate("/user");
 				}
+				console.log(res)
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.log(err.response));
 	};
 	return (
 		<form onSubmit={onSubmit}>

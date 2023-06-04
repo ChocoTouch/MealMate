@@ -23,13 +23,13 @@ const Header = () => {
 				/>
 				<ul>
 					<li>
-						<Link to="/home">accueil</Link>
+						<Link to="home">accueil</Link>
 					</li>
 					<li>
-						<Link to="/contact">contact</Link>
+						<Link to="contact">contact</Link>
 					</li>
 					<li>
-						<Link to="/about">à propos</Link>
+						<Link to="about">à propos</Link>
 					</li>
 					<li>
 						<IconButton onClick={handleSearchBar}>

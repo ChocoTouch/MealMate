@@ -78,7 +78,16 @@ const MenuEdit = () => {
                 <div className="group">
                     Commentaires : {
                         tables.comments.map(comment => (
-                            <p key={comment.id}>{comment.name}</p>
+                            <p key={comment.id}>{comment.message}</p>
+                        ))
+                    }
+                </div>
+                <div className="group">
+                    Recipes : {
+                        tables.recipes.map(recipe => (
+                            <div>
+                                <p key={recipe.id}>{recipe.name}</p>
+                            </div>
                         ))
                     }
                 </div>

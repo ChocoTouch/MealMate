@@ -37,7 +37,7 @@ exports.getRecipe = async (req, res, next) => {
 
 		let recipe = await Recipe.findOne({
 			where: { id: recipeID },
-			include: [{ model: User }, { model: Theme }, { model: Ingredient }, { model: Menu }, { model: Diet }],
+			include: [{ model: User }, { model: Theme }, { model: Ingredient }, { model: Menu }, { model: Diet }, { model: Comment }],
 		});
 
 		if (recipe === null) {

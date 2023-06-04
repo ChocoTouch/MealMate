@@ -1,24 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { dietService } from '@/_services/admin/diet.service';
+import { dayService } from '@/_services/admin/day.service';
 
 const DayEdit = () => {
     const { id } = useParams();
     let navigate = useNavigate();
 
-    const [diet, setDay] = useState([]);
+    const [day, setDay] = useState([]);
     const flag = useRef(false);
 
     const onChange = (e) => {
         setDay({
-            ...diet,
+            ...day,
             [e.target.name]: e.target.value
         })
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
-        dietService.updateDayOfWeek(diet)
+        dayService.updateDayOfWeek(day)
             .then(res => {
                 navigate('../index')
             })
@@ -26,7 +26,7 @@ const DayEdit = () => {
     }
     useEffect(()=>{
         if (flag.current === false) {
-            dietService.getDayOfWeek(id)
+            dayService.getDayOfWeek(id)
                 .then(res => {
                     setDay(res.data.data);
                 })
@@ -43,7 +43,7 @@ const DayEdit = () => {
             <form onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
-                    <input type="text" name="name" id="name" defaultValue={diet.name} onChange={onChange} autoComplete="off"/>
+                    <input type="text" name="name" id="name" defaultValue={day.name} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
                     <button>Modifier</button>
