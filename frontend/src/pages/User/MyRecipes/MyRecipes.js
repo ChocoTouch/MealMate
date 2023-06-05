@@ -18,13 +18,20 @@ const MyRecipes = () => {
         return () => flag.current = true
     }, [])
 
+    const delRecipe = (recipeId) => {
+        recipeService.trashMyRecipe(recipeId)
+            .then(res => {
+                setRecipes((current) => current.filter(recipe => recipe.id !== recipeId))
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <div className='MyRecipes'>
             Mes Recettes :
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nom</th>
                         <th>Description</th>
                         <th>Difficulté</th>
@@ -36,18 +43,17 @@ const MyRecipes = () => {
                     {
                         recipes.map(recipe => (
                             <tr key={recipe.id}>
-                                <td><Link to={`../edit/${recipe.id}`}>{recipe.id}</Link></td>
-                                <td>{recipe.name}</td>
+                                <td><Link to={`edit/${recipe.id}`}>{recipe.name}</Link></td>
                                 <td>{recipe.description}</td>
                                 <td>{recipe.difficulty}</td>
                                 <td>{recipe.Theme.name}</td>
-                                {/* <td><span className='del_ubtn' onClick={() => delRecipe(recipe.id)}>Supprimer</span></td> */}
+                                <td><span className='del_ubtn' onClick={() => delRecipe(recipe.id)}>Supprimer</span></td>
                             </tr>
                         ))
                     }
                 </tbody>
             </table>
-            <Link to={`../add`}>Création de recette</Link>
+            <Link to={`add`}>Création de recette</Link>
         </div>
     );
 };

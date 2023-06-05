@@ -57,7 +57,7 @@ const Header = () => {
 						<Link to="me">Profil</Link>
 					</li>
 					<li>
-						<Link to="me/recipes/index">Mes Recettes</Link>
+						<Link to="me/recipes">Mes Recettes</Link>
 					</li>
 					<li>
 						<Link to="me/menus">Mes Menus</Link>

@@ -18,32 +18,59 @@ let getMenu = (menuId) => {
 }
 
 /**
- * Ajout d'un menu
- * @param {number} menu 
+ * Récupération de la liste des menus de l'utilisateur connecté
  * @returns {Promise}
  */
-let addMenu = (menu) => {
-    return Axios.put('/user/menus', menu)
+let getMyMenus = () => {
+    return Axios.get('/user/menus/me')
 }
 
 /**
- * Mise à jour d'un menu
+ * Ajout d'un menu de l'utilisateur connecté
  * @param {number} menu 
  * @returns {Promise}
  */
-let updateMenu = (menu) => {
-    return Axios.patch('/user/menus/' + menu.id, menu)
+let addMyMenu = (menu) => {
+    return Axios.put('/user/menus/me', menu)
 }
 
 /**
- * Suppression d'un menu
+ * Ajout d'un menu de l'utilisateur connecté
+ * @param {number} menu 
+ * @param {number} recipeId 
+ * @returns {Promise}
+ */
+let addRecipeInMyMenu = (recipeId, menu) => {
+    return Axios.put('/user/menus/recipe/' + recipeId, menu,{headers: { 'content-type': 'application/x-www-form-urlencoded' }})
+}
+
+/**
+ * Mise à jour d'un menu de l'utilisateur connecté
+ * @param {number} menu 
+ * @returns {Promise}
+ */
+let updateMyMenu = (menu) => {
+    return Axios.patch('/user/menus/me/' + menu.id, menu)
+}
+
+/**
+ * Suppression d'un menu de l'utilisateur connecté
  * @param {number} menuId 
  * @returns {Promise}
  */
-let deleteMenu = (menuId) => {
-    return Axios.delete('/user/menus/' + menuId)
+let trashMyMenu = (menuId) => {
+    return Axios.delete('/user/menus/me/trash/' + menuId)
+}
+
+/**
+ * Restauration d'un menu de l'utilisateur connecté
+ * @param {number} menuId 
+ * @returns {Promise}
+ */
+let untrashMyMenu = (menuId) => {
+    return Axios.post('/user/menus/me/untrash/' + menuId)
 }
 
 export const menuService = {
-    getAllMenus, getMenu, updateMenu, deleteMenu, addMenu
+    getAllMenus, getMenu, getMyMenus, addMyMenu, updateMyMenu, trashMyMenu, untrashMyMenu, addRecipeInMyMenu
 }

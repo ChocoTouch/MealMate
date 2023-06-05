@@ -33,7 +33,7 @@ const MyMenus = () => {
                     {
                         menus.map(menu => (
                             <tr key={menu.id}>
-                                <td><Link to={`../edit/${menu.id}` }>{menu.id}</Link></td>
+                                <td><Link to={`edit/${menu.id}` }>{menu.id}</Link></td>
                                 <td>{menu.name}</td>
                                 <td>{menu.description}</td>
                                 {/* <td><span className='del_ubtn' onClick={() => delMenu(menu.id)}>Supprimer</span></td> */}
@@ -42,6 +42,7 @@ const MyMenus = () => {
                     }
                 </tbody>
             </table>
+            <Link to={`add`}>Création de menu</Link>
         </div>
     );
 };

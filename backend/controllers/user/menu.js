@@ -113,7 +113,7 @@ exports.addRecipeInMyMenu = async (req, res, next) => {
 		let recipeID = parseInt(req.params.id);
 		const { menu_id, course_id, meal_id, day_id } = req.body;
 
-		if (!recipeID || !menu_id) {
+		if (!recipeID || !menu_id || !course_id || !meal_id || !day_id) {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 

@@ -17,6 +17,6 @@ let getDayOfWeek = (dayId) => {
     return Axios.get('/user/daysofweek/' + dayId)
 }
 
-export const themeService = {
+export const dayService = {
     getAllDaysOfWeek, getDayOfWeek
 }

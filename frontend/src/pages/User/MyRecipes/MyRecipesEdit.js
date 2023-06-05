@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import { recipeService } from '@/_services/user/recipe.service';
 import { themeService } from '@/_services/user/theme.service';
 import { dietService } from '@/_services/user/diet.service';
 import { ingredientService } from '@/_services/user/ingredient.service';
+
 //import './recipeedit.css'
 
 const MyRecipesEdit = () => {
     const { id } = useParams();
     let navigate = useNavigate();
 
-    const [recipe, setRecipe] = useState({
-        count: "1"
-    });
+    const [recipe, setRecipe] = useState([]);
     const [tables, setTables] = useState({
         diets: [],
         ingredients: [],
@@ -37,6 +37,23 @@ const MyRecipesEdit = () => {
         return () => flag.current = true
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const onChange = (e) => {
+        setRecipe({
+            ...recipe,
+            [e.target.name]: e.target.value
+
+        })
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        recipeService.updateMyRecipe(recipe)
+            .then(res => {
+                navigate('../')
+            })
+            .catch(err => console.log(err))
+    }
 
 
     const getIngredients = () => {
@@ -76,31 +93,17 @@ const MyRecipesEdit = () => {
             })
             .catch(err => console.log(err))
     }
-    const onChange = (e) => {
-        setRecipe({
-            ...recipe,
-            [e.target.name]: e.target.value
-
-        })
-    }
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-        recipeService.updateMyRecipe(recipe)
-            .then(res => {
-                navigate('../index')
-            })
-            .catch(err => console.log(err))
-    }
 
     const addIngredient = (e) => {
         e.preventDefault();
-        recipeService.addIngredientInMyRecipe(e.target[0].value, {
+        console.log(recipe)
+        recipeService.addIngredientInMyRecipe(recipe.ingredient_id || 1, {
             recipe_id: recipe.id,
-            count: recipe.count
+            count: recipe.count || 1
         })
             .then(res => {
                 getRecipe();
+                console.log(res)
             })
             .catch(err => console.log(err))
     }
@@ -109,7 +112,6 @@ const MyRecipesEdit = () => {
         recipeService.deleteIngredientInMyRecipe(ingredientId, {
             data: {
                 recipe_id: recipe.id,
-                count: recipe.count
             }
         })
             .then(res => {
@@ -184,7 +186,7 @@ const MyRecipesEdit = () => {
                     }
                 </div>
             </aside>
-            <form onSubmit={onSubmit} title='editMyRecipe'>
+            <form onSubmit={onSubmit} >
                 <p className='form_title'>édition d'une recette :</p>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
@@ -200,13 +202,7 @@ const MyRecipesEdit = () => {
                 </div>
                 <div className="group">
                     <label htmlFor="difficulty">Difficulté</label>
-                    <select name="difficulty" value={recipe.difficulty} onChange={onChange} id="difficulty">
-                        <option name="difficulty" value="1">1</option>
-                        <option name="difficulty" value="2">2</option>
-                        <option name="difficulty" value="3">3</option>
-                        <option name="difficulty" value="4">4</option>
-                        <option name="difficulty" value="5">5</option>
-                    </select>
+                    <input name="difficulty" type='number' min="1" max="5" value={recipe.difficulty || 1} onChange={onChange} id="difficulty" />
                 </div>
                 <div className="group">
                     <label htmlFor="theme">Thèmes</label>
@@ -222,7 +218,7 @@ const MyRecipesEdit = () => {
                     <button>Modifier</button>
                 </div>
             </form>
-            <form className="add_ingredient" onSubmit={addIngredient} title='addIngredientInMyRecipe'>
+            <form className="add_ingredient" onSubmit={addIngredient} >
                 <p className='form_title'>Ajouter un ingrédient :</p>
                 <div className="group">
                     <label htmlFor="ingredient_id">Ingrédient</label>
@@ -240,7 +236,7 @@ const MyRecipesEdit = () => {
                 </div>
                 <button>Ajouter ingrédient</button>
             </form>
-            <form className="add_diet" onSubmit={addDiet} title='addDietInMyRecipe'>
+            <form className="add_diet" onSubmit={addDiet} >
                 <p className='form_title'>Ajouter un régime :</p>
                 <div className="group">
                     <label htmlFor="diet_id">Régime</label>

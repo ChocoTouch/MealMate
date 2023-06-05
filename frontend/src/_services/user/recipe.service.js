@@ -48,12 +48,22 @@ let updateMyRecipe = (recipe) => {
  * @param {number} recipeId 
  * @returns {Promise}
  */
-let deleteMyRecipe = (recipeId) => {
-    return Axios.delete('/user/recipes/me/' + recipeId)
+let trashMyRecipe = (recipeId) => {
+    return Axios.delete('/user/recipes/me/trash/' + recipeId)
+}
+
+/**
+ * Restauration d'une recette de l'utilisateur connecté
+ * @param {number} recipeId 
+ * @returns {Promise}
+ */
+let untrashMyRecipe = (recipeId) => {
+    return Axios.post('/user/recipes/me/untrash/' + recipeId)
 }
 
 /**
  * Ajout d'un ingrédient dans une recette de l'utilisateur connecté
+ * @param {number} recipe_id
  * @param {number} ingredientId
  * @returns {Promise}
  */
@@ -91,5 +101,5 @@ let deleteDietInMyRecipe = (dietId, recipe_id) => {
 }
 
 export const recipeService = {
-    getAllRecipes, getRecipe, getMyRecipes, updateMyRecipe, deleteMyRecipe, addMyRecipe, addIngredientInMyRecipe,deleteIngredientInMyRecipe,addDietInMyRecipe,deleteDietInMyRecipe
+    getAllRecipes, getRecipe, getMyRecipes, updateMyRecipe, trashMyRecipe, untrashMyRecipe, addMyRecipe, addIngredientInMyRecipe,deleteIngredientInMyRecipe,addDietInMyRecipe,deleteDietInMyRecipe
 }
