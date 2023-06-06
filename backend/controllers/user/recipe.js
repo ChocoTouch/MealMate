@@ -321,6 +321,7 @@ exports.updateMyRecipe = async (req, res, next) => {
 			message: "Votre recette à bien été modifiée .",
 		});
 	} catch (err) {
+		console.log(err)
 		next(err);
 	}
 };

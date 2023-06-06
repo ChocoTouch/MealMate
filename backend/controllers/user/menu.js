@@ -48,7 +48,7 @@ exports.getMyMenus = async (req, res, next) => {
 					attributes: ["id", "message", "user_username"],
 				},
 			],
-			attributes: ["id", "name", "slug", "description", "user_username"],
+			attributes: ["id", "name", "slug", "description", "user_username","user_id"],
 		});
 
 		return res.json({ data: menus });
@@ -155,7 +155,14 @@ exports.addRecipeInMyMenu = async (req, res, next) => {
 			throw new RecipeError("Cette recette n'existe pas .", 0);
 		}
 
-		let menuRecipe = await menu.addRecipe(recipe);
+		let menuRecipe = await menu.addRecipe(recipe, {
+			through: { 
+				menu_id: menu_id,
+				course_id: course_id,
+				meal_id: meal_id,
+				day_id: day_id,
+			}
+		});
 
 		return res.json({
 			message: "La recette a bien été ajoutée à votre menu .",
@@ -235,7 +242,7 @@ exports.updateMyMenu = async (req, res, next) => {
 		}
 
 		let menu = await Menu.findOne({
-			where: { id: menuID, user_id: req.decodedToken },
+			where: { id: menuID, user_id: req.decodedToken.id },
 			raw: true,
 		});
 

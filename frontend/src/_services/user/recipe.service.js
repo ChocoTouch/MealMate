@@ -63,7 +63,7 @@ let untrashMyRecipe = (recipeId) => {
 
 /**
  * Ajout d'un ingrédient dans une recette de l'utilisateur connecté
- * @param {number} recipe_id
+ * @param {number} recipe
  * @param {number} ingredientId
  * @returns {Promise}
  */

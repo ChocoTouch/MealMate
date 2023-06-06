@@ -28,22 +28,22 @@
 }
 
 .searchbar-container .searchbar-input{
-    padding: 1vw 3vw;
-    font-size: 1em;
-    border-radius: 5vw;
+    padding: 1% 3%;
+    font-size: 1.5vw;
+    border-radius: 5px;
     border: none;
 }
 
 .searchbar-container .searchbar-title{
-    font-size: 2em;
+    font-size: 2vw;
     margin: auto;
     width: 80%;
-    line-height: 3vw;
+    line-height: 130%;
 }
 .searchbar-container .searchbar-text{
-    font-size: 1em;
-    padding: 0 3vw;
-    margin: 0.8vw 0 2.8vw;
+    font-size: 1.5vw;
+    padding: 0 3%;
+    margin: 0.8% 0 2.8%;
 }
 
 section .list-title{
@@ -52,13 +52,13 @@ section .list-title{
 }
 
 section .left-bar{
-    width: 1vw;
+    width: 1%;
     background: #9A2727;
     height: 80%;
 }
 
 .recipes-list{
-    margin: 2vw 0 2vw 4vw;
+    margin: 2% 0 2% 4%;
 }
 
 section .list-cards{
@@ -67,38 +67,38 @@ section .list-cards{
 }
 
 section .list-title{
-    font-size: 2em;
+    font-size: 170%;
 }
 
 .menus-list{
     display: flex;
     justify-content: center;
-    margin: 5vw 0;
+    margin: 5% 0;
 }
 
 .menus-list .menucard-article {
     width: 28%;
-    height: 13.5vw;
-    padding: 0 2vw;
+    position: relative;
+    padding: 0 2%;
 }
 
 .menus-list .menucard-article .menucard-image {
     width: 100%;
-    height: 100%;
-    border-radius: 1vw;
+    aspect-ratio: 4/3;
+    border-radius: 15%;
 }
 
 .menus-list .menucard-article .menucard-title{
     margin: 0;
-    margin-left: 2vw;
-    position: relative;
-    bottom: 10vw;
-    font-size: 2em;
+    margin-left: 8%;
+    position: absolute;
+    font-size: 170%;
     width: 50%;
+    bottom: 40%;
     font-weight: bolder;
     color: white;
 }
 
 .users-list{
-    margin: 2vw 0 2vw 4vw;
+    margin: 2% 0 2% 4%;
 }

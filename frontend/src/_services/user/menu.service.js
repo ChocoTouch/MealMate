@@ -41,7 +41,17 @@ let addMyMenu = (menu) => {
  * @returns {Promise}
  */
 let addRecipeInMyMenu = (recipeId, menu) => {
-    return Axios.put('/user/menus/recipe/' + recipeId, menu,{headers: { 'content-type': 'application/x-www-form-urlencoded' }})
+    return Axios.put('/user/menus/recipe/' + recipeId, menu)
+}
+
+/**
+ * Ajout d'un menu de l'utilisateur connecté
+ * @param {number} menu_id 
+ * @param {number} recipeId 
+ * @returns {Promise}
+ */
+let deleteRecipeInMyMenu = (recipeId, menu_id) => {
+    return Axios.delete('/user/menus/recipe/' + recipeId, menu_id)
 }
 
 /**
@@ -72,5 +82,5 @@ let untrashMyMenu = (menuId) => {
 }
 
 export const menuService = {
-    getAllMenus, getMenu, getMyMenus, addMyMenu, updateMyMenu, trashMyMenu, untrashMyMenu, addRecipeInMyMenu
+    getAllMenus, getMenu, getMyMenus, addMyMenu, updateMyMenu, trashMyMenu, untrashMyMenu, addRecipeInMyMenu, deleteRecipeInMyMenu
 }

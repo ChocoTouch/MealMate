@@ -1,21 +1,16 @@
 .recipecard-article{
-    display: flex;
-    flex-direction: column;
     padding: 1vw;
-    width: 14vw;
-    height: 10vw;
+    width: 15%;
+    position: relative;
     margin: 2vw 3vw 1vw 3vw;
     border-radius: 1vw;
     box-shadow: 0 0.5vw 1vw 1vw rgb(0 0 0 / 10%);
 }
 
 .recipecard-article p{
-    margin:1vw 0 0 0;
+    margin: 1vw 0 0 0;
     color: #9A2727;
     font-size: 1.2vw;
-    position: relative;
-    bottom: 11vw;
-
 }
 
 .recipecard-article .recipecard-title{
@@ -24,11 +19,17 @@
     font-weight: 1.5vw;
 }
 
+.recipecard-article .recipecard-text{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* white-space: nowrap; */
+}
+
 .recipecard-image{
-    width: 70%;
-    position: relative;
-    left: 50%;
-    bottom: 30%;
+    width: 60%;
+    position: absolute;
+    left: 60%;
+    bottom: 70%;
     border-radius: 50%;
     box-shadow: 0 0.5vw 1vw 1vw rgb(0 0 0 / 10%);
 }

@@ -23,7 +23,6 @@ const MyMenus = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nom</th>
                         <th>Description</th>
                         <th></th>
@@ -33,8 +32,7 @@ const MyMenus = () => {
                     {
                         menus.map(menu => (
                             <tr key={menu.id}>
-                                <td><Link to={`edit/${menu.id}` }>{menu.id}</Link></td>
-                                <td>{menu.name}</td>
+                                <td><Link to={`edit/${menu.id}` }>{menu.name}</Link></td>
                                 <td>{menu.description}</td>
                                 {/* <td><span className='del_ubtn' onClick={() => delMenu(menu.id)}>Supprimer</span></td> */}
                             </tr>

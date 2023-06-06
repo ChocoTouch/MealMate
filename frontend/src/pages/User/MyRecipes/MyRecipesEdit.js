@@ -96,14 +96,12 @@ const MyRecipesEdit = () => {
 
     const addIngredient = (e) => {
         e.preventDefault();
-        console.log(recipe)
-        recipeService.addIngredientInMyRecipe(recipe.ingredient_id || 1, {
-            recipe_id: recipe.id,
-            count: recipe.count || 1
+        recipeService.addIngredientInMyRecipe(e.target[0].value, {
+            recipe_id: id,
+            count: e.target[1].value
         })
             .then(res => {
                 getRecipe();
-                console.log(res)
             })
             .catch(err => console.log(err))
     }
@@ -111,7 +109,7 @@ const MyRecipesEdit = () => {
     const delIngredient = (ingredientId) => {
         recipeService.deleteIngredientInMyRecipe(ingredientId, {
             data: {
-                recipe_id: recipe.id,
+                recipe_id: id,
             }
         })
             .then(res => {

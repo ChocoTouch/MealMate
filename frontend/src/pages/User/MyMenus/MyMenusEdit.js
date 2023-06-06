@@ -102,8 +102,6 @@ const MyMenusEdit = () => {
 
     const addRecipe = (e) => {
         e.preventDefault();
-        console.log(menu)
-        console.log(e)
         menuService.addRecipeInMyMenu(e.target[0].value, {
             menu_id: id,
             meal_id: e.target[1].value,
@@ -112,38 +110,28 @@ const MyMenusEdit = () => {
         })
             .then(res => {
                 getMenu();
-                console.log(res)
             })
             .catch(err => {
                 console.log(err)
-                console.log(err.response.data);
-                console.log(err.response.status);
-                console.log(err.response.headers);
             })
     }
 
     const delRecipe = (recipeId) => {
-        recipeService.deleteRecipeInMyRecipe(recipeId, {
+        menuService.deleteRecipeInMyMenu(recipeId, {
             data: {
-                menu_id: menu.id,
+                menu_id: id,
             }
         })
             .then(res => {
                 getMenu();
             })
-            .catch(err => {
-                console.log(err)
-                console.log(err.response.data);
-                console.log(err.response.status);
-                console.log(err.response.headers);
-            })
+            .catch(err => console.log(err))
     }
 
 
     return (
         <div className='MenuEdit'>
             <aside>
-                <button onClick={() => console.log(tables)}>click</button>
                 <div className="group">
                     <p className='group_title'>Liste des Recettes du menu :</p>
                     {
@@ -154,22 +142,26 @@ const MyMenusEdit = () => {
                                     <p>Nom : {recipe.name}</p>
                                     <p>Description: {recipe.description}</p>
                                     <p>Créateur : {recipe.user_username}</p>
+                                    {recipe.Menu_recipes.map(menu_recipe => (
+                                    <div key={menu_recipe.id} className='menu_recipe'>
+                                        <div className="group">
+                                            <p className='group_title'>Plats :</p>
+                                            <p>Nom : {menu_recipe.Course.name}</p>
+                                            <p>Description : {menu_recipe.Course.name}</p>
+                                        </div>
+                                        <div className="group">
+                                            <p className='group_title'>Repas :</p>
+                                            <p>Nom : {menu_recipe.Meal.name}</p>
+                                            <p>Description : {menu_recipe.Meal.description}</p>
+                                        </div>
+                                        <div className="group">
+                                            <p className='group_title'>Jour :</p>
+                                            <p>Nom : {menu_recipe.DayOfWeek.name}</p>
+                                        </div>
+                                    </div>
+                                ))}
                                 </div>
-                                <div className="group">
-                                    <p className='group_title'>Plat :</p>
-                                    <p>Nom : {recipe.Menu_recipes[0].Course.name}</p>
-                                    <p>Description : {recipe.Menu_recipes[0].Course.name}</p>
-                                </div>
-                                <div className="group">
-                                    <p className='group_title'>Repas :</p>
-                                    <p>Nom : {recipe.Menu_recipes[0].Meal.name}</p>
-                                    <p>Description : {recipe.Menu_recipes[0].Meal.description}</p>
-                                </div>
-                                <div className="group">
-                                    <p className='group_title'>Jour :</p>
-                                    <p>Nom : {recipe.Menu_recipes[0].DayOfWeek.name}</p>
-                                </div>
-                                {/* <p className='del_ubtn' onClick={() => delIngredient(recipe.id)}>Supprimer</p> */}
+                                <p className='del_ubtn' onClick={() => delRecipe(recipe.id)}>Supprimer</p>
                             </div>
                         ))
                     }

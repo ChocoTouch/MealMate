@@ -19,7 +19,7 @@ const Home = () => {
 			recipeService
 				.getAllRecipes()
 				.then((res) => {
-					if (res.data.data.slice(res.data.data.length - 4).length > 5) {
+					if (res.data.data.length > 4) {
 						setRecipes(res.data.data.slice(res.data.data.length - 4));
 					} else {
 						setRecipes(res.data.data);
@@ -29,8 +29,8 @@ const Home = () => {
 				})
 				.catch((err) => console.log(err));
 			menuService.getAllMenus().then((res) => {
-				if (res.data.data.slice(res.data.data.length - 4).length > 3) {
-					setRecipes(res.data.data.slice(res.data.data.length - 2));
+				if (res.data.data.length > 3) {
+					setMenus(res.data.data.slice(res.data.data.length - 3));
 				} else {
 					setMenus(res.data.data);
 				}
@@ -40,8 +40,8 @@ const Home = () => {
             userService
 				.getAllUsers()
 				.then((res) => {
-					if (res.data.data.slice(res.data.data.length - 5).length > 6) {
-						setUsers(res.data.data.slice(res.data.data.length - 5));
+					if (res.data.data.length > 6) {
+						setUsers(res.data.data.slice(res.data.data.length - 6));
 					} else {
 						setUsers(res.data.data);
 					}

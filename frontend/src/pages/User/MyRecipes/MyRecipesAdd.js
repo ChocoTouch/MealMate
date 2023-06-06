@@ -29,9 +29,8 @@ const MyRecipesAdd = () => {
     }, [])
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(recipe);
         recipeService.addMyRecipe(recipe)
-            .then(res => navigate('../index'))
+            .then(res => navigate('../'))
             .catch(err => console.log(err))
     }
 
