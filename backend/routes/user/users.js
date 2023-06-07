@@ -11,8 +11,10 @@ router.use((req, res, next) => {
 
 router.get("/", userController.getAllUsers);
 
+router.get("/me", userController.getMyUser);
+
 router.get("/:id", userController.getUser);
 
-router.put("/me", userController.updateMyProfile);
+router.patch("/me", userController.updateMyProfile);
 
 module.exports = router;

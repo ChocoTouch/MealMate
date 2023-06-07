@@ -58,6 +58,10 @@ const UserEdit = () => {
                     <input type="email" name="email" id="email" defaultValue={user.email} onChange={onChange} autoComplete="off"/>
                 </div>
                 <div className="group">
+                    <label htmlFor="telephone">Telephone</label>
+                    <input type="text" name="telephone" id="telephone" defaultValue={user.telephone} onChange={onChange} autoComplete="off"/>
+                </div>
+                <div className="group">
                     <label htmlFor="roles">Rôles</label>
                     <input type="text" name="roles" id="roles" defaultValue={user.roles} onChange={onChange} autoComplete="off"/>
                 </div>

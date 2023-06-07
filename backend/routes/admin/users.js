@@ -23,6 +23,4 @@ router.delete("/trash/:id", userController.trashUser);
 
 router.delete("/:id", userController.deleteUser);
 
-router.put("/me", userController.updateMyProfile);
-
 module.exports = router;

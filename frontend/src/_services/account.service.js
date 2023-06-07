@@ -12,16 +12,16 @@ let saveToken = (token) => {
     localStorage.setItem('token', token)
 }
 
-let savePayload = (payload) => {
-    localStorage.setItem('payload', JSON.stringify(payload));
+let saveRoles = (roles) => {
+    localStorage.setItem('roles', JSON.stringify(roles));
 }
 
 let getToken = () => {
     return localStorage.getItem('token')
 }
 
-let getPayload = () => {
-    return JSON.parse(localStorage.getItem('payload'))
+let getRoles = () => {
+    return JSON.parse(localStorage.getItem('roles'))
 }
 
 let logout = () => {
@@ -34,5 +34,5 @@ let isLogged = () => {
 }
 
 export const accountService = {
-    saveToken, savePayload, logout, isLogged, login, getToken, getPayload, register
+    saveToken, saveRoles, logout, isLogged, login, getToken, getRoles, register
 }
