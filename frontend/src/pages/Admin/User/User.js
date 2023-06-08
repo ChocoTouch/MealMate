@@ -40,6 +40,7 @@ const User = () => {
                         <th>Pseudo</th>
                         <th>Telephone</th>
                         <th>Role</th>
+                        <th>Image</th>
                         <th>Date de création</th>
                         <th>Date d'édition</th>
                         <th>Date de suppression</th>
@@ -57,6 +58,8 @@ const User = () => {
                                 <td>{user.username}</td>
                                 <td>{user.telephone}</td>
                                 <td>{user.roles}</td>
+                                {/* <td><img src={user.image} alt="Profil utilisateur"/></td> */}
+                                <td>{user.image}</td>
                                 <td>{user.createdAt}</td>
                                 <td>{user.updatedAt}</td>
                                 <td>{user.deletedAt}</td>

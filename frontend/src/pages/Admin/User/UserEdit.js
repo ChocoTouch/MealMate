@@ -6,6 +6,7 @@ const UserEdit = () => {
     const { id } = useParams();
     let navigate = useNavigate();
 
+
     const [user, setUser] = useState([]);
     const flag = useRef(false);
 
@@ -14,10 +15,12 @@ const UserEdit = () => {
             ...user,
             [e.target.name]: e.target.value
         })
+        console.log(user)
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
+        console.log(e)
         userService.updateUser(user)
             .then(res => {
                 navigate('../index')
@@ -40,7 +43,7 @@ const UserEdit = () => {
     return (
         <div className='UserEdit'>
             édition d'un utilisateur :
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} encType="multipart/form-data">
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" defaultValue={user.name} onChange={onChange} autoComplete="off"/>
@@ -64,6 +67,10 @@ const UserEdit = () => {
                 <div className="group">
                     <label htmlFor="roles">Rôles</label>
                     <input type="text" name="roles" id="roles" defaultValue={user.roles} onChange={onChange} autoComplete="off"/>
+                </div>
+                <div className="group">
+                    <label htmlFor="image">Uploader fichier Image</label>
+                    <input type="file" name="image" onChange={onChange} id="image"/>
                 </div>
                 <div className="group">
                     <button>Modifier</button>

@@ -27,9 +27,12 @@ const Profile = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        console.log(e)
         userService.updateMyProfile(user)
             .then(res => {
+                accountService.saveToken(res.data.access_token);
                 getMyInfo();
+                console.log(res)
             })
             .catch(err => console.log(err))
 
@@ -72,6 +75,10 @@ const Profile = () => {
                 <div className="group">
                     <label htmlFor="telephone">Telephone</label>
                     <input type="text" name="telephone" id="telephone" defaultValue={user.telephone} onChange={onChangeEdit} autoComplete="off" />
+                </div>
+                <div className="group">
+                    <label htmlFor="password">Saisissez votre mot de passe pour éditer votre profil</label>
+                    <input type="password" name="password" id="password" defaultValue="" onChange={onChangeEdit} autoComplete="off" />
                 </div>
                 <div className="group">
                     <button>Modifier</button>
