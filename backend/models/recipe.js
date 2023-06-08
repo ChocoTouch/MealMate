@@ -42,6 +42,10 @@ module.exports = (sequelize) => {
       difficulty: {
         type: DataTypes.INTEGER(1),
         allowNull: false,
+      },
+      image: {
+        type: DataTypes.STRING(200),
+        allowNull: true,
       }
     },
     { paranoid: true } // softDelete

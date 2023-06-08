@@ -261,6 +261,7 @@ exports.addMyRecipe = async (req, res, next) => {
 		}
 
 		req.body.user_id = req.decodedToken.id;
+		req.body.image = req.file.path || null;
 		req.body.user_username = req.decodedToken.username;
 
 		req.body.slug = slugify(name);
@@ -308,7 +309,7 @@ exports.updateMyRecipe = async (req, res, next) => {
 		}
 
 		req.body.user_username = req.decodedToken.username;
-
+		req.body.image = req.file.path || null;
 		req.body.user_id = req.decodedToken.id;
 
 		req.body.slug = slugify(name);

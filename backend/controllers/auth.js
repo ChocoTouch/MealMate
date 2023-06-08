@@ -40,8 +40,6 @@ exports.login = async (req, res, next) => {
       roles: user.roles,
       username: user.username,
       telephone: user.telephone,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
     };
     // Génération et envoi du token 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {

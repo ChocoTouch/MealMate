@@ -33,6 +33,10 @@ module.exports = (sequelize) => {
         type: DataTypes.FLOAT(7,2),
         allowNull: false,
       },
+      image: {
+        type: DataTypes.STRING(200),
+        allowNull: true,
+      }
     },
     { paranoid: true } // softDelete
   );

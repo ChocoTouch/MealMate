@@ -30,6 +30,10 @@ module.exports = (sequelize) => {
       description: {
         type: DataTypes.STRING(250),
         allowNull: false,
+      },
+      image: {
+        type: DataTypes.STRING(200),
+        allowNull: true,
       }
     },
     { paranoid: true } // softDelete

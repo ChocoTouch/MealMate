@@ -1,6 +1,6 @@
 const express = require("express");
 const userController = require("../../controllers/admin/user");
-
+const uploader = require("../../multer/multer")
 let router = express.Router();
 
 router.use((req, res, next) => {
@@ -13,9 +13,9 @@ router.get("/", userController.getAllUsers);
 
 router.get("/:id", userController.getUser);
 
-router.put("", userController.addUser);
+router.put("", uploader.upload, userController.addUser);
 
-router.patch("/:id", userController.updateUser);
+router.patch("/:id", uploader.upload, userController.updateUser);
 
 router.post("/untrash/:id", userController.untrashUser);
 

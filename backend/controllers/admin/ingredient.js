@@ -56,6 +56,8 @@ exports.addIngredient = async (req, res, next) => {
 
 		req.body.slug = slugify(name);
 
+		req.body.image = req.file.path || null;
+
 		let ingredientc = await Ingredient.create(req.body);
 
 		return res.json({
@@ -91,6 +93,8 @@ exports.updateIngredient = async (req, res, next) => {
 
 		req.body.slug = slugify(name);
 
+		req.body.image = req.file.path || null;
+		
 		await Ingredient.update(req.body, { where: { id: ingredientID } });
 
 		return res.json({

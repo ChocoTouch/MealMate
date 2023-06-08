@@ -31,6 +31,9 @@ app.use("/admin", check.checkAdminTokenMW, admin_router);
 app.get("*", (req, res) => res.status(501).send("Ressource non existant, il n'y a rien ici ."));
 app.use(errorHandler);
 
+// Dossier statique d'images
+app.use('/Images', express.static('./Images'))
+
 /* Demarrage serveur avec test DB */
 DB.sequelize
   .authenticate()

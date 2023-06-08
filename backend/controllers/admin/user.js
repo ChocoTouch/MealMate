@@ -3,6 +3,7 @@ const slugify = require("slugify");
 const User = DB.User;
 const Recipe = DB.Recipe;
 const Menu = DB.Menu;
+
 const { RequestError, UserError } = require("../../error/customError");
 
 exports.getAllUsers = (req, res, next) => {
@@ -30,6 +31,7 @@ exports.getUser = async (req, res, next) => {
 
 		return res.json({ data: user });
 	} catch (err) {
+		console.log(err)
 		next(err);
 	}
 };
@@ -58,6 +60,8 @@ exports.addUser = async (req, res, next) => {
 				throw new RequestError(`Le format du rôle est incohérent.`, 1);
 		}
 
+		req.body.image = req.file.path || null;
+
 		req.body.slug = slugify(username);
 		
 		let userc = await User.create(req.body);
@@ -67,6 +71,7 @@ exports.addUser = async (req, res, next) => {
 			data: userc,
 		});
 	} catch (err) {
+		console.log(err)
 		next(err);
 	}
 };
@@ -74,18 +79,17 @@ exports.addUser = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
 	try {
 		let userID = parseInt(req.params.id);
-		const { username, email, roles } = req.body;
-
+		const { username, email, roles, slug } = req.body;
 		if (username) {
 			let user = await User.findOne({ where: { username: username }, raw: true });
-			if (user === null) {
+			if (user !== null) {
 				throw new UserError(`Le pseudo ${username} est déjà utilisé .`, 0);
 			}
 		}
 
 		if (email) {
 			let user = await User.findOne({ where: { email: email }, raw: true });
-			if (user === null) {
+			if (user !== null) {
 				throw new UserError(`L'adresse e-mail ${email} est déjà utilisée .`, 0);
 			}
 		}
@@ -100,11 +104,17 @@ exports.updateUser = async (req, res, next) => {
 			throw new UserError("Cet utilisateur n'existe pas .", 0);
 		}
 
-		if (roles !== "ROLE_ADMIN" && roles !== "ROLE_USER") {
-			throw new RequestError(`Le format du rôle est incohérent.`, 1);
+		if(roles){
+			if (roles !== "ROLE_ADMIN" && roles !== "ROLE_USER") {
+				throw new RequestError(`Le format du rôle est incohérent.`, 1);
+			}
 		}
 
-		req.body.slug = slugify(req.body.username);
+		req.body.image = req.file.path || null;
+
+		if(slug || username){
+			req.body.slug = slugify(req.body.username);
+		}
 
 		await User.update(req.body, { where: { id: userID } });
 
@@ -112,6 +122,7 @@ exports.updateUser = async (req, res, next) => {
 			message: "L'utilisateur à bien été modifié .",
 		});
 	} catch (err) {
+		console.log(err)
 		next(err);
 	}
 };
@@ -163,3 +174,4 @@ exports.deleteUser = async (req, res, next) => {
 		next(err);
 	}
 };
+

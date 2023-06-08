@@ -96,7 +96,7 @@ exports.addMenu = async (req, res, next) => {
 		}
 
 		req.body.user_username = user.username;
-
+		req.body.image = req.file.path || null;
 		req.body.slug = slugify(name);
 
 		let menuc = await Menu.create(req.body);
@@ -135,6 +135,8 @@ exports.updateMenu = async (req, res, next) => {
 		if (name) {
 			req.body.slug = slugify(name);
 		}
+		
+		req.body.image = req.file.path || null;
 
 		await Menu.update(req.body, { where: { id: menuID } });
 

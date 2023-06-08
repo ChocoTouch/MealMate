@@ -61,6 +61,8 @@ exports.addRecipe = async (req, res, next) => {
 		if (difficulty < 1 || difficulty > 5) {
 			throw new RequestError("La difficulté est incohérente .", 0);
 		}
+		
+		req.body.image = req.file.path || null;
 
 		if (!theme_id) {
 			req.body.theme_id = 1;
@@ -113,6 +115,8 @@ exports.updateRecipe = async (req, res, next) => {
 		if (difficulty < 1 || difficulty > 5) {
 			throw new RequestError("La difficulté est incohérente .", 0);
 		}
+		
+		req.body.image = req.file.path || null;
 
 		let recipe = await Recipe.findOne({
 			where: { id: recipeID },
