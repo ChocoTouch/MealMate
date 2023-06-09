@@ -30,7 +30,7 @@ const Recipe = () => {
 
 
     return (
-        <div className='Recipe'>
+        <div className='list_table'>
             liste des recettes :
             <table>
                 <thead>

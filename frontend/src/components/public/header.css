@@ -22,24 +22,42 @@
     margin: 0;
     display: flex;
     justify-content: flex-end;
-    align-items: baseline;
+    align-items: center;
 }
 .publicheader ul li{
-    display: inline-block;
-    margin-right:20px;
+    display: flex;
+    font-weight: bold;
+    margin-right: 20px;
 }
 .publicheader ul li a{
     text-decoration: none;
     color: #9A2727;
 }
 
+.publicheader ul li button{
+    padding: 0;
+}
+
+.publicheader ul li svg{
+    width: 1.5em;
+    height: 1.5em;
+}
+
+
 .publicheader .logo{
     height: 60%;
 
 }
 
-/* .login-btn{
-} */
+.login-btn{
+    text-decoration: none;
+    background-color: #9A2727;
+    padding: 1% 2%;
+    color:white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    border-radius: 1vw;
+}
 .search-bar {
     border-radius: 16px;
     border: 1px solid black;

@@ -35,7 +35,7 @@ const Login = () => {
 			.catch((err) => console.log(err.response));
 	};
 	return (
-		<form onSubmit={onSubmit}>
+		<form onSubmit={onSubmit} className="loginform">
 			<div className="group">
 				<label htmlFor="email">Adresse E-mail</label>
 				<input

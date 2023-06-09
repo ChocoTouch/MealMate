@@ -28,7 +28,7 @@ const Theme = () => {
 
 
     return (
-        <div className='Theme'>
+        <div className='list_table'>
             liste des themes
             <table>
                 <thead>

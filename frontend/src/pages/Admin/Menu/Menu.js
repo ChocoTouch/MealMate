@@ -28,7 +28,7 @@ const Menu = () => {
 
 
     return (
-        <div className='Menu'>
+        <div className='list_table'>
             liste des menus
             <table>
                 <thead>

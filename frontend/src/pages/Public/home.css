@@ -20,28 +20,80 @@
     text-align: center;
     position: absolute;
     color: white;
-    /* bottom: 88%; */
     top: 20%;
     left: 30%;
-    /* margin: 0 auto; */
     width: 40%;
 }
 
+.searchbar-container .searchbar-search{
+    width: 85%;
+    margin: auto;
+    position: relative;
+}
+
 .searchbar-container .searchbar-input{
-    padding: 1% 3%;
-    font-size: 1.5vw;
-    border-radius: 5px;
+    padding: 2% 2% 0;
+    font-size: 1.5rem;
+    margin: auto;
+    /* border-radius: 15px; */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     border: none;
+    width: calc(96% - 2px);
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.searchbar-container .searchbar-input:focus{
+    outline: none;
+}
+
+.searchbar-container .searchbar-results{
+    background-color: white;
+    color: black;
+    list-style: none;
+    margin: auto;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 1% 3%;
+    position: absolute;
+    min-height: 15%;
+    max-height: 300%;
+    overflow: hidden;
+    top: 100%;
+    width: calc(94% - 2px);
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }
 
 .searchbar-container .searchbar-title{
-    font-size: 2vw;
+    font-size: 1.8rem;
     margin: auto;
     width: 80%;
     line-height: 130%;
 }
+
+.searchbar-container .searchbar-title span:nth-child(1){
+    font-size: 3.5rem;
+}
+.searchbar-container .searchbar-title span:nth-child(2){
+    font-size: 3.3rem;
+}
+.searchbar-container .searchbar-title span:nth-child(3){
+    font-size: 3.1rem;
+}
+.searchbar-container .searchbar-title span:nth-child(4){
+    font-size: 2.9rem;
+}
+.searchbar-container .searchbar-title span:nth-child(5){
+    font-size: 2.7rem;
+}
+
+
 .searchbar-container .searchbar-text{
-    font-size: 1.5vw;
+    font-size: 1.2rem;
     padding: 0 3%;
     margin: 0.8% 0 2.8%;
 }
@@ -49,12 +101,6 @@
 section .list-title{
     color: #3F0000;
     font-weight: bolder;
-}
-
-section .left-bar{
-    width: 1%;
-    background: #9A2727;
-    height: 80%;
 }
 
 .recipes-list{
@@ -78,27 +124,33 @@ section .list-title{
 
 .menus-list .menucard-article {
     width: 28%;
+    height: 15vw;
     position: relative;
     padding: 0 2%;
 }
 
 .menus-list .menucard-article .menucard-image {
+    height: 100%;
     width: 100%;
-    aspect-ratio: 4/3;
-    border-radius: 15%;
+    object-fit: contain;
+    border-radius: 2rem;
 }
 
 .menus-list .menucard-article .menucard-title{
     margin: 0;
-    margin-left: 8%;
     position: absolute;
-    font-size: 170%;
+    font-size: 1.8rem;
     width: 50%;
-    bottom: 40%;
+    top: 35%;
+    left: 25%;
+    text-align: center;
     font-weight: bolder;
     color: white;
+    background-color: #3F0000;
+    border-radius: 15px;
+    padding: 1%;
 }
 
 .users-list{
-    margin: 2% 0 2% 4%;
+    margin: 2% 0 4% 4%;
 }

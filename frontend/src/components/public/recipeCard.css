@@ -1,5 +1,5 @@
 .recipecard-article{
-    padding: 1vw;
+    padding: 1%;
     width: 15%;
     position: relative;
     margin: 2vw 3vw 1vw 3vw;
@@ -16,20 +16,22 @@
 .recipecard-article .recipecard-title{
     font-weight: bold;
     width: 60%;
-    font-weight: 1.5vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .recipecard-article .recipecard-text{
     overflow: hidden;
     text-overflow: ellipsis;
-    /* white-space: nowrap; */
+    white-space: nowrap;
 }
 
 .recipecard-image{
     width: 60%;
     position: absolute;
     left: 60%;
-    bottom: 70%;
+    bottom: 50%;
     border-radius: 50%;
     box-shadow: 0 0.5vw 1vw 1vw rgb(0 0 0 / 10%);
 }

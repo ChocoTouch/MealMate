@@ -28,7 +28,7 @@ const Diet = () => {
 
 
     return (
-        <div className='Diet'>
+        <div className='list_table'>
             liste des diets
             <table>
                 <thead>

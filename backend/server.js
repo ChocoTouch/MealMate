@@ -24,15 +24,15 @@ const user_router = require("./routes/userrouter");
 app.get("/", (req, res) =>
   res.send(`Welcome to the MealMate API by Bauchet Anthony`)
 );
+
+// Dossier statique d'images
+app.use('/Images', express.static('./Images'))
 app.use("/auth", auth_router);
 app.use("/public", public_router);
 app.use("/user", check.checkTokenMW, user_router);
 app.use("/admin", check.checkAdminTokenMW, admin_router); 
 app.get("*", (req, res) => res.status(501).send("Ressource non existant, il n'y a rien ici ."));
 app.use(errorHandler);
-
-// Dossier statique d'images
-app.use('/Images', express.static('./Images'))
 
 /* Demarrage serveur avec test DB */
 DB.sequelize

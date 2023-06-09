@@ -1,10 +1,10 @@
 
-.group{
+.loginform .group{
     margin-bottom:15px;
 }
-label{
+.loginform label{
     display:block;
 }
-button{
+.loginform button{
     width:100%
 }

@@ -28,7 +28,7 @@ const Course = () => {
 
 
     return (
-        <div className='Course'>
+        <div className='list_table'>
             liste des courses
             <table>
                 <thead>

@@ -28,7 +28,7 @@ const User = () => {
 
 
     return (
-        <div className='User'>
+        <div className='list_table'>
             liste des utilisateurs
             <table>
                 <thead>

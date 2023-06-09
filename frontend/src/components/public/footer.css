@@ -1,5 +1,4 @@
 .pfooter{
-    text-align: center;
     color: black;
     width: 100%;
     position: relative;
@@ -8,15 +7,75 @@
 
 .pfooter .image{
     width: 100%;
-    position: relative;
-    top: 9px;
 }
 
 .pfooter .container{
     position: absolute;
     bottom: 5vw;
     width: 100%;
+} 
+
+.footer_content{
+    width: 100%;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 0;
+    color: white;
+    background-color: #9A2727;
+    top: 20%;
 }
-.container .text{
+
+.footer_content .mealmate_infos{
+    width: 30%;
+}
+
+.footer_content .mealmate_infos img{
+    width: 40%;
+}
+
+
+.footer_content .mealmate_infos .iconbuttons button{
+    color: white;
+}
+
+.footer_content .mealmate_infos .infos_text{
+    margin: 5% 0;
+}
+
+.footer_content .mealmate_infos .infos_text p{
     margin: 0;
+}
+
+.footer_content nav {
+    width: 30%;
+}
+
+.footer_content nav ul{
+    list-style: none;
+    padding: 0 5%;
+    margin: 0;
+    border-left: 1px solid white;
+}
+
+.footer_content h3{
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 5% 0;
+    font-style: normal;
+}
+
+.footer_content address{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.footer_content address p{
+    margin: 0;
+}
+
+.footer_content nav ul li{
+    margin-bottom: 4%;
 }

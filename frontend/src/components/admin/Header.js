@@ -1,6 +1,7 @@
 import React from 'react';
 import { accountService } from '../../_services/account.service';
 import { useNavigate } from 'react-router-dom';
+import mealMateLogo from '../../assets/images/MealMateLogoDark.png';
 
 const Header = () => {
     let navigate = useNavigate();
@@ -10,8 +11,9 @@ const Header = () => {
     }
     return (
         <div className='AHeader'>
-            Admin Header
-            <button onClick={logout}>Déconnexion</button>
+            <h1>Espace administrateur</h1>
+            <img src={mealMateLogo} alt="Mealmate logo"/>
+            <button onClick={logout}>Quitter l'espace administrateur</button>
         </div>
     );
 };

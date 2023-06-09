@@ -1,13 +1,5 @@
 #user{
-    display: flex;
-}
-
-aside{
-    width: 30vw;
-}
-
-form{
-    margin: 0 auto;
+    width: 100%;
 }
 
 .form_title{
@@ -18,16 +10,15 @@ form{
     font-weight: bold;
 }
 
-.AHeader{
+.UHeader{
     text-align: center;
-    line-height: 50px;
-    background-color: grey;
-    display: flex;
-    justify-content: space-between;
+    background-color: white;
     border: solid 1px black;
+    margin: 0;
+    padding: 2% 0;
 }
 
-.AHeader button{
+.UHeader button{
     width: 20%;
     height:20px;
 }
@@ -35,19 +26,41 @@ form{
 #user_body{
     border: solid 1px black;
 }
-/***********************************/
 
-.SideMenu ul{
-    list-style: none;
+.del_ubtn{
+    cursor: pointer;
+    color:red;
+}
+/****************************************************/
+
+.UHeader{
+    text-align: center;
+    border: solid 1px black;
+    text-transform: capitalize;
+    padding: 0;
 }
 
-.SideMenu ul li a{
+.UHeader nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.UHeader ul{
+    list-style: none;
+    padding:0 2%;
+}
+.UHeader ul li{
+    display: inline-block;
+    margin-right:20px;
+    border: 1px solid gray;
+    padding: 5px;
+}
+.UHeader ul li a{
     text-decoration: none;
     color: black;
 }
 
-/**************************************/
-.del_ubtn{
-    cursor: pointer;
-    color:red;
+.UHeader button{
+    margin: 0 2%;
 }

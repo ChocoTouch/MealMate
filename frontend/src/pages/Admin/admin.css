@@ -1,13 +1,7 @@
 #admin{
+    width: 100%;
     display: flex;
-}
-
-aside{
-    width: 30vw;
-}
-
-form{
-    margin: 0 auto;
+    background-color: #3F0000;
 }
 
 .form_title{
@@ -21,38 +15,67 @@ form{
 .AHeader{
     text-align: center;
     line-height: 50px;
-    background-color: grey;
+    background-color: #9A2727;
     display: flex;
     justify-content: space-between;
     border: solid 1px black;
+    height: 6vw;
+}
+
+.AHeader img{
+    padding: 1%;
 }
 
 .AHeader button{
-    width: 80px;
-    height:20px;
+    padding: 1%;
+    margin: 1% 2% 1% 0;
+    background-color: #3F0000;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    width: 25%;
 }
 
+.AHeader h1{
+    width: 25%;
+    margin: auto 0;
+    color: white;
+}
+
+
 .SideMenu{
-    flex-grow:1;
-    border: solid 1px black;
+    width: 15%;
+    background-color: #3F0000;
+    color: white;
+    font-size: 1.2rem;
 }
 #admin_body{
-    flex-grow:6;
-    border: solid 1px black;
+    width: 85%;
+    background-color: white;
 }
 /***********************************/
 
 .SideMenu ul{
     list-style: none;
+    font-weight: bolder;
 }
 
 .SideMenu ul li a{
     text-decoration: none;
-    color: black;
+    color: white;
+    font-weight: normal;
+    font-size: 1.1rem;
 }
 
 /**************************************/
 .del_ubtn{
     cursor: pointer;
     color:red;
+}
+
+/*************************************/
+.list_table {
+    padding: 0 2%;
 }

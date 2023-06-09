@@ -28,7 +28,7 @@ const Days = () => {
 
 
     return (
-        <div className='Days'>
+        <div className='list_table'>
             liste des days
             <table>
                 <thead>

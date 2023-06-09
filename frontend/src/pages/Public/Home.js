@@ -2,15 +2,22 @@ import React, { useState, useEffect, useRef } from "react";
 import { recipeService } from "@/_services/public/recipe.service";
 import { menuService } from "@/_services/public/menu.service";
 import { userService } from "@/_services/public/user.service";
+
 import RecipeCard from "@/components/public/RecipeCard";
 import UserCard from "@/components/public/UserCard";
+
 import searchbarimage from "../../assets/images/Salmon.png";
+import defaultmenuimage from "../../assets/images/DefaultMenuImage.png"
+import defaultrecipeimage from "../../assets/images/DefaultRecipeImage.png"
+import defaultuserimage from "../../assets/images/DefaultUserImage.png"
 import "./home.css";
 
 const Home = () => {
 	const [recipes, setRecipes] = useState([]);
 	const [menus, setMenus] = useState([]);
     const [users, setUsers] = useState([]);
+	const [results, setResults] = useState([])
+
 	const flag = useRef(false);
 	const [isLoad, setLoad] = useState(false);
 
@@ -19,12 +26,7 @@ const Home = () => {
 			recipeService
 				.getAllRecipes()
 				.then((res) => {
-					if (res.data.data.length > 4) {
-						setRecipes(res.data.data.slice(res.data.data.length - 4));
-					} else {
-						setRecipes(res.data.data);
-					}
-					console.log(res.data.data);
+					setRecipes(res.data.data);
 					setLoad(true);
 				})
 				.catch((err) => console.log(err));
@@ -34,7 +36,6 @@ const Home = () => {
 				} else {
 					setMenus(res.data.data);
 				}
-				console.log(res.data.data);
 				setLoad(true);
 			});
             userService
@@ -45,13 +46,22 @@ const Home = () => {
 					} else {
 						setUsers(res.data.data);
 					}
-					console.log(res.data.data);
 					setLoad(true);
 				})
 				.catch((err) => console.log(err));
 		}
 		return () => (flag.current = true);
 	}, []);
+
+	const onChange = (e) => {
+		const query = recipes.filter((recipe) => recipe && recipe.name && recipe.name.toLowerCase().includes(e.target.value.toLowerCase()))
+		if(e.target.value !== ""){
+			setResults(query)
+		}
+		else{
+			setResults([])
+		}
+	}
 
 	if (!isLoad) {
 		return <div>chargement....</div>;
@@ -63,19 +73,28 @@ const Home = () => {
 					<h1 className="searchbar-title">
 						Explorez les recettes
 						<br />
-						du mmmmmonde entier
+						du <span>m</span><span>m</span><span>m</span><span>m</span><span>m</span>onde entier
 					</h1>
 					<p className="searchbar-text">
 						Plongez vous dans l'univers des recettes de cuisine provenant du monde entier et créées par des milliers de
 						personnes professionnelles ou amatrices
 					</p>
+					<div className="searchbar-search">
 					<input
 						type="text"
 						placeholder="Recherche..."
 						name="searchbar-input"
 						id="searchbar-input"
 						className="searchbar-input"
+						onChange={onChange}
 					/>
+					<ul className="searchbar-results">
+						<hr></hr>
+						{results.map((result,id) =>(
+							<li key={id}>{result.name}</li>
+						))}
+					</ul>
+					</div>
 				</div>
 				<img
 					src={searchbarimage}
@@ -86,13 +105,12 @@ const Home = () => {
 
 			<section className="recipes-list">
 				<h1 className="list-title">Dernières recettes</h1>
-				<div className="left-bar"></div>
 				<div className="list-cards">
-					{recipes.map((recipe, id) => (
+					{recipes.slice(recipes.length - 4).map((recipe, id) => (
 						<RecipeCard
 							key={id}
 							recipe={recipe}
-							image="https://picsum.photos/400/400?random=1"
+							image={recipe.image ? "/"+ recipe.image : defaultrecipeimage}
 						/>
 					))}
 				</div>
@@ -105,7 +123,7 @@ const Home = () => {
 					>
 						<img
 							className="menucard-image"
-							src="https://picsum.photos/400/400?random=2"
+							src={menu.image ? "/"+ menu.image : defaultmenuimage}
 							alt={menu.name}
 						/>
 						<p className="menucard-title">{menu.name}</p>
@@ -114,13 +132,12 @@ const Home = () => {
 			</section>
             <section className="users-list">
 				<h1 className="list-title">Nos créateurs les plus populaires</h1>
-				<div className="left-bar"></div>
 				<div className="list-cards">
 					{users.map((user, id) => (
 						<UserCard
 							key={id}
 							user={user}
-							image="https://picsum.photos/400/400?random=3"
+							image={user.image ? "/"+ user.image : defaultuserimage}
 						/>
 					))}
 				</div>

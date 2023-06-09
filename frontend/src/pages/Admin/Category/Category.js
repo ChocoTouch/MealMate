@@ -28,7 +28,7 @@ const Category = () => {
 
 
     return (
-        <div className='Category'>
+        <div className='list_table'>
             liste des categories
             <table>
                 <thead>
