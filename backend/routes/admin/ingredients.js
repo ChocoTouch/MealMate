@@ -1,5 +1,6 @@
 const express = require("express");
 const ingredientController = require("../../controllers/admin/ingredient");
+const uploader = require("../../multer/multer")
 
 let router = express.Router();
 
@@ -13,9 +14,9 @@ router.get("/", ingredientController.getAllIngredients);
 
 router.get("/:id", ingredientController.getIngredient);
 
-router.put("", ingredientController.addIngredient);
+router.put("", uploader.upload, ingredientController.addIngredient);
 
-router.patch("/:id", ingredientController.updateIngredient);
+router.patch("/:id", uploader.upload, ingredientController.updateIngredient);
 
 router.post("/untrash/:id", ingredientController.untrashIngredient);
 

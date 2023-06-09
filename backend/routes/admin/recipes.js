@@ -12,8 +12,6 @@ router.use((req, res, next) => {
 
 router.get("/", recipeController.getAllRecipes);
 
-router.get("/me", recipeController.getMyRecipes);
-
 router.get("/:id", recipeController.getRecipe);
 
 router.put("", uploader.upload, recipeController.addRecipe);
@@ -25,21 +23,5 @@ router.post("/untrash/:id", recipeController.untrashRecipe);
 router.delete("/trash/:id", recipeController.trashRecipe);
 
 router.delete("/:id", recipeController.deleteRecipe);
-
-router.put("/ingredient/:id", recipeController.addIngredientInMyRecipe);
-
-router.delete("/ingredient/:id", recipeController.deleteIngredientInMyRecipe);
-
-router.put("/diet/:id", recipeController.addDietInMyRecipe);
-
-router.put("/diet/:id", recipeController.deleteDietInMyRecipe);
-
-router.put("/me", recipeController.addMyRecipe);
-
-router.patch("/me/:id", recipeController.updateMyRecipe);
-
-router.delete("/me/trash/:id", recipeController.trashMyRecipe);
-
-router.post("/me/untrash/:id", recipeController.untrashMyRecipe);
 
 module.exports = router;

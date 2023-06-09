@@ -220,11 +220,15 @@ exports.addMyMenu = async (req, res, next) => {
 
 		req.body.user_username = req.decodedToken.username;
 
-		req.body.image = req.file.path || null;
+		if(req.file){
+			req.body.image = req.file.path;
+		}
 		
 		req.body.user_id = req.decodedToken.id;
-
-		req.body.slug = slugify(name);
+		
+		if(req.file){
+			req.body.image = req.file.path;
+		}
 
 		let menuc = await Menu.create(req.body);
 
@@ -258,7 +262,14 @@ exports.updateMyMenu = async (req, res, next) => {
 		
 		req.body.user_id = req.decodedToken.id;
 
-		req.body.slug = slugify(name);
+		if(req.file){
+			req.body.image = req.file.path;
+		}
+
+		if(name){
+			req.body.slug = slugify(name);
+		}
+
 
 		await Menu.update(req.body, {
 			where: { id: menuID },

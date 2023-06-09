@@ -1,5 +1,6 @@
 const express = require("express");
 const menuController = require("../../controllers/user/menu");
+const uploader = require("../../multer/multer")
 
 let router = express.Router();
 
@@ -19,9 +20,9 @@ router.put("/recipe/:id", menuController.addRecipeInMyMenu);
 
 router.delete("/recipe/:id", menuController.deleteRecipeInMyMenu);
 
-router.put("/me", menuController.addMyMenu);
+router.put("/me", uploader.upload, menuController.addMyMenu);
 
-router.patch("/me/:id", menuController.updateMyMenu);
+router.patch("/me/:id", uploader.upload, menuController.updateMyMenu);
 
 router.delete("/me/trash/:id", menuController.trashMyMenu);
 

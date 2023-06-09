@@ -60,7 +60,9 @@ exports.addUser = async (req, res, next) => {
 				throw new RequestError(`Le format du rôle est incohérent.`, 1);
 		}
 
-		req.body.image = req.file.path || null;
+		if(req.file){
+			req.body.image = req.file.path;
+		}
 
 		req.body.slug = slugify(username);
 		
@@ -110,8 +112,10 @@ exports.updateUser = async (req, res, next) => {
 			}
 		}
 
-		req.body.image = req.file.path || null;
-
+		if(req.file){
+			req.body.image = req.file.path;
+		}
+		
 		if(slug || username){
 			req.body.slug = slugify(req.body.username);
 		}

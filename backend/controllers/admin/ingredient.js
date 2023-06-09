@@ -54,9 +54,13 @@ exports.addIngredient = async (req, res, next) => {
 			throw new RequestError(`L'ingrédient ${name} existe déjà .`);
 		}
 
-		req.body.slug = slugify(name);
+		if(name){
+			req.body.slug = slugify(name);
+		}
 
-		req.body.image = req.file.path || null;
+		if(req.file){
+			req.body.image = req.file.path;
+		}
 
 		let ingredientc = await Ingredient.create(req.body);
 
@@ -91,9 +95,13 @@ exports.updateIngredient = async (req, res, next) => {
 			throw new IngredientError("Cet ingredient n'existe pas .", 0);
 		}
 
-		req.body.slug = slugify(name);
+		if(name){
+			req.body.slug = slugify(name);
+		}
 
-		req.body.image = req.file.path || null;
+		if(req.file){
+			req.body.image = req.file.path;
+		}
 		
 		await Ingredient.update(req.body, { where: { id: ingredientID } });
 

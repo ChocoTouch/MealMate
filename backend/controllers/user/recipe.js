@@ -261,7 +261,9 @@ exports.addMyRecipe = async (req, res, next) => {
 		}
 
 		req.body.user_id = req.decodedToken.id;
-		req.body.image = req.file.path || null;
+		if(req.file){
+			req.body.image = req.file.path;
+		}
 		req.body.user_username = req.decodedToken.username;
 
 		req.body.slug = slugify(name);
@@ -308,11 +310,16 @@ exports.updateMyRecipe = async (req, res, next) => {
 			throw new RecipeError("Cette recette n'existe pas ou ne vous appartient pas.", 0);
 		}
 
-		req.body.user_username = req.decodedToken.username;
-		req.body.image = req.file.path || null;
-		req.body.user_id = req.decodedToken.id;
+		if(name){
+			req.body.slug = slugify(name);
+		}
 
-		req.body.slug = slugify(name);
+		if(req.file){
+			req.body.image = req.file.path;
+		}
+		req.body.user_id = req.decodedToken.id;
+		req.body.user_username = req.decodedToken.username;
+
 
 		await Recipe.update(req.body, {
 			where: { id: recipeID },
