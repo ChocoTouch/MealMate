@@ -38,10 +38,6 @@ module.exports = {
 	},
 
 	async down(queryInterface, Sequelize) {
-		// await queryInterface.bulkDelete({
-		// 	model: "Users",
-		// 	where: { name: { [Op.or]: ["testadminNAME", "testuserNAME"] } },
-		// });
 		await queryInterface.bulkDelete("Users", { name: ["testuserNAME","testadminNAME"] } );
 	},
 };

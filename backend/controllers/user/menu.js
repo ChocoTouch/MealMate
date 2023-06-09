@@ -12,7 +12,7 @@ const Comment = DB.Comment;
 const { RequestError, RecipeError, MenuError, CourseError } = require("../../error/customError");
 
 exports.getAllMenus = (req, res, next) => {
-	Menu.findAll({ attributes: ["id", "name", "slug", "description", "user_username", "createdAt"] })
+	Menu.findAll({ attributes: ["id", "name", "slug", "description", "user_username", "createdAt", "image"] })
 		.then((menus) => res.json({ data: menus }))
 		.catch((err) => next(err));
 };
@@ -26,7 +26,7 @@ exports.getMyMenus = async (req, res, next) => {
 			include: [
 				{
 					model: Recipe,
-					attributes: ["id", "name", "slug", "description", "user_username", "createdAt"],
+					attributes: ["id", "name", "slug", "description", "user_username", "createdAt", "image"],
 					through: {
 						attributes: [],
 					},
@@ -45,10 +45,10 @@ exports.getMyMenus = async (req, res, next) => {
 				},
 				{
 					model: Comment,
-					attributes: ["id", "message", "user_username"],
+					attributes: ["id", "message", "user_username", "image"],
 				},
 			],
-			attributes: ["id", "name", "slug", "description", "user_username","user_id"],
+			attributes: ["id", "name", "slug", "description", "user_username", "user_id", "image"],
 		});
 
 		return res.json({ data: menus });
@@ -70,13 +70,13 @@ exports.getMenu = async (req, res, next) => {
 			include: [
 				{
 					model: Recipe,
-					attributes: ["id", "name", "slug", "description", "user_username", "createdAt"],
+					attributes: ["id", "name", "slug", "description", "user_username", "createdAt", "image"],
 					through: {
 						attributes: [],
 					},
 					include: [
 						{ model: Theme, attributes: ["id", "name", "slug", "description"] },
-						{ model: User, attributes: ["id", "username", "slug"] },
+						{ model: User, attributes: ["id", "username", "slug", "image"] },
 						{
 							model: Menu_Recipe,
 							attributes: ["id"],
@@ -93,9 +93,9 @@ exports.getMenu = async (req, res, next) => {
 					model: Comment,
 					attributes: ["id", "message", "user_username"],
 				},
-				{ model: User, attributes: ["id", "username", "slug"] },
+				{ model: User, attributes: ["id", "username", "slug", "image"] },
 			],
-			attributes: ["id", "name", "slug", "description", "user_username", "createdAt"],
+			attributes: ["id", "name", "slug", "description", "user_username", "createdAt", "image"],
 		});
 
 		if (menu === null) {

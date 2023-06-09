@@ -11,7 +11,7 @@ const { RequestError, RecipeError } = require("../../error/customError");
 exports.getAllRecipes = (req, res, next) => {
 	Recipe.findAll({
 		include: [{ model: Theme, attributes: ["id", "name", "slug", "description"] }],
-		attributes: ["id", "name", "slug", "description", "difficulty", "user_username", "createdAt"],
+		attributes: ["id", "name", "slug", "description", "difficulty", "user_username", "createdAt", "image"],
 	})
 		.then((recipes) => res.json({ data: recipes }))
 		.catch((err) => next(err));
@@ -33,14 +33,14 @@ exports.getRecipe = async (req, res, next) => {
 				{ model: Comment, attributes: ["id", "message", "user_username"] },
 				{
 					model: Ingredient,
-					attributes: ["id", "name", "slug", "description", "calories", "price"],
+					attributes: ["id", "name", "slug", "description", "calories", "price", "image"],
 					through: {
 						attributes: ["count"],
 					},
 				},
 				{
 					model: Menu,
-					attributes: ["id", "name", "slug", "description", "user_username", "createdAt"],
+					attributes: ["id", "name", "slug", "description", "user_username", "createdAt", "image"],
 					through: {
 						attributes: [],
 					},
@@ -53,7 +53,7 @@ exports.getRecipe = async (req, res, next) => {
 					},
 				},
 			],
-			attributes: ["id", "name", "slug", "description", "difficulty", "instructions", "createdAt"],
+			attributes: ["id", "name", "slug", "description", "difficulty", "instructions", "createdAt", "image"],
 		});
 
 		if (recipe === null) {

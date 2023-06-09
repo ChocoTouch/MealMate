@@ -7,7 +7,7 @@ const Diet = DB.Diet;
 const { RequestError, IngredientError } = require("../../error/customError");
 
 exports.getAllIngredients = (req, res, next) => {
-	Ingredient.findAll({ attributes: ["id", "name", "slug", "description", "calories", "price"] })
+	Ingredient.findAll({ attributes: ["id", "name", "slug", "description", "calories", "price", "image"] })
 		.then((ingredients) => res.json({ data: ingredients }))
 		.catch((err) => next(err));
 };
@@ -26,7 +26,7 @@ exports.getIngredient = async (req, res, next) => {
 				{ model: Category, attributes: ["id", "name", "slug"], through: { attributes: [] } },
 				{
 					model: Recipe,
-					attributes: ["id", "name", "slug", "user_username", "description", "difficulty"],
+					attributes: ["id", "name", "slug", "user_username", "description", "difficulty", "image"],
 					include: [
 						{ model: Theme, attributes: ["id", "name", "slug", "description"] },
 						{
@@ -42,7 +42,7 @@ exports.getIngredient = async (req, res, next) => {
 					},
 				},
 			],
-			attributes: ["id", "name", "slug", "description", "calories", "price"],
+			attributes: ["id", "name", "slug", "description", "calories", "price", "image"],
 		});
 
 		if (ingredient === null) {

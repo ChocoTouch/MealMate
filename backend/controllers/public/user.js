@@ -7,15 +7,7 @@ const { RequestError, UserError } = require("../../error/customError");
 
 exports.getAllUsers = (req, res, next) => {
 	User.findAll({
-		attributes: ["id", "name", "slug", "firstname", "username"],
-		include: [
-			{
-				model: Recipe,
-				attributes: ["id", "name", "slug", "description"],
-				include: [{ model: Theme, attributes: ["id", "name", "slug", "description"] }],
-			},
-			{ model: Menu, attributes: ["id", "user_id", "name", "slug", "description"] },
-		],
+		attributes: ["id", "name", "slug", "firstname", "username", "image"]
 	})
 		.then((users) => res.json({ data: users }))
 		.catch((err) => next(err));
@@ -34,12 +26,12 @@ exports.getUser = async (req, res, next) => {
 			include: [
 				{
 					model: Recipe,
-					attributes: ["id", "name", "slug", "description"],
+					attributes: ["id", "name", "slug", "description", "image"],
 					include: [{ model: Theme, attributes: ["id", "name", "slug", "description"] }],
 				},
-				{ model: Menu, attributes: ["id", "user_id", "name", "slug", "description"] },
+				{ model: Menu, attributes: ["id", "user_id", "name", "slug", "description", "image"] },
 			],
-			attributes: ["id", "name", "slug", "firstname", "username"],
+			attributes: ["id", "name", "slug", "firstname", "username", "image"],
 		});
 
 		if (user === null) {

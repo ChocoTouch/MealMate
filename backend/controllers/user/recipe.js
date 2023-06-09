@@ -12,7 +12,7 @@ const { RequestError, RecipeError, IngredientError, DietError } = require("../..
 exports.getAllRecipes = (req, res, next) => {
 	Recipe.findAll({
 		include: [{ model: Theme, attributes: ["id", "name", "slug", "description"] }],
-		attributes: ["id", "name", "slug", "description", "difficulty", "user_username", "createdAt"],
+		attributes: ["id", "name", "slug", "description", "difficulty", "user_username", "createdAt", "image"],
 	})
 		.then((recipes) => res.json({ data: recipes }))
 		.catch((err) => next(err));
@@ -25,14 +25,14 @@ exports.getMyRecipes = async (req, res, next) => {
 			include: [
 				{
 					model: Ingredient,
-					attributes: ["id", "name", "slug", "description", "calories", "price"],
+					attributes: ["id", "name", "slug", "description", "calories", "price", "image"],
 					through: {
 						attributes: ["count"],
 					},
 				},
 				{
 					model: Menu,
-					attributes: ["id", "name", "slug", "description", "user_username", "createdAt"],
+					attributes: ["id", "name", "slug", "description", "user_username", "createdAt", "image"],
 					through: {
 						attributes: [],
 					},
@@ -48,7 +48,7 @@ exports.getMyRecipes = async (req, res, next) => {
 				},
 			],
 
-			attributes: ["id", "name", "slug", "description", "difficulty", "instructions", "createdAt"],
+			attributes: ["id", "name", "slug", "description", "difficulty", "instructions", "createdAt", "image"],
 		});
 		return res.json({ data: recipes });
 	} catch (err) {
@@ -67,19 +67,19 @@ exports.getRecipe = async (req, res, next) => {
 		let recipe = await Recipe.findOne({
 			where: { id: recipeID },
 			include: [
-				{ model: User, attributes: ["id", "username", "slug"] },
+				{ model: User, attributes: ["id", "username", "slug", "image"] },
 				{ model: Theme, attributes: ["id", "name", "slug", "description"] },
 				{ model: Comment, attributes: ["id", "message", "user_username"] },
 				{
 					model: Ingredient,
-					attributes: ["id", "name", "slug", "description", "calories", "price"],
+					attributes: ["id", "name", "slug", "description", "calories", "price", "image"],
 					through: {
 						attributes: ["count"],
 					},
 				},
 				{
 					model: Menu,
-					attributes: ["id", "name", "slug", "description", "user_username", "createdAt"],
+					attributes: ["id", "name", "slug", "description", "user_username", "createdAt", "image"],
 					through: {
 						attributes: [],
 					},
@@ -92,7 +92,7 @@ exports.getRecipe = async (req, res, next) => {
 					},
 				},
 			],
-			attributes: ["id", "name", "slug", "description", "difficulty", "theme_id", "instructions", "createdAt"],
+			attributes: ["id", "name", "slug", "description", "difficulty", "theme_id", "instructions", "createdAt", "image"],
 		});
 
 		if (recipe === null) {
