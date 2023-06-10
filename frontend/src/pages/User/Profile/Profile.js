@@ -30,6 +30,7 @@ const Profile = () => {
         console.log(e)
         userService.updateMyProfile(user)
             .then(res => {
+                e.target[5].value = ""
                 accountService.saveToken(res.data.access_token);
                 getMyInfo();
                 console.log(res)

@@ -73,7 +73,7 @@ exports.getMyUser = async (req, res, next) => {
 
 exports.updateMyProfile = async (req, res, next) => {
 	try {
-		const { username, email, password, name, firstname, telephone } = req.body;
+		const { username, email, password, name, firstname, telephone, image } = req.body;
 
 		// Validation des données envoyées
 		if (!password) {
@@ -118,7 +118,7 @@ exports.updateMyProfile = async (req, res, next) => {
 			email: email,
 			username: username,
 			roles: loggedUser.roles,
-			image: req.file.path || null
+			image: req.file ? req.file.path : null
 		};
 
 		// Mise à jour de l'utilisateur
