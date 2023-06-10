@@ -35,9 +35,10 @@ const Login = () => {
 			.catch((err) => console.log(err.response));
 	};
 	return (
+		<>
 		<form onSubmit={onSubmit} className="loginform">
 			<div className="group">
-				<label htmlFor="email">Adresse E-mail</label>
+				<label htmlFor="email">Renseignez votre adresse Email</label>
 				<input
 					type="email"
 					name="email"
@@ -48,7 +49,7 @@ const Login = () => {
 				/>
 			</div>
 			<div className="group">
-				<label htmlFor="password">Mot de passe</label>
+				<label htmlFor="password">Renseignez votre mot de passe</label>
 				<input
 					type="password"
 					name="password"
@@ -62,6 +63,8 @@ const Login = () => {
 				<button>Connexion</button>
 			</div>
 		</form>
+		<p>Pas encore de compte ?<br/>Inscrivez-vous !</p>
+		</>
 	);
 };
 

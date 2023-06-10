@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { menuService } from '@/_services/admin/menu.service';
+import defaultmenuimage from "../../../assets/images/DefaultMenuImage.png"
 
 const Menu = () => {
     const [menus, setMenus] = useState([]);
@@ -38,6 +39,7 @@ const Menu = () => {
                         <th>Créateur</th>
                         <th>Nom</th>
                         <th>Description</th>
+                        <th>Image</th>
                         <th>Date de création</th>
                         <th>Date d'édition</th>
                         <th>Date de suppression</th>
@@ -53,6 +55,7 @@ const Menu = () => {
                                 <td>{menu.user_username}</td>
                                 <td>{menu.name}</td>
                                 <td>{menu.description}</td>
+                                <td><img src={menu.image ? "/"+ menu.image : defaultmenuimage} alt={menu.name}/></td>
                                 <td>{menu.createdAt}</td>
                                 <td>{menu.updatedAt}</td>
                                 <td>{menu.deletedAt}</td>

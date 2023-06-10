@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { userService } from '@/_services/admin/user.service';
-
+import defaultuserimage from "../../../assets/images/DefaultUserImage.png"
 const User = () => {
     const [users, setUsers] = useState([]);
     const flag = useRef(false)
@@ -56,10 +56,9 @@ const User = () => {
                                 <td>{user.firstname}</td>
                                 <td>{user.name}</td>
                                 <td>{user.username}</td>
-                                <td>{user.telephone}</td>
+                                <td>{user.telephone || "pas de numéro"}</td>
                                 <td>{user.roles}</td>
-                                {/* <td><img src={user.image} alt="Profil utilisateur"/></td> */}
-                                <td>{user.image}</td>
+                                <td><img src={user.image ? "/"+ user.image : defaultuserimage} alt={"Utilisateur:" + user.name}/></td>
                                 <td>{user.createdAt}</td>
                                 <td>{user.updatedAt}</td>
                                 <td>{user.deletedAt}</td>

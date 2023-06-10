@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { recipeService } from '@/_services/admin/recipe.service';
+import defaultrecipeimage from "../../../assets/images/DefaultRecipeImage.png"
 
 const Recipe = () => {
     const [recipes, setRecipes] = useState([]);
@@ -41,6 +42,7 @@ const Recipe = () => {
                         <th>Difficulté</th>
                         <th>Thème</th>
                         <th>Créateur</th>
+                        <th>Image</th>
                         <th>Date de création</th>
                         <th>Date d'édition</th>
                         <th>Date de suppression</th>
@@ -57,6 +59,7 @@ const Recipe = () => {
                                 <td>{recipe.difficulty}</td>
                                 <td>{recipe.Theme.name}</td>
                                 <td>{recipe.user_username}</td>
+                                <td><img src={recipe.image ? "/"+ recipe.image : defaultrecipeimage} alt={recipe.name}/></td>
                                 <td>{recipe.createdAt}</td>
                                 <td>{recipe.updatedAt}</td>
                                 <td>{recipe.deletedAt}</td>

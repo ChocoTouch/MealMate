@@ -35,8 +35,7 @@ const Footer = () => {
                     <h3>Navigation</h3>
                     <ul>
                         <li>Accueil</li>
-                        <li>Recettes</li>
-                        <li>Favoris</li>
+                        <li>Recettes</li> 
                         <li>Nous contacter</li>
                         <li>Qui sommes-nous?</li>
                     </ul>
