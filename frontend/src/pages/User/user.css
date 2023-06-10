@@ -13,18 +13,18 @@
 .UHeader{
     text-align: center;
     background-color: white;
-    border: solid 1px black;
     margin: 0;
-    padding: 2% 0;
+    text-transform: capitalize;
+    padding: 0;
 }
 
-.UHeader button{
-    width: 20%;
-    height:20px;
+.ULayout{
+    height: 100%;
+    overflow-y: scroll;
 }
 
 #user_body{
-    border: solid 1px black;
+    background-color: #FFF9F9;
 }
 
 .del_ubtn{
@@ -32,13 +32,6 @@
     color:red;
 }
 /****************************************************/
-
-.UHeader{
-    text-align: center;
-    border: solid 1px black;
-    text-transform: capitalize;
-    padding: 0;
-}
 
 .UHeader nav{
     display: flex;
@@ -48,13 +41,12 @@
 
 .UHeader ul{
     list-style: none;
-    padding:0 2%;
+    display: flex;
+    width: 100%;
 }
 .UHeader ul li{
     display: inline-block;
-    margin-right:20px;
-    border: 1px solid gray;
-    padding: 5px;
+    padding: 0 2%;
 }
 .UHeader ul li a{
     text-decoration: none;
@@ -63,4 +55,30 @@
 
 .UHeader button{
     margin: 0 2%;
+}
+
+@media only screen and (max-width: 600px) {
+    .UHeader ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .UHeader button{
+        margin: 0;
+    }
+
+    .UHeader nav{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        text-align: left;
+        padding: 1%;
+    }
+
+    .UHeader ul li {
+        font-size: 4rem;
+    }
 }

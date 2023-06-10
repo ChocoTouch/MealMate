@@ -18,14 +18,6 @@ let getMenu = (menuId) => {
 }
 
 /**
- * Récupération de la liste des menus de l'utilisateur connecté
- * @returns {Promise}
- */
-let getMyMenus = () => {
-    return Axios.get('/admin/menus/me')
-}
-
-/**
  * Ajout d'un menu
  * @param {number} menu 
  * @returns {Promise}
@@ -53,5 +45,5 @@ let deleteMenu = (menuId) => {
 }
 
 export const menuService = {
-    getAllMenus, getMenu, getMyMenus, updateMenu, deleteMenu, addMenu
+    getAllMenus, getMenu, updateMenu, deleteMenu, addMenu
 }

@@ -10,7 +10,6 @@ const UserCard = ({ user, image }) => {
         >            
             <div className='usercard-container'>
                 <p className='usercard-title'>{user.firstname} {user.name}</p>
-                <p className='usercard-text'>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut hendrerit libero."</p>
             </div>
             <img className='usercard-image' src={image} alt={user.name} />
             <p className='usercard-recipes'>{user.Recipes.length} recettes</p>

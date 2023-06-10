@@ -5,6 +5,7 @@
     margin: 2vw 3vw 1vw 3vw;
     border-radius: 1vw;
     box-shadow: 0 0.5vw 1vw 1vw rgb(0 0 0 / 10%);
+    cursor: pointer;
 }
 
 .recipecard-article p{
@@ -34,4 +35,32 @@
     bottom: 50%;
     border-radius: 50%;
     box-shadow: 0 0.5vw 1vw 1vw rgb(0 0 0 / 10%);
+}
+
+
+@media only screen and (max-width: 600px) {
+    .recipecard-article {
+        width: 80%;
+        height: 45vw;
+        margin: 20% auto 0;
+        border-radius: 5rem;
+        padding: 4%;
+    }
+    .recipecard-article p {
+        margin: 1vw 0 0 0;
+        color: #9A2727;
+        font-size: 5rem;
+    }
+
+    .recipecard-article .recipecard-text {
+        overflow: scroll;
+        text-overflow: initial;
+        white-space: pre-wrap;
+    }
+
+    .recipecard-image{
+        width: 40%;
+        left: 65%;
+        bottom: 65%;
+    }
 }

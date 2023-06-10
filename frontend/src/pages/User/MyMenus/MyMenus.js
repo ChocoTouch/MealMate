@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { menuService } from '@/_services/admin/menu.service';
+import { menuService } from '@/_services/user/menu.service';
 
 const MyMenus = () => {
     const [menus, setMenus] = useState([]);

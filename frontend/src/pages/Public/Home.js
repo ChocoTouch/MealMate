@@ -89,7 +89,6 @@ const Home = () => {
 						onChange={onChange}
 					/>
 					<ul className="searchbar-results">
-						<hr></hr>
 						{results.map((result,id) =>(
 							<li key={id}>{result.name}</li>
 						))}

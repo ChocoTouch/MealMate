@@ -1,10 +1,64 @@
 
-.loginform .group{
-    margin-bottom:15px;
+.loginform{
+    width: 40%;
+    text-align: center;
+    padding: 2% 2% 0 2%;
+    margin: auto auto 0 auto;
+    color: #9A2727;
 }
+
+.loginform .group {
+    margin: 5% 0;
+}
+
+.loginform .group a{
+    color: #3F0000;
+    font-weight: bold;
+}
+
+.loginform .group input{
+    width: 95.5%;
+    padding: 2%;
+    color: #9A2727;
+    box-shadow: inset 0px 1px 5px 2px rgb(0 0 0 / 10%);
+    border: none;
+    border-radius: 0.5rem;
+}
+
 .loginform label{
     display:block;
+    text-align: left;
+    padding: 1% 0;
+    font-weight: bold;
 }
-.loginform button{
-    width:100%
+.loginform button {
+    width: 100%;
+    padding: 2%;
+    color: white;
+    background-color: #9A2727;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+}
+
+.loginregister {
+    text-align: center;
+    color: #3F0000;
+    font-weight: bold;
+    margin: auto;
+    margin-top: 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .loginform{
+        font-size: 3rem;
+        width: 60%;
+        padding-top: 15%;
+    }
+
+    .loginregister {
+        font-size: 3rem;
+        margin-bottom: 15%;
+    }
+
 }

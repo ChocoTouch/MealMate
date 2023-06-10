@@ -12,18 +12,28 @@
     font-weight: bold;
 }
 
+.ALayout{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
 .AHeader{
     text-align: center;
     line-height: 50px;
     background-color: #9A2727;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border: solid 1px black;
-    height: 6vw;
+    height: 100%;
 }
 
 .AHeader img{
     padding: 1%;
+    width: 20%;
+    height: fit-content;
 }
 
 .AHeader button{
@@ -53,7 +63,7 @@
 }
 #admin_body{
     width: 85%;
-    background-color: white;
+    background-color: #FFF9F9;
 }
 /***********************************/
 
@@ -67,12 +77,13 @@
     color: white;
     font-weight: normal;
     font-size: 1.1rem;
+    white-space: nowrap;
 }
 
 /**************************************/
 .del_ubtn{
     cursor: pointer;
-    color:red;
+    color:#9A2727;
 }
 
 /*************************************/
@@ -84,4 +95,91 @@
 .list_table img{
     height: 5vw;
     max-width: 12vw;
+}
+
+.AFooter{
+    background-color: #9A2727;
+    text-align: center;
+    color: white;
+}
+
+@media only screen and (max-width: 600px) {
+    #admin {
+        flex-direction: column;
+    }
+    #admin_body {
+        width: 100%;
+        font-size: 6rem;
+    }
+
+    .SideMenu {
+        width: 100%;
+        font-size: 3rem;
+    }
+
+    .SideMenu ul{
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        width: calc(100% - 2px);
+        display: flex;
+        overflow-x: scroll;
+        align-items: center;
+    }
+
+    .SideMenu ul ul{
+        display: block;
+        text-align: left;
+    }
+
+    .SideMenu ul li{
+        padding: 3%;
+        font-size: 4rem;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .SideMenu ul li ul li{
+        padding: 0;
+    }
+
+    .SideMenu ul li a {
+        font-size: 3.5rem;
+        font-weight: bolder;
+        font-weight: normal;
+        text-transform: capitalize;
+    }
+
+    .SideMenu ul li ul li a {
+        font-size: 3.5rem;
+        font-weight: bolder;
+        font-weight: normal;
+        text-transform: capitalize;
+    }
+
+    .AHeader{
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .AHeader img {
+        width: 45%;
+    }
+
+    .AHeader button {
+        font-size: 3.5rem;
+        padding: 3%;
+        width: 80%;
+        margin: 5% auto;
+    }
+
+    .AHeader h1 {
+        font-size: 4rem;
+        width: 100%;
+    }
+
+    .AFooter {
+        font-size: 4rem;
+    }
 }

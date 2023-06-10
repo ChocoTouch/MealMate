@@ -1,7 +1,7 @@
 .publicheader{
     height: 6vw;
     text-align: center;
-    border: solid 1px black;
+    border-bottom: solid 1px black;
     text-transform: capitalize;
     color: #9A2727;
 }
@@ -61,4 +61,34 @@
 .search-bar {
     border-radius: 16px;
     border: 1px solid black;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .publicheader {
+        height: 100%;
+    }
+    .publicheader .logo {
+        width: 25%;
+    }
+
+    .publicheader ul {
+        font-size: 4rem;
+        flex-direction: column;
+        padding: 0 5%;
+        align-items: center;
+    }
+
+    .publicheader ul li {
+        margin: 0;
+    }
+
+    .publicheader ul li svg {
+        width: 4.5em;
+        height: 4.5em;
+    }
+
+    .login-btn {
+        font-size: 3.5rem;
+    }
 }

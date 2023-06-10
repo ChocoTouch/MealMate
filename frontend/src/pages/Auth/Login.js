@@ -27,8 +27,14 @@ const Login = () => {
 				accountService.saveToken(res.data.access_token);
 				if (res.data.roles === "ROLE_ADMIN") {
 					navigate("/admin");
-				} else {
+					console.log(res.data.roles)
+				}
+				if (res.data.roles === "ROLE_USER") {
 					navigate("/user");
+					console.log(res.data.roles)
+				}
+				else {
+
 				}
 				console.log(res)
 			})
@@ -60,10 +66,13 @@ const Login = () => {
 				/>
 			</div>
 			<div className="group">
+				<a>Mot de passe oublié ?</a>
+			</div>
+			<div className="group">
 				<button>Connexion</button>
 			</div>
 		</form>
-		<p>Pas encore de compte ?<br/>Inscrivez-vous !</p>
+		<a className="loginregister">Pas encore de compte ?<br/>Inscrivez-vous !</a>
 		</>
 	);
 };

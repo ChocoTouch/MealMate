@@ -6,7 +6,7 @@ const Axios = axios.create({
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
 });
 
-// Intercepteur pour la mise en place du token dans la requête
+// Intercepteur pour la mise en place du token dans la requête.
 Axios.interceptors.request.use(request => {
     if (accountService.isLogged()) {
         request.headers.Authorization = 'Bearer ' + accountService.getToken();
@@ -14,7 +14,7 @@ Axios.interceptors.request.use(request => {
     return request;
 });
 
-// Intercepteur de réponse API pour vérification de la session
+// Intercepteur de réponse API pour vérification de la session.
 Axios.interceptors.response.use(response => {
     return response;
 }, error => {

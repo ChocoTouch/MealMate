@@ -2,19 +2,19 @@
     position: relative;
     width: 13%;
     margin: 0 1vw 0 2vw;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
     color: #9A2727;
+    cursor: pointer;
+    border: 2px solid;
+    border-radius: 1rem;
 }
 
 .usercard-article .usercard-container{
-    position: absolute;
-    bottom: 4vw;
-    left: 5%;
-    width: 90%;
-}
-
-
-.usercard-article .usercard-text{
-    font-size: 0.8vw;
+    background-color: white;
+    border-radius: 3rem;
+    text-align: center;
 }
 
 .usercard-article p{
@@ -33,7 +33,7 @@
 
 .usercard-article .usercard-title{
     font-weight: bolder;
-    font-size: 1.2vw;
+    font-size: 1rem;
 }
 
 .usercard-article .usercard-image{
@@ -41,4 +41,34 @@
     height: 100%;
     border-radius: 5%;
     object-fit: cover;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .usercard-article {
+        width: 70%;
+        margin: 5% auto;
+        padding: 2%;
+        border: 2px solid;
+        border-radius: 5rem;
+        text-align: center;
+    }
+
+    .usercard-article .usercard-container{
+        background-color: white;
+        border-radius: 3rem;
+        text-align: center;
+    }
+
+    .usercard-article .usercard-recipes {
+        font-size: 5.2vw;
+    }
+
+    .usercard-article .usercard-menus {
+        font-size: 5.2vw;
+    }
+
+    .usercard-article .usercard-title {
+        font-size: 5rem;
+    }
 }
