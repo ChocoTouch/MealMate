@@ -29,7 +29,7 @@ const RecipeEdit = () => {
         console.log(recipe);
         recipeService.updateRecipe(recipe)
             .then(res => {
-                navigate('../index')
+                navigate('../')
             })
             .catch(err => console.log(err))
     }

@@ -19,14 +19,16 @@ const CategoryAdd = () => {
         e.preventDefault();
         console.log(category);
         categoryService.addCategory(category)
-            .then(res => navigate('../index'))
+            .then(res => navigate('../'))
             .catch(err => console.log(err))
     }
 
     return (
         <div className='CategoryAdd'>
-            ajout d'un Category :
-            <form onSubmit={onSubmit}>
+            <form className='formadd' onSubmit={onSubmit}>
+                <div className="group">
+                    <h1>Ajout d'une Catégorie :</h1>
+                </div>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" />

@@ -11,6 +11,6 @@ router.use((req, res, next) => {
 
 router.get("/", recipeController.getAllRecipes);
 
-router.get("/:id", recipeController.getRecipe);
+router.get("/:slug", recipeController.getRecipe);
 
 module.exports = router;

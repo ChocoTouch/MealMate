@@ -45,7 +45,7 @@ const Days = () => {
                     {
                         days.map(day => (
                             <tr key={day.id}>
-                                <td><Link to={`../edit/${day.id}` }>{day.id}</Link></td>
+                                <td><Link to={`edit/${day.id}` }>{day.id}</Link></td>
                                 <td>{day.name}</td>
                                 <td>{day.createdAt}</td>
                                 <td>{day.updatedAt}</td>

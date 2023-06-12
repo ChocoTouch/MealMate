@@ -46,7 +46,7 @@ const Course = () => {
                     {
                         courses.map(course => (
                             <tr key={course.id}>
-                                <td><Link to={`../edit/${course.id}` }>{course.id}</Link></td>
+                                <td><Link to={`edit/${course.id}` }>{course.id}</Link></td>
                                 <td>{course.name}</td>
                                 <td>{course.description}</td>
                                 <td>{course.createdAt}</td>

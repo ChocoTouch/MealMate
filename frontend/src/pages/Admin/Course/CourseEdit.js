@@ -20,7 +20,7 @@ const CourseEdit = () => {
         e.preventDefault();
         courseService.updateCourse(course)
             .then(res => {
-                navigate('../index')
+                navigate('../')
             })
             .catch(err => console.log(err))
     }

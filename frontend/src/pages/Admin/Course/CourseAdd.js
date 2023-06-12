@@ -19,14 +19,16 @@ const CourseAdd = () => {
         e.preventDefault();
         console.log(course);
         courseService.addCourse(course)
-            .then(res => navigate('../index'))
+            .then(res => navigate('../'))
             .catch(err => console.log(err))
     }
 
     return (
         <div className='CourseAdd'>
-            ajout d'un Plat :
-            <form onSubmit={onSubmit}>
+            <form className='formadd' onSubmit={onSubmit}>
+                <div className="group">
+                    <h1>Ajout d'un Plat :</h1>
+                </div>  
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" />

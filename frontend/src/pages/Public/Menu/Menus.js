@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { menuService } from '@/_services/admin/menu.service';
+import { menuService } from '@/_services/public/menu.service';
 import defaultmenuimage from "../../../assets/images/DefaultMenuImage.png"
 
-const Menu = () => {
+import './menus.css'
+
+const Menus = () => {
     const [menus, setMenus] = useState([]);
     const flag = useRef(false)
 
@@ -19,47 +21,26 @@ const Menu = () => {
         return () => flag.current = true
     }, [])
 
-    const delMenu = (menuId) => {
-        menuService.deleteMenu(menuId)
-            .then(res =>{
-                setMenus((current) => current.filter(menu => menu.id !== menuId))
-            })
-            .catch(err => console.log(err))
-    }
-
-
     return (
-        <div className='list_table'>
-            liste des menus
+        <div className='Menus'>
+            MENUS
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>ID_Utilisateur</th>
-                        <th>Créateur</th>
                         <th>Nom</th>
+                        <th>Créateur</th>
                         <th>Description</th>
                         <th>Image</th>
-                        <th>Date de création</th>
-                        <th>Date d'édition</th>
-                        <th>Date de suppression</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         menus.map(menu => (
                             <tr key={menu.id}>
-                                <td><Link to={`edit/${menu.id}` }>{menu.id}</Link></td>
-                                <td>{menu.user_id}</td>
-                                <td>{menu.user_username}</td>
-                                <td>{menu.name}</td>
+                                <td><Link to={`${menu.User.slug}/menu/${menu.slug}`}>{menu.name}</Link></td>
+                                <td>{menu.User.username}</td>
                                 <td>{menu.description}</td>
                                 <td><img src={menu.image ? "/"+ menu.image : defaultmenuimage} alt={menu.name}/></td>
-                                <td>{menu.createdAt}</td>
-                                <td>{menu.updatedAt}</td>
-                                <td>{menu.deletedAt}</td>
-                                <td><span className='del_ubtn' onClick={() => delMenu(menu.id)}>Supprimer</span></td>
                             </tr>
                         ))
                     }
@@ -69,4 +50,4 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+export default Menus;

@@ -46,7 +46,7 @@ const Diet = () => {
                     {
                         diets.map(diet => (
                             <tr key={diet.id}>
-                                <td><Link to={`../edit/${diet.id}` }>{diet.id}</Link></td>
+                                <td><Link to={`edit/${diet.id}` }>{diet.id}</Link></td>
                                 <td>{diet.name}</td>
                                 <td>{diet.description}</td>
                                 <td>{diet.createdAt}</td>

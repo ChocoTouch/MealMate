@@ -30,7 +30,7 @@ const MenuEdit = () => {
         console.log(menu);
         menuService.updateMenu(menu)
             .then(res => {
-                navigate('../index')
+                navigate('../')
             })
             .catch(err => console.log(err))
     }

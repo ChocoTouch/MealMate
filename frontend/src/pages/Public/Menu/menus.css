@@ -1,0 +1,11 @@
+.Menus img{
+    height: 50%;
+    display: block;
+    margin: auto;
+}
+/*******************************/
+
+.Menu section table{
+    width: 100%;
+    table-layout: fixed;
+}

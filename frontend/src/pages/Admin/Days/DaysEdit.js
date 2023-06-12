@@ -20,7 +20,7 @@ const DayEdit = () => {
         e.preventDefault();
         dayService.updateDayOfWeek(day)
             .then(res => {
-                navigate('../index')
+                navigate('../')
             })
             .catch(err => console.log(err))
     }

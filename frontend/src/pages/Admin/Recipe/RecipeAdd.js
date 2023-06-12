@@ -19,14 +19,16 @@ const RecipeAdd = () => {
         e.preventDefault();
         console.log(recipe);
         recipeService.addRecipe(recipe)
-            .then(res => navigate('../index'))
+            .then(res => navigate('../'))
             .catch(err => console.log(err))
     }
 
     return (
         <div className='RecipeAdd'>
-            ajout d'une recette :
-            <form onSubmit={onSubmit}>
+            <form className='formadd' onSubmit={onSubmit}>
+                <div className="group">
+                    <h1>Ajout d'une Recette :</h1>
+                </div>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" />

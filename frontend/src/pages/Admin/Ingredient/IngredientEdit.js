@@ -20,7 +20,7 @@ const IngredientEdit = () => {
         e.preventDefault();
         ingredientService.updateIngredient(ingredient)
             .then(res => {
-                navigate('../index')
+                navigate('../')
             })
             .catch(err => console.log(err))
     }

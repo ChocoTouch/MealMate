@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import './footer.css';
 import footerimage from '../../assets/images/FooterImage.png';
 import mealMateLogo from '../../assets/images/MealMateLogoDark.png';
@@ -34,10 +35,11 @@ const Footer = () => {
                 <nav>
                     <h3>Navigation</h3>
                     <ul>
-                        <li>Accueil</li>
-                        <li>Recettes</li> 
-                        <li>Nous contacter</li>
-                        <li>Qui sommes-nous?</li>
+                        <li><Link to="home">accueil</Link></li>
+                        <li><Link to="recipes">recettes</Link></li>
+                        <li><Link to="menus">menus</Link></li>  
+                        <li><Link to="contact">contact</Link></li>
+                        <li><Link to="about">à propos</Link></li>
                     </ul>
                 </nav>
                 <address className='makers'>

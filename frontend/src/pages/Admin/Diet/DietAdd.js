@@ -19,14 +19,16 @@ const DietAdd = () => {
         e.preventDefault();
         console.log(diet);
         dietService.addDiet(diet)
-            .then(res => navigate('../index'))
+            .then(res => navigate('../'))
             .catch(err => console.log(err))
     }
 
     return (
         <div className='DietAdd'>
-            ajout d'un Régime :
-            <form onSubmit={onSubmit}>
+            <form className='formadd' onSubmit={onSubmit}>
+                <div className="group">
+                    <h1>Ajout d'un Régime :</h1>
+                </div>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" />

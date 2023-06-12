@@ -20,7 +20,7 @@ const ThemeEdit = () => {
         e.preventDefault();
         themeService.updateTheme(theme)
             .then(res => {
-                navigate('../index')
+                navigate('../')
             })
             .catch(err => console.log(err))
     }

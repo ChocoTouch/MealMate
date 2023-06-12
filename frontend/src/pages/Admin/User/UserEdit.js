@@ -23,7 +23,7 @@ const UserEdit = () => {
         console.log(e)
         userService.updateUser(user)
             .then(res => {
-                navigate('../index')
+                navigate('../')
             })
             .catch(err => console.log(err))
     }

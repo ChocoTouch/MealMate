@@ -11,6 +11,6 @@ router.use((req, res, next) => {
 
 router.get("/", userController.getAllUsers);
 
-router.get("/:id", userController.getUser);
+router.get("/:slug", userController.getUser);
 
 module.exports = router;

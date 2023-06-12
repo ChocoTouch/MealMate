@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./auth.css";
 import { accountService } from "@/_services";
@@ -44,6 +45,9 @@ const Login = () => {
 		<>
 		<form onSubmit={onSubmit} className="loginform">
 			<div className="group">
+				<h1>Connectez-vous</h1>
+			</div>
+			<div className="group">
 				<label htmlFor="email">Renseignez votre adresse Email</label>
 				<input
 					type="email"
@@ -52,6 +56,7 @@ const Login = () => {
 					value={credentials.email}
 					onChange={onChange}
 					autoComplete="off"
+					required
 				/>
 			</div>
 			<div className="group">
@@ -63,16 +68,17 @@ const Login = () => {
 					value={credentials.password}
 					onChange={onChange}
 					autoComplete="off"
+					required
 				/>
 			</div>
 			<div className="group">
-				<a>Mot de passe oublié ?</a>
+				<p>Mot de passe oublié ?</p>
 			</div>
 			<div className="group">
-				<button>Connexion</button>
+				<button className='submitbtn'>Connexion</button>
 			</div>
 		</form>
-		<a className="loginregister">Pas encore de compte ?<br/>Inscrivez-vous !</a>
+		<Link to="/auth/register" className="loginregister">Pas encore de compte ?<br/>Inscrivez-vous !</Link>
 		</>
 	);
 };

@@ -23,14 +23,14 @@ exports.getAllUsers = (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
 	try {
-		let userID = parseInt(req.params.id);
+		let userSlug = parseInt(req.params.slug);
 
-		if (!userID) {
+		if (!userSlug) {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
 		let user = await User.findOne({
-			where: { id: userID },
+			where: { slug: userSlug },
 			include: [
 				{
 					model: Recipe,

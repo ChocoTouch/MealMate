@@ -10,11 +10,11 @@ let getAllUsers = () => {
 
 /**
  * Récupération d'un utilisateur
- * @param {number} userId 
+ * @param {string} userSlug 
  * @returns {Promise}
  */
-let getUser = (userId) => {
-    return Axios.get('/public/users/' + userId)
+let getUser = (userSlug) => {
+    return Axios.get('/public/users/' + userSlug)
 }
 
 

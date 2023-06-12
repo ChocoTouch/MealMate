@@ -11,6 +11,6 @@ router.use((req, res, next) => {
 
 router.get("/", menuController.getAllMenus);
 
-router.get("/:id", menuController.getMenu);
+router.get("/:slug", menuController.getMenu);
 
 module.exports = router;

@@ -10,7 +10,7 @@ const { RequestError, RecipeError } = require("../../error/customError");
 
 exports.getAllRecipes = (req, res, next) => {
 	Recipe.findAll({
-		include: [{ model: Theme, attributes: ["id", "name", "slug", "description"] }],
+		include: [{ model: Theme, attributes: ["id", "name", "slug", "description"] },{ model: User, attributes: ["id", "username", "slug", "image"] }],
 		attributes: ["id", "name", "slug", "description", "difficulty", "user_username", "createdAt", "image"],
 	})
 		.then((recipes) => res.json({ data: recipes }))
@@ -19,14 +19,14 @@ exports.getAllRecipes = (req, res, next) => {
 
 exports.getRecipe = async (req, res, next) => {
 	try {
-		let recipeID = parseInt(req.params.id);
+		let recipeSlug = req.params.slug;
 
-		if (!recipeID) {
+		if (!recipeSlug) {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
 		let recipe = await Recipe.findOne({
-			where: { id: recipeID },
+			where: { slug: recipeSlug },
 			include: [
 				{ model: User, attributes: ["id", "username", "slug"] },
 				{ model: Theme, attributes: ["id", "name", "slug", "description"] },

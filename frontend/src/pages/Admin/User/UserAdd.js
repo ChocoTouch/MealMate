@@ -18,13 +18,16 @@ const UserAdd = () => {
         e.preventDefault();
         console.log(user);
         userService.addUser(user)
-            .then(res => navigate('../index'))
+            .then(res => navigate('../'))
             .catch(err => console.log(err))
     }
     return (
         <div className='UserAdd'>
-            ajout d'un utilisateur :
-            <form onSubmit={onSubmit}>
+
+            <form className='formadd' onSubmit={onSubmit}>
+                <div className="group">
+                    <h1>Ajout d'un utilisateur :</h1>
+                </div>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" onChange={onChange} autoComplete="off"/>

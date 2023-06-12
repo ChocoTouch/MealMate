@@ -10,11 +10,11 @@ let getAllRecipes = () => {
 
 /**
  * Récupération d'une recette
- * @param {number} recipeId 
+ * @param {string} recipeSlug 
  * @returns {Promise}
  */
-let getRecipe = (recipeId) => {
-    return Axios.get('/public/recipes/' + recipeId)
+let getRecipe = (recipeSlug) => {
+    return Axios.get('/public/recipes/' + recipeSlug)
 }
 
 

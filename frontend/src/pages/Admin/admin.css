@@ -8,6 +8,54 @@
     font-weight: bold;
 }
 
+.formadd{
+    width: 40%;
+    text-align: center;
+    padding: 2% 2% 0 2%;
+    margin: auto auto 0 auto;
+    color: #9A2727;
+
+}
+
+.formadd > div {
+    margin: 5% 0;
+}
+
+.formadd .group {
+    width: 100%;
+}
+
+.formadd .group a{
+    color: #3F0000;
+    font-weight: bold;
+}
+
+.formadd .group input{
+    width: 95.5%;
+    padding: 2%;
+    color: #9A2727;
+    box-shadow: inset 0px 1px 5px 2px rgb(0 0 0 / 10%);
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.formadd label{
+    display:block;
+    text-align: left;
+    padding: 1% 0;
+    font-weight: bold;
+}
+.formadd button {
+    width: 100%;
+    padding: 2%;
+    color: white;
+    background-color: #9A2727;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .group_title{
     font-weight: bold;
 }
@@ -46,6 +94,7 @@
     font-size: 1.5rem;
     font-weight: bolder;
     width: 25%;
+    cursor: pointer;
 }
 
 .AHeader h1{

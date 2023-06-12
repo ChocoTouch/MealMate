@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Login from './Login';
+import Register from './Register';
 import { Home, Contact, About, PLayout } from '@/pages/Public';
 
 import Error from '@/_utils/Error'
@@ -11,6 +12,7 @@ const AuthRouter = () => {
             <Route element={<PLayout />}>
                 <Route index element={<Login />}/>
                 <Route path="login" element={<Login />}/>
+                <Route path="register" element={<Register />}/>
                 <Route path="home" element={<Home />}/>
                 <Route path="contact" element={<Contact />}/>
                 <Route path="about" element={<About />}/>

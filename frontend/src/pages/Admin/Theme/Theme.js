@@ -46,7 +46,7 @@ const Theme = () => {
                     {
                         themes.map(theme => (
                             <tr key={theme.id}>
-                                <td><Link to={`../edit/${theme.id}` }>{theme.id}</Link></td>
+                                <td><Link to={`edit/${theme.id}` }>{theme.id}</Link></td>
                                 <td>{theme.name}</td>
                                 <td>{theme.description}</td>
                                 <td>{theme.createdAt}</td>

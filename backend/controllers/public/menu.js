@@ -11,21 +11,25 @@ const Menu_Recipe = DB.Menu_recipe;
 const { RequestError, MenuError} = require("../../error/customError");
 
 exports.getAllMenus = (req, res, next) => {
-	Menu.findAll({ attributes: ["id", "name", "slug", "description", "user_username", "createdAt", "image"] })
+	Menu.findAll({ attributes: ["id", "name", "slug", "description", "user_username", "createdAt", "image"],
+	include: [
+		{ model: User, attributes: ["id", "username", "slug", "image"] },
+	],
+})
 		.then((menus) => res.json({ data: menus }))
 		.catch((err) => next(err));
 };
 
 exports.getMenu = async (req, res, next) => {
 	try {
-		let menuID = parseInt(req.params.id);
+		let menuSlug = req.params.slug;
 
-		if (!menuID) {
+		if (!menuSlug) {
 			throw new RequestError("Paramètre(s) manquant(s) .");
 		}
 
 		let menu = await Menu.findOne({
-			where: { id: menuID },
+			where: { slug: menuSlug },
 			include: [
 				{
 					model: Recipe,

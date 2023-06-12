@@ -20,7 +20,7 @@ const CategoryEdit = () => {
         e.preventDefault();
         categoryService.updateCategory(category)
             .then(res => {
-                navigate('../index')
+                navigate('../')
             })
             .catch(err => console.log(err))
     }

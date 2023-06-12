@@ -10,11 +10,11 @@ let getAllMenus = () => {
 
 /**
  * Récupération d'un menu
- * @param {number} menuId 
+ * @param {string} menuSlug 
  * @returns {Promise}
  */
-let getMenu = (menuId) => {
-    return Axios.get('/public/menus/' + menuId)
+let getMenu = (menuSlug) => {
+    return Axios.get('/public/menus/' + menuSlug)
 }
 
 

@@ -5,10 +5,15 @@
     padding: 2% 2% 0 2%;
     margin: auto auto 0 auto;
     color: #9A2727;
+
+}
+
+.loginform > div {
+    margin: 5% 0;
 }
 
 .loginform .group {
-    margin: 5% 0;
+    width: 100%;
 }
 
 .loginform .group a{
@@ -31,7 +36,7 @@
     padding: 1% 0;
     font-weight: bold;
 }
-.loginform button {
+.loginform .submitbtn {
     width: 100%;
     padding: 2%;
     color: white;
@@ -39,6 +44,7 @@
     border: none;
     border-radius: 0.5rem;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .loginregister {
@@ -47,6 +53,85 @@
     font-weight: bold;
     margin: auto;
     margin-top: 0;
+    text-decoration: none;
+}
+
+
+.registerform{
+    width: 40%;
+    text-align: center;
+    padding: 2% 2% 0 2%;
+    margin: auto auto 0 auto;
+    color: #9A2727;
+}
+
+.registerform > div {
+    margin: 4% 0;
+    width: 100%;
+}
+
+.registerform .group {
+    width: 100%;
+}
+
+.registerform .group a{
+    color: #3F0000;
+    font-weight: bold;
+}
+
+.registerform .group input{
+    width: 95.5%;
+    padding: 2%;
+    color: #9A2727;
+    box-shadow: inset 0px 1px 5px 2px rgb(0 0 0 / 10%);
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.registerform label{
+    display:block;
+    text-align: left;
+    padding: 1% 0;
+    font-weight: bold;
+}
+.registerform .submitbtn {
+    width: 100%;
+    padding: 2%;
+    color: white;
+    background-color: #9A2727;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.registerform .fullname{
+    display: flex;
+    justify-content: space-between;
+}
+
+.registerform .fullname .group{
+    width: 45%;
+}
+
+.registerform .fullname .group input{
+    padding: 4%;
+}
+
+.registerform .title{
+    position: relative;
+    font-weight: bold;
+}
+
+.registerform .title button{
+    color: #9A2727;
+    padding: 0;
+}
+
+.registerlogin{
+    position: absolute;
+    left: -40%;
+    text-decoration: none;
 }
 
 @media only screen and (max-width: 600px) {
@@ -59,6 +144,23 @@
     .loginregister {
         font-size: 3rem;
         margin-bottom: 15%;
+    }
+
+    .registerform{
+        font-size: 3rem;
+        width: 60%;
+        padding-top: 15%;
+    }
+
+    .registerlogin {
+        font-size: 3rem;
+        margin-bottom: 15%;
+        position: initial;
+    }
+
+    .registerlogin svg{
+        width: 4rem;
+        height: 4rem;
     }
 
 }

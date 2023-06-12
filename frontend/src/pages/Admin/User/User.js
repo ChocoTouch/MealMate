@@ -52,7 +52,7 @@ const User = () => {
 					{users.map((user) => (
 						<tr key={user.id}>
 							<td>
-								<Link to={`../edit/${user.id}`}>{user.id}</Link>
+								<Link to={`edit/${user.id}`}>{user.id}</Link>
 							</td>
 							<td>{user.email}</td>
 							<td>{user.firstname}</td>

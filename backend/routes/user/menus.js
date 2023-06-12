@@ -20,7 +20,7 @@ router.put("/recipe/:id", menuController.addRecipeInMyMenu);
 
 router.delete("/recipe/:id", menuController.deleteRecipeInMyMenu);
 
-router.put("/me", uploader.upload, menuController.addMyMenu);
+router.put("/me", menuController.addMyMenu);
 
 router.patch("/me/:id", uploader.upload, menuController.updateMyMenu);
 

@@ -5,7 +5,7 @@ let login = (credentials) => {
 }
 
 let register = (user) => {
-    return Axios.post('/auth/register',user)
+    return Axios.put('/auth/register',user)
 }
 
 let saveToken = (token) => {

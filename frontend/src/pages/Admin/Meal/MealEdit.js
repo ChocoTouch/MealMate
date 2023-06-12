@@ -20,7 +20,7 @@ const MealEdit = () => {
         e.preventDefault();
         mealService.updateMeal(meal)
             .then(res => {
-                navigate('../index')
+                navigate('../')
             })
             .catch(err => console.log(err))
     }

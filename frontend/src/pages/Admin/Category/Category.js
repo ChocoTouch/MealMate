@@ -45,7 +45,7 @@ const Category = () => {
                     {
                         categories.map(category => (
                             <tr key={category.id}>
-                                <td><Link to={`../edit/${category.id}` }>{category.id}</Link></td>
+                                <td><Link to={`edit/${category.id}` }>{category.id}</Link></td>
                                 <td>{category.name}</td>
                                 <td>{category.createdAt}</td>
                                 <td>{category.updatedAt}</td>

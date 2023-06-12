@@ -1,7 +1,7 @@
 .publicheader{
     height: 6vw;
     text-align: center;
-    border-bottom: solid 1px black;
+    border-bottom: solid 1px #9A2727;
     text-transform: capitalize;
     color: #9A2727;
 }
@@ -36,6 +36,7 @@
 
 .publicheader ul li button{
     padding: 0;
+    color: #9A2727;
 }
 
 .publicheader ul li svg{
@@ -60,7 +61,11 @@
 }
 .search-bar {
     border-radius: 16px;
-    border: 1px solid black;
+    border: 1px solid #9A2727;
+}
+
+.search-bar:focus {
+    outline: 1px solid #9A2727;
 }
 
 @media only screen and (max-width: 600px) {
@@ -70,6 +75,7 @@
     }
     .publicheader .logo {
         width: 25%;
+        height: fit-content;
     }
 
     .publicheader ul {

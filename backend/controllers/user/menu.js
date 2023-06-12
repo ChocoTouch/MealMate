@@ -220,20 +220,19 @@ exports.addMyMenu = async (req, res, next) => {
 
 		req.body.user_username = req.decodedToken.username;
 
-		if(req.file){
-			req.body.image = req.file.path;
-		}
+
 		
 		req.body.user_id = req.decodedToken.id;
 		
-		if(req.file){
-			req.body.image = req.file.path;
+		if(name){
+			req.body.slug = slugify(name);
 		}
 
 		let menuc = await Menu.create(req.body);
 
 		return res.json({ message: "Votre menu a bien été crée .", data: menuc });
 	} catch (err) {
+		console.log(err)
 		next(err);
 	}
 };

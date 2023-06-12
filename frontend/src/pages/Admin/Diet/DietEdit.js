@@ -20,7 +20,7 @@ const DietEdit = () => {
         e.preventDefault();
         dietService.updateDiet(diet)
             .then(res => {
-                navigate('../index')
+                navigate('../')
             })
             .catch(err => console.log(err))
     }
