@@ -65,7 +65,7 @@ Une fois l'API configurée, lancer Postman.
 
 Entrer la route à utiliser.
 ****
-# Routage :
+# Routage API :
 ### Liste des Router :
 #### Home API
 ```
@@ -196,4 +196,14 @@ deleteIn
 ```http://localhost:8888/admin/menus/recipe/10``` en **PUT** permet d'ajouter la recette avec l'id ```10``` à un menu.
 
 **Attention !** 
-Certains paramètres comme ```menu_id``` sont à entrer dans le body (x-www-form-urlencoded)
+Certains paramètres sont à entrer dans le body avec le type de contenu (x-www-form-urlencoded)
+
+# Installation de la partie front end
+
+Ouvrir le projet dans un terminal dans le dossier front end et installer les dépendances et lancer le site avec le script starto.
+```sh
+cd frontend
+npm install
+npm run starto
+```
+# **Profitez de votre expérience et découvrez les fonctionnalités du sites!**
