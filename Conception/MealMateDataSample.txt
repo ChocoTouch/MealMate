@@ -7,13 +7,58 @@ id	nom	description	pays	calories	prix
 5	Saumon	Riche en acides gras oméga-3	Norvège	300	20
 
 Menu
-id	user_id	nom	description
-1	1	Brunch	Un repas du matin délicieux et nourrissant
-2	2	Dîner	Un repas du soir satisfaisant et savoureux
-3	3	Dessert	Une douceur sucrée pour terminer la journée
+id	user_id	nom				description
+1	1	Brunch du vendredi soir 	Un repas du matin délicieux et nourrissant
+2	2	Dîner				Un repas du soir satisfaisant et savoureux
+3	3	Dessert	du bonheur		Une douceur sucrée pour terminer la journée
 
-Recette
+Recipe
 id	user_id	nom	description	instructions	pays	vegetarien	vegetalien	sansgluten
 1	1	Soupe de tomates	Un classique réconfortant	1. Faire revenir les oignons et l'ail dans une casserole. 2. Ajouter les tomates et le bouillon. 3. Laisser mijoter pendant 20 minutes. 4. Mixer jusqu'à obtenir une texture lisse.	France	true	false	true
 2	2	Curry de poulet	Un plat épicé et savoureux	1. Faire revenir le poulet, les oignons et l'ail. 2. Ajouter le curry et le lait de coco. 3. Laisser mijoter pendant 30 minutes. 4. Servir sur du riz.	Inde	false	false	true
 3	3	Gâteau au chocolat	Un dessert riche et décadent	1. Mélanger la farine, le sucre, la poudre de cacao et la levure. 2. Ajouter les œufs, le lait et le chocolat fondu. 3. Cuire au four pendant 30 minutes.	États-Unis	true	true	false
+
+
+Meal
+id	name			slug			description
+1	Petit-Déjeuner
+2	Déjeuner
+3	Diner
+4	Brunch
+5	En-cas
+
+Course
+id	name		slug			description
+1	Hors d'oeuvre
+2	Soupe
+3	Plat de Poisson
+4	Plat de Viande
+5	Plat de Résistance
+6	Salade
+7	Dessert
+8	Boisson
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

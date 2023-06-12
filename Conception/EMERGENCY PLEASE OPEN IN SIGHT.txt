@@ -1,0 +1,28 @@
+29 juin : PRESENTATION EN ANGLAIS + DIAPO DE PRESENTATION 40 MIN (diapo cachées pour lentretien) + ***DOSSIER PROFESSIONNEL*** + DOSSIER PROJET
+
+03 JUILLET : Envoi par mail a Sarah Du résumé en francais du projet
+
+13 JUILLET : VALIDATION DU 29 JUIN
+
+17 JUILLET : Envoi par mail a Sarah
+
+17-18-19 JUILLET: ENTRAINEMENT + FINALISATION
+
+20 et 21 JUILLET: Passage
+
+1 - Présentation Personnel Anglais
+2 - Présentation de votre Projet
+3 - Cahier des Charges (Besoins, Spécificités Fonctionnelles, QQOQCP)
+4 - Organisation du Projet (Trello, Git) - KANBAN / CYCLE EN V
+5 - Conception UI/UX : Zoning, Wireframe, Maquette Fonctionnelle, Charte Graphique, Maquette Graphique + Parler du Responsive (Media Query)
+6 - Conception de la BDD : Méthode MERISE, 2 diagrammes : (MCD, MPD)
+7 - Conception de l'application : UML 2 diagrammes : Cas d'utilisations (Parcours utilisateur), ***Diagramme de Classe, (Diagramme Sequence en option)***
+8 - Conception Multicouche : MVC - Modele, Vue et Controlleur. (Exemple de capture de code + explication) ATTENTION AU SCHEMA SUR INTERNET. La vue retourne au controlleur et le controlleur au client.
+9 - Aspects Sécurités : CSRF, Injection SQL, Injection XSS, Politique de mot de passe (Hashage + CNIL)
+10 - DEMONSTRATION DE L'APPLICATION
+11 - Politique de test : Plan de test unitaire & fonctionnelle au minimum
+12 - Veille Technologique : Site que vous consulter pour faire de la veille - https://owasp.org/www-project-top-ten/
+13 - Difficultés Rencontrées
+14 - Conclusion
+
+/!\ Raconter une histoire. Il ne s'agit de simplement enchainer des notions qu'il y ai une logique de progression dans votre présentation.

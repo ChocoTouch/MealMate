@@ -1,51 +1,61 @@
 
-PAGES PUBLIQUES :
+PAGES PUBLIQUES (/public) :
 	/home
 	/contact
 	/about
-	/recipes (recherches et affichage de recettes avec likes et commentaires)
-
-PAGES USERS :
-	/home
 	/recipes
-	/menus (liste de menus de la semaine avec likes et commentaires)
-	/user/profile
-	/user/parameters
-	/user/recipes (gestion de recettes)
-		/index
+		/:userslug/:recipeslug
+	/menus
+		/:userslug/:recipeslug
+PAGES USERS (/user):
+	/public/... (PAGES PUBLIQUES)
+	/profile
+		/edit
+	/recipes
 		/edit
 		/add
-		/delete
-	/user/menus (gestion de menus)
-		/index
+	/menus
 		/edit
 		/add
-		/delete
-	/about
-	/contact
 
-PAGES LOGIN :
-	/auth/login
+PAGES AUTH (/auth):
+	/login
+	/register
 
-PAGES ADMIN :
-	/admin/dashboard (données sur les utilisateurs, recettes, menus)
-	/admin/user (gestion des utilisateurs)
-		/index
+PAGES ADMIN (/admin) :
+	/dashboard
+	/public/... (PAGES PUBLIQUES)
+	/user/... (PAGES USERS)
+	/user
 		/edit
 		/add
-		/delete
-	/admin/recipes (gestion de recettes)
-		/index
+	/recipes
 		/edit
 		/add
-		/delete
-	/admin/menus (gestion de menus)
-		/index
+	/menus
 		/edit
 		/add
-		/delete
-	/admin/comments (gestion de commentaires)
-		/index
+	/comments
 		/edit
 		/add
-		/delete
+	/categories
+		/edit
+		/add
+	/meals
+		/edit
+		/add
+	/days
+		/edit
+		/add
+	/courses
+		/edit
+		/add
+	/themes
+		/edit
+		/add
+	/diets
+		/edit
+		/add
+	/ingredients
+		/edit
+		/add
