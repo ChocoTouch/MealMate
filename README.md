@@ -193,7 +193,7 @@ deleteIn
 ```
 ****
 # EXEMPLE
-```http://localhost:8888/admin/menus/recipe/10``` en **PUT** permet d'ajouter la recette avec l'id ```10``` à un menu.
+```http://localhost:8888/admin/menus/recipe/10``` en **PATCH** permet d'éditer la recette avec l'id ```10``` à un menu.
 
 **Attention !** 
 Certains paramètres sont à entrer dans le body avec le type de contenu (x-www-form-urlencoded)
