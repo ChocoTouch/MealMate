@@ -10,7 +10,7 @@ Application web de gestion de recettes et de menus.
 - Commenter les menus et les plats des autres amateurs de cuisines
 
 # Installation de l'API
-MealMate nécessite [Node.js](https://nodejs.org/) 18 au fonctionnement.
+MealMate nécessite [Node.js](https://nodejs.org/) 18 et un SGBD SQL au fonctionnement.
 
 Ouvrir le projet dans un terminal dans le dossier backend et installer les dépendances et lancer le serveur.
 ```sh
