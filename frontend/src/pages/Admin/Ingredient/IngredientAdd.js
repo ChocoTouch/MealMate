@@ -31,19 +31,19 @@ const IngredientAdd = () => {
                 </div>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
-                    <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" />
+                    <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" required/>
                 </div>
                 <div className="group">
                     <label htmlFor="description">Description</label>
-                    <input type="text" name="description" id="description" onChange={onChange} autoComplete="off" />
+                    <input type="text" name="description" id="description" onChange={onChange} autoComplete="off" required/>
                 </div>
                 <div className="group">
-                    <label htmlFor="price">Prix</label>
-                    <input type="text" name="price" id="price" onChange={onChange} autoComplete="off" />
+                    <label htmlFor="price">Prix pour 100g</label>
+                    <input type="text" name="price" id="price" onChange={onChange} autoComplete="off" required/>
                 </div>
                 <div className="group">
-                    <label htmlFor="calories">Calories</label>
-                    <input type="text" name="calories" id="calories" onChange={onChange} autoComplete="off" />
+                    <label htmlFor="calories">Calories pour 100g</label>
+                    <input type="text" name="calories" id="calories" onChange={onChange} autoComplete="off" required/>
                 </div>
                 <div className="group">
                     <button>Ajouter</button>

@@ -29,11 +29,11 @@ const MyMenusAdd = () => {
             <form onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
-                    <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" />
+                    <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" required/>
                 </div>
                 <div className="group">
                     <label htmlFor="description">Description</label>
-                    <input type="text" name="description" id="description" onChange={onChange} autoComplete="off" />
+                    <input type="text" name="description" id="description" onChange={onChange} autoComplete="off" required/>
                 </div>
                 <div className="group">
                     <button>Ajouter</button>

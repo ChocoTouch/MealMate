@@ -110,7 +110,7 @@ const RecipeEdit = () => {
                 </div>
                 <div className="group">
                     <label htmlFor="difficulty">Difficulté</label>
-                    <input type="text" name="difficulty" id="difficulty" defaultValue={recipe.difficulty} onChange={onChange} autoComplete="off" />
+                    <input name="difficulty" type='number' min="1" max="5" value={recipe.difficulty || 1} onChange={onChange} id="difficulty" />
                 </div>
                 <div className="group">
                     <label htmlFor="theme_id">ID Thème</label>

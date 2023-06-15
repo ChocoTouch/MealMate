@@ -48,23 +48,23 @@ const MyRecipesAdd = () => {
             <form onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
-                    <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" />
+                    <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" required />
                 </div>
                 <div className="group">
                     <label htmlFor="description">Description</label>
-                    <input type="text" name="description" id="description" onChange={onChange} autoComplete="off" />
+                    <input type="text" name="description" id="description" onChange={onChange} autoComplete="off" required />
                 </div>
                 <div className="group">
                     <label htmlFor="instructions">Instructions</label>
-                    <input type="text" name="instructions" id="instructions" onChange={onChange} autoComplete="off" />
+                    <input type="text" name="instructions" id="instructions" onChange={onChange} autoComplete="off" required/>
                 </div>
                 <div className="group">
                     <label htmlFor="difficulty">Difficulté</label>
-                    <input type="text" name="difficulty" id="difficulty" onChange={onChange} autoComplete="off" />
+                    <input name="difficulty" type='number' min="1" max="5" value={recipe.difficulty || 1} onChange={onChange} id="difficulty" />
                 </div>
                 <div className="group">
                     <label htmlFor="theme">ID Thème</label>
-                    <select name="theme_id" value={recipe.theme_id} onChange={onChange} id="theme">
+                    <select name="theme_id" value={recipe.theme_id} onChange={onChange} id="theme" required>
                         {
                             themes.map(theme => (
                                 <option key={theme.id} name="theme_id" value={theme.id}>{theme.name}</option>
