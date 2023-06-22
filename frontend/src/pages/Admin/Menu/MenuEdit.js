@@ -59,7 +59,7 @@ const MenuEdit = () => {
     return (
         <div className='MenuEdit'>
             édition d'une recette :
-            <form onSubmit={onSubmit}>
+            <form className="formedit" onSubmit={onSubmit}>
                 <div className="group">
                     <p>Créateur : {menu.user_username}</p>
                 </div>

@@ -3,6 +3,7 @@
     display: flex;
     background-color: #3F0000;
 }
+/******************************************  FORMULAIRES *********************************************************/
 
 .form_title{
     font-weight: bold;
@@ -55,6 +56,56 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.formedit{
+    width: 40%;
+    text-align: center;
+    padding: 2% 2% 0 2%;
+    margin: auto auto 0 auto;
+    color: #9A2727;
+
+}
+
+.formedit > div {
+    margin: 5% 0;
+}
+
+.formedit .group {
+    width: 100%;
+}
+
+.formedit .group a{
+    color: #3F0000;
+    font-weight: bold;
+}
+
+.formedit .group input{
+    width: 95.5%;
+    padding: 2%;
+    color: #9A2727;
+    box-shadow: inset 0px 1px 5px 2px rgb(0 0 0 / 10%);
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.formedit label{
+    display:block;
+    text-align: left;
+    padding: 1% 0;
+    font-weight: bold;
+}
+.formedit button {
+    width: 100%;
+    padding: 2%;
+    color: white;
+    background-color: #9A2727;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/***************************************************************************************************/
 
 .group_title{
     font-weight: bold;

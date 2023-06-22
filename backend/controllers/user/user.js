@@ -73,7 +73,7 @@ exports.getMyUser = async (req, res, next) => {
 
 exports.updateMyProfile = async (req, res, next) => {
 	try {
-		const { username, email, password, name, firstname, telephone, image } = req.body;
+		const { username, email, password, name, firstname, telephone, image} = req.body;
 
 		// Validation des données envoyées
 		if (!password) {
@@ -90,7 +90,7 @@ exports.updateMyProfile = async (req, res, next) => {
 		}
 
 		// Vérification du pseudo envoyé
-		if (username) {
+		if (username && username !== req.decodedToken.username) {
 			if (username !== loggedUser.username) {
 				let user = await User.findOne({ where: { username: username }, raw: true });
 				if (user !== null) {
@@ -100,7 +100,7 @@ exports.updateMyProfile = async (req, res, next) => {
 		}
 
 		// Vérification de l'email envoyé
-		if (email) {
+		if (email && email !== req.decodedToken.email) {
 			if (email !== loggedUser.email) {
 				let user = await User.findOne({ where: { email: email }, raw: true });
 				if (user !== null) {
@@ -118,8 +118,8 @@ exports.updateMyProfile = async (req, res, next) => {
 			email: email,
 			username: username,
 			roles: loggedUser.roles,
-			image: req.file ? req.file.path : null
-		};
+			image: req.file ? req.file.path : null,
+		}
 
 		// Mise à jour de l'utilisateur
 		await User.update(updatedUser, { where: { id: req.decodedToken.id } });

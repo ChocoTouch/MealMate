@@ -14,9 +14,9 @@ router.get("/", ingredientController.getAllIngredients);
 
 router.get("/:id", ingredientController.getIngredient);
 
-router.put("", uploader.upload, ingredientController.addIngredient);
+router.put("", uploader.upload.single('image'), ingredientController.addIngredient);
 
-router.patch("/:id", uploader.upload, ingredientController.updateIngredient);
+router.patch("/:id", uploader.upload.single('image'), ingredientController.updateIngredient);
 
 router.post("/untrash/:id", ingredientController.untrashIngredient);
 

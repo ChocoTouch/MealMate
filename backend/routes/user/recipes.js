@@ -24,9 +24,9 @@ router.put("/diet/:id", recipeController.addDietInMyRecipe);
 
 router.delete("/diet/:id", recipeController.deleteDietInMyRecipe);
 
-router.put("/me", uploader.upload, recipeController.addMyRecipe);
+router.put("/me", uploader.upload.single('image'), recipeController.addMyRecipe);
 
-router.patch("/me/:id", uploader.upload, recipeController.updateMyRecipe);
+router.patch("/me/:id", uploader.upload.single('image'), recipeController.updateMyRecipe);
 
 router.delete("/me/trash/:id", recipeController.trashMyRecipe);
 

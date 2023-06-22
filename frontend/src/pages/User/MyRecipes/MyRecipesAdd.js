@@ -45,7 +45,7 @@ const MyRecipesAdd = () => {
     return (
         <div className='RecipeAdd'>
             ajout d'une recette :
-            <form onSubmit={onSubmit}>
+            <form className="formadd" onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" required />
@@ -71,6 +71,10 @@ const MyRecipesAdd = () => {
                             ))
                         }
                     </select>
+                </div>
+                <div className="group">
+                    <label htmlFor="image">Uploader fichier Image</label>
+                    <input type="file" name="image" onChange={onChange} id="image"/>
                 </div>
                 <div className="group">
                     <button>Ajouter</button>

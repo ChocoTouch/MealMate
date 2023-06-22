@@ -91,7 +91,7 @@ const RecipeEdit = () => {
                 </div>
             </aside>
 
-            <form onSubmit={onSubmit}>
+            <form className="formedit" onSubmit={onSubmit}>
                 <p className='form_title'>édition d'une recette :</p>
                 <div className="group">
                     <p>Créateur : {recipe.user_username}</p>

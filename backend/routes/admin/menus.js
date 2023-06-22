@@ -14,9 +14,9 @@ router.get("/", menuController.getAllMenus);
 
 router.get("/:id", menuController.getMenu);
 
-router.put("", uploader.upload, menuController.addMenu);
+router.put("", uploader.upload.single('image'), menuController.addMenu);
 
-router.patch("/:id", uploader.upload, menuController.updateMenu);
+router.patch("/:id", uploader.upload.single('image'), menuController.updateMenu);
 
 router.post("/untrash/:id", menuController.untrashMenu);
 

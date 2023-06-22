@@ -40,7 +40,7 @@ const DayEdit = () => {
     return (
         <div className='DayEdit'>
             édition d'un Jour :
-            <form onSubmit={onSubmit}>
+            <form className="formedit" onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" defaultValue={day.name} onChange={onChange} autoComplete="off"/>

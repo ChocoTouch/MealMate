@@ -40,7 +40,7 @@ const CategoryEdit = () => {
     return (
         <div className='CategoryEdit'>
             édition d'une Catégorie :
-            <form onSubmit={onSubmit}>
+            <form className="formedit" onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" defaultValue={category.name} onChange={onChange} autoComplete="off"/>

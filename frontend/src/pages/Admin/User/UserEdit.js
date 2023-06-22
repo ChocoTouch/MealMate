@@ -43,7 +43,7 @@ const UserEdit = () => {
     return (
         <div className='UserEdit'>
             édition d'un utilisateur :
-            <form onSubmit={onSubmit} encType="multipart/form-data">
+            <form className="formedit" onSubmit={onSubmit} encType="multipart/form-data">
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" defaultValue={user.name} onChange={onChange} autoComplete="off"/>

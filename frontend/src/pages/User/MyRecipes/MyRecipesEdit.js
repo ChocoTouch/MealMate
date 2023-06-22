@@ -184,7 +184,7 @@ const MyRecipesEdit = () => {
                     }
                 </div>
             </aside>
-            <form onSubmit={onSubmit} >
+            <form className="formedit" onSubmit={onSubmit} >
                 <p className='form_title'>édition d'une recette :</p>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
@@ -211,6 +211,10 @@ const MyRecipesEdit = () => {
                             ))
                         }
                     </select>
+                </div>
+                <div className="group">
+                    <label htmlFor="image">Uploader fichier Image</label>
+                    <input type="file" name="image" onChange={onChange} id="image"/>
                 </div>
                 <div className="group">
                     <button>Modifier</button>

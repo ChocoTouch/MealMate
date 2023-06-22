@@ -82,19 +82,19 @@ exports.updateUser = async (req, res, next) => {
 	try {
 		let userID = parseInt(req.params.id);
 		const { username, email, roles, slug } = req.body;
-		if (username) {
-			let user = await User.findOne({ where: { username: username }, raw: true });
-			if (user !== null) {
-				throw new UserError(`Le pseudo ${username} est déjà utilisé .`, 0);
-			}
-		}
+		// if (username) {
+		// 	let user = await User.findOne({ where: { username: username }, raw: true });
+		// 	if (user !== null) {
+		// 		throw new UserError(`Le pseudo ${username} est déjà utilisé .`, 0);
+		// 	}
+		// }
 
-		if (email) {
-			let user = await User.findOne({ where: { email: email }, raw: true });
-			if (user !== null) {
-				throw new UserError(`L'adresse e-mail ${email} est déjà utilisée .`, 0);
-			}
-		}
+		// if (email) {
+		// 	let user = await User.findOne({ where: { email: email }, raw: true });
+		// 	if (user !== null) {
+		// 		throw new UserError(`L'adresse e-mail ${email} est déjà utilisée .`, 0);
+		// 	}
+		// }
 
 		if (!userID) {
 			throw new RequestError("Paramètre(s) manquant(s) .");

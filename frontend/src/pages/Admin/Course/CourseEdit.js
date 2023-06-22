@@ -40,7 +40,7 @@ const CourseEdit = () => {
     return (
         <div className='CourseEdit'>
             édition d'un Régime :
-            <form onSubmit={onSubmit}>
+            <form className="formedit" onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" defaultValue={course.name} onChange={onChange} autoComplete="off"/>

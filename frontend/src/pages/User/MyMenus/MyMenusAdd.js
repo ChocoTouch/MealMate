@@ -26,7 +26,7 @@ const MyMenusAdd = () => {
     return (
         <div className='MenuAdd'>
             ajout d'un menu :
-            <form onSubmit={onSubmit}>
+            <form className="formadd" onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" onChange={onChange} autoComplete="off" required/>
@@ -34,6 +34,10 @@ const MyMenusAdd = () => {
                 <div className="group">
                     <label htmlFor="description">Description</label>
                     <input type="text" name="description" id="description" onChange={onChange} autoComplete="off" required/>
+                </div>
+                <div className="group">
+                    <label htmlFor="image">Uploader fichier Image</label>
+                    <input type="file" name="image" onChange={onChange} id="image"/>
                 </div>
                 <div className="group">
                     <button>Ajouter</button>

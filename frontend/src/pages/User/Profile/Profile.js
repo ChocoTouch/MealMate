@@ -8,7 +8,6 @@ const Profile = () => {
     const flag = useRef(false);
 
 
-
     useEffect(() => {
         if (flag.current === false) {
             getMyInfo()
@@ -55,7 +54,7 @@ const Profile = () => {
             <p>username : {user.username}</p>
             <p>telephone : {user.telephone}</p>
 
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} encType="multipart/form-data">
             Edition du profil
                 <div className="group">
                     <label htmlFor="name">Nom</label>
@@ -80,6 +79,10 @@ const Profile = () => {
                 <div className="group">
                     <label htmlFor="password">Saisissez votre mot de passe pour éditer votre profil</label>
                     <input type="password" name="password" id="password" defaultValue="" onChange={onChangeEdit} autoComplete="off" />
+                </div>
+                <div className="group">
+                    <label htmlFor="image">Uploader fichier Image</label>
+                    <input type="file" name="image" onChange={onChangeEdit} id="image"/>
                 </div>
                 <div className="group">
                     <button>Modifier</button>

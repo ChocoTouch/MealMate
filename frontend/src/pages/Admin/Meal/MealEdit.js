@@ -40,7 +40,7 @@ const MealEdit = () => {
     return (
         <div className='MealEdit'>
             édition d'un Repas :
-            <form onSubmit={onSubmit}>
+            <form className="formedit" onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" defaultValue={meal.name} onChange={onChange} autoComplete="off"/>

@@ -1,5 +1,6 @@
 const express = require("express");
 const userController = require("../../controllers/user/user");
+const uploader = require("../../multer/multer")
 
 let router = express.Router();
 
@@ -15,6 +16,6 @@ router.get("/me", userController.getMyUser);
 
 router.get("/:id", userController.getUser);
 
-router.patch("/me", userController.updateMyProfile);
+router.patch("/me", uploader.upload.single('image'), userController.updateMyProfile);
 
 module.exports = router;

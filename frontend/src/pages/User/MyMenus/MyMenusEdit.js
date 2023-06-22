@@ -178,7 +178,7 @@ const MyMenusEdit = () => {
                     }
                 </div>
             </aside>
-            <form onSubmit={onSubmit}>
+            <form className="formedit" onSubmit={onSubmit}>
                 <p className='form_title'>édition d'un menu :</p>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
@@ -187,6 +187,10 @@ const MyMenusEdit = () => {
                 <div className="group">
                     <label htmlFor="description">Description</label>
                     <input type="text" name="description" id="description" defaultValue={menu.description} onChange={onChange} autoComplete="off" />
+                </div>
+                <div className="group">
+                    <label htmlFor="image">Uploader fichier Image</label>
+                    <input type="file" name="image" onChange={onChange} id="image"/>
                 </div>
                 <div className="group">
                     <button>Modifier</button>
@@ -205,7 +209,7 @@ const MyMenusEdit = () => {
                     </select>
                 </div>
                 <div className="group">
-                    <label htmlFor="meal_id">Plat de la recette : </label>
+                    <label htmlFor="meal_id">Repas de la recette : </label>
                     <select name="meal_id" value={tables.recipes.meal_id} onChange={onChange} id="meal_id">
                         {
                             meals.map(meal => (

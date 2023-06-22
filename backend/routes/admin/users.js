@@ -13,9 +13,9 @@ router.get("/", userController.getAllUsers);
 
 router.get("/:id", userController.getUser);
 
-router.put("", uploader.upload, userController.addUser);
+router.put("", uploader.upload.single('image'), userController.addUser);
 
-router.patch("/:id", uploader.upload, userController.updateUser);
+router.patch("/:id", uploader.upload.single('image'), userController.updateUser);
 
 router.post("/untrash/:id", userController.untrashUser);
 

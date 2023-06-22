@@ -22,7 +22,7 @@ router.delete("/recipe/:id", menuController.deleteRecipeInMyMenu);
 
 router.put("/me", menuController.addMyMenu);
 
-router.patch("/me/:id", uploader.upload, menuController.updateMyMenu);
+router.patch("/me/:id", uploader.upload.single('image'), menuController.updateMyMenu);
 
 router.delete("/me/trash/:id", menuController.trashMyMenu);
 

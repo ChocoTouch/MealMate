@@ -14,9 +14,9 @@ router.get("/", recipeController.getAllRecipes);
 
 router.get("/:id", recipeController.getRecipe);
 
-router.put("", uploader.upload, recipeController.addRecipe);
+router.put("", uploader.upload.single('image'), recipeController.addRecipe);
 
-router.patch("/:id", uploader.upload, recipeController.updateRecipe);
+router.patch("/:id", uploader.upload.single('image'), recipeController.updateRecipe);
 
 router.post("/untrash/:id", recipeController.untrashRecipe);
 

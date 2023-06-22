@@ -40,7 +40,7 @@ const ThemeEdit = () => {
     return (
         <div className='ThemeEdit'>
             édition d'un Thème :
-            <form onSubmit={onSubmit}>
+            <form className="formedit" onSubmit={onSubmit}>
                 <div className="group">
                     <label htmlFor="name">Nom</label>
                     <input type="text" name="name" id="name" defaultValue={theme.name} onChange={onChange} autoComplete="off"/>
