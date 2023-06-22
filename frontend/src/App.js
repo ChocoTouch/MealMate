@@ -24,7 +24,6 @@ function App() {
             </AuthGuard>} />
           <Route path="/auth/*" element={<AuthRouter />} />
         </Routes>
-
       </BrowserRouter>
     </div>
   );

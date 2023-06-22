@@ -39,6 +39,10 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING(64),
         is: /^[0-9a-f]{64}$/i,
+        //is: /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{12,})\S$/,
+        // Checks that a password has a minimum of 12 characters, 
+        // at least 1 uppercase letter, 1 lowercase letter, 
+        // and 1 number with no spaces.
         allowNull: false,
       },
       telephone: {

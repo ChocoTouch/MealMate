@@ -20,7 +20,6 @@ import Error from '@/_utils/Error';
 
 const AdminRouter = () => {
     return (
-        <div>
             <Routes>
                 <Route element={<ALayout />}>
                     <Route index element={<Dashboard />} />
@@ -81,7 +80,6 @@ const AdminRouter = () => {
                     <Route path="*" element={<Error />} />
                 </Route>
             </Routes>
-        </div>
     );
 };
 

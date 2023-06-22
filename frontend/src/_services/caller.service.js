@@ -3,7 +3,7 @@ import { accountService } from './account.service';
 
 const Axios = axios.create({
     baseURL: 'http://localhost:8888',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    headers: { 'Access-Control-Allow-Origin': '*', 'content-type': 'application/x-www-form-urlencoded' },
 });
 
 // Intercepteur pour la mise en place du token dans la requête.
