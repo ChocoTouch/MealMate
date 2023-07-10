@@ -51,7 +51,7 @@ db.Recipe.belongsTo(db.Theme, { foreignKey: "theme_id" });
 
 /* ManyToOne User Recipe */
 db.User.hasMany(db.Recipe, { foreignKey: "user_id" });
-db.Recipe.belongsTo(db.User, { foreignKey: "user_id" });
+db.Recipe.belongsTo(db.User, { foreignKey: "user_id"});
 
 /* ManyToOne User Menu */
 db.User.hasMany(db.Menu, { foreignKey: "user_id" });
