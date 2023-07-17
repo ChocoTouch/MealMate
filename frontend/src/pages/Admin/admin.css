@@ -187,15 +187,6 @@
 }
 
 /*************************************/
-.list_table {
-    padding: 0 2%;
-    overflow-x: scroll;
-}
-
-.list_table img{
-    height: 5vw;
-    max-width: 12vw;
-}
 
 .AFooter{
     background-color: #9A2727;

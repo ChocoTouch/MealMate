@@ -31,8 +31,8 @@ const Recipe = () => {
 
 
     return (
-        <div className='list_table'>
-            liste des recettes :
+        <div className='Recipes'>
+            <h1>liste des recettes :</h1>
             <table>
                 <thead>
                     <tr>
@@ -54,15 +54,15 @@ const Recipe = () => {
                         recipes.map(recipe => (
                             <tr key={recipe.id}>
                                 <td><Link to={`edit/${recipe.id}`}>{recipe.id}</Link></td>
-                                <td>{recipe.name}</td>
-                                <td>{recipe.description}</td>
-                                <td>{recipe.difficulty}</td>
-                                <td>{recipe.Theme.name}</td>
-                                <td>{recipe.user_username}</td>
+                                <td><p>{recipe.name}</p></td>
+                                <td><p>{recipe.description}</p></td>
+                                <td><p className='difficulty'>{recipe.difficulty}</p></td>
+                                <td><p className='theme'>{recipe.Theme.name}</p></td>
+                                <td><p>{recipe.user_username}</p></td>
                                 <td><img src={recipe.image ? "/"+ recipe.image : defaultrecipeimage} alt={recipe.name}/></td>
-                                <td>{recipe.createdAt}</td>
-                                <td>{recipe.updatedAt}</td>
-                                <td>{recipe.deletedAt}</td>
+                                <td><p>{recipe.createdAt}</p></td>
+                                <td><p>{recipe.updatedAt}</p></td>
+                                <td><p>{recipe.deletedAt}</p></td>
                                 <td><span className='del_ubtn' onClick={() => delRecipe(recipe.id)}>Supprimer</span></td>
                             </tr>
                         ))

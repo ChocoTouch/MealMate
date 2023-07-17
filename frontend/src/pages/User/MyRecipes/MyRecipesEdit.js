@@ -6,7 +6,7 @@ import { themeService } from '@/_services/user/theme.service';
 import { dietService } from '@/_services/user/diet.service';
 import { ingredientService } from '@/_services/user/ingredient.service';
 
-//import './recipeedit.css'
+import './myrecipes.css'
 
 const MyRecipesEdit = () => {
     const { id } = useParams();
@@ -147,43 +147,44 @@ const MyRecipesEdit = () => {
         <div className='RecipeEdit'>
             <aside className=''>
 
-                <div className="group">
-                    <p className='group_title'>Ingrédients :</p>
+                <div className="items">
+                    <p className='items_title'>Ingrédients :</p>
                     {
                         tables.ingredients.map(ingredient => (
-                            <div key={ingredient.id}>
-                                <p>Nom : {ingredient.name}</p>
-                                <p>Calories : {ingredient.calories}</p>
-                                <p>Prix : {ingredient.price}</p>
-                                <p>Quantité : {ingredient.Recipe_ingredient.count}</p>
+                            <div className='item' key={ingredient.id}>
+                                <p><span>Nom :</span> {ingredient.name}</p>
+                                <p><span>Calories :</span> {ingredient.calories}</p>
+                                <p><span>Prix :</span> {ingredient.price}</p>
+                                <p><span>Quantité :</span> {ingredient.Recipe_ingredient.count}</p>
                                 <p className='del_ubtn' onClick={() => delIngredient(ingredient.id)}>Supprimer</p>
                             </div>
                         ))
                     }
                 </div>
-                <div className="group">
-                    <p className='group_title'>Régimes :</p>
+                <div className="items">
+                    <p className='items_title'>Régimes :</p>
                     {
                         tables.diets.map(diet => (
-                            <div key={diet.id}>
-                                <p>{diet.name}</p>
+                            <div className='item' key={diet.id}>
+                                <p><span>Nom :</span> {diet.name}</p>
                                 <p className='del_ubtn' onClick={() => delDiet(diet.id)}>Supprimer</p>
                             </div>
                         ))
                     }
                 </div>
-                <div className="group">
-                    <p className='group_title'>Commentaires :</p>
+                <div className="items">
+                    <p className='items_title'>Commentaires :</p>
                     {
                         tables.comments.map(comment => (
-                            <div key={comment.id}>
-                                <p>écris par : {comment.user_username}</p>
-                                <p>Message : {comment.message}</p>
+                            <div className='item' key={comment.id}>
+                                <p>écris par : <span>{comment.user_username}</span></p>
+                                <p><span>Message :</span> {comment.message}</p>
                             </div>
                         ))
                     }
                 </div>
             </aside>
+            <div className='forms'>
             <form className="formedit" onSubmit={onSubmit} >
                 <p className='form_title'>édition d'une recette :</p>
                 <div className="group">
@@ -220,7 +221,7 @@ const MyRecipesEdit = () => {
                     <button>Modifier</button>
                 </div>
             </form>
-            <form className="add_ingredient" onSubmit={addIngredient} >
+            <form className="formadd" onSubmit={addIngredient} >
                 <p className='form_title'>Ajouter un ingrédient :</p>
                 <div className="group">
                     <label htmlFor="ingredient_id">Ingrédient</label>
@@ -236,9 +237,11 @@ const MyRecipesEdit = () => {
                     <label htmlFor="count">Quantité</label>
                     <input type="number" name="count" id="count" value={recipe.count || 1} onChange={onChange} autoComplete="off" min="1" />
                 </div>
-                <button>Ajouter ingrédient</button>
+                <div className="group">
+                    <button>Ajouter ingrédient</button>
+                </div>
             </form>
-            <form className="add_diet" onSubmit={addDiet} >
+            <form className="formadd" onSubmit={addDiet} >
                 <p className='form_title'>Ajouter un régime :</p>
                 <div className="group">
                     <label htmlFor="diet_id">Régime</label>
@@ -250,8 +253,11 @@ const MyRecipesEdit = () => {
                         }
                     </select>
                 </div>
-                <button>Ajouter Régime</button>
+                <div className="group">
+                    <button>Ajouter Régime</button>
+                </div>
             </form>
+            </div>
         </div>
     );
 };

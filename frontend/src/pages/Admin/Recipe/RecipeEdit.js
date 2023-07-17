@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { recipeService } from '@/_services/admin/recipe.service';
-import './recipeedit.css'
+import './recipe.css'
 
 const RecipeEdit = () => {
     const { id } = useParams();
@@ -56,41 +56,42 @@ const RecipeEdit = () => {
     return (
         <section className='RecipeEdit'>
             <aside className=''>
-                <div className="group">
-                    <p className='group_title'>Ingrédients :</p> {
+                <div className="items">
+                    <p className='items_title'>Ingrédients :</p> {
                         tables.ingredients.map(ingredient => (
-                            <div key={ingredient.id}>
-                                <p>ID : {ingredient.id}</p>
-                                <p>Nom : {ingredient.name}</p>
-                                <p>Calories : {ingredient.calories}</p>
-                                <p>Prix : {ingredient.price}</p>
+                            <div className='item' key={ingredient.id}>
+                                <p><span>ID :</span> {ingredient.id}</p>
+                                <p><span>Nom :</span> {ingredient.name}</p>
+                                <p><span>Calories :</span> {ingredient.calories}</p>
+                                <p><span>Prix :</span> {ingredient.price}</p>
                             </div>
                         ))
                     }
                 </div>
-                <div className="group">
-                    <p className='group_title'>Régimes :</p> {
+                <div className="items">
+                    <p className='items_title'>Régimes :</p> {
                         tables.diets.map(diet => (
-                            <div key={diet.id}>
-                                <p>ID : {diet.id}</p>
-                                <p>{diet.name}</p>
+                            <div className='item' key={diet.id}>
+                                <p><span>ID :</span> {diet.id}</p>
+                                <p><span>Nom :</span> {diet.name}</p>
                             </div>
                         ))
                     }
                 </div>
-                <div className="group">
-                    <p className='group_title'>Commentaires :</p>
+                <div className="items">
+                    <p className='items_title'>Commentaires :</p>
                     {
                         tables.comments.map(comment => (
-                            <div key={comment.id}>
-                                <p>ID : {comment.id}</p>
-                                <p>Message : {comment.message}</p>
+                            <div className='item' key={comment.id}>
+                                <p><span>ID :</span> {comment.id}</p>
+                                <p><span>Pseudo :</span> {comment.user_username}</p>
+                                <p className='message'><span>Message :</span> {comment.message}</p>
                             </div>
                         ))
                     }
                 </div>
             </aside>
-
+            <div className='forms'>
             <form className="formedit" onSubmit={onSubmit}>
                 <p className='form_title'>édition d'une recette :</p>
                 <div className="group">
@@ -120,7 +121,7 @@ const RecipeEdit = () => {
                     <button>Modifier</button>
                 </div>
             </form>
-
+            </div>
         </section>
     );
 };

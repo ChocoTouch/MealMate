@@ -37,6 +37,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #3F0000;
 }
 
 .UHeader ul{
@@ -50,11 +51,23 @@
 }
 .UHeader ul li a{
     text-decoration: none;
-    color: black;
+    color: white;
+    font-weight: bold;
 }
 
 .UHeader button{
     margin: 0 2%;
+    border: none;
+    padding: 0.5vw 1vw;
+    border-radius: 0.5vw;
+    background-color: white;
+    color: #3f0000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.UHeader button:hover{
+    text-decoration: underline;
 }
 
 @media only screen and (max-width: 600px) {

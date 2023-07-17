@@ -1,0 +1,130 @@
+.MyRecipes tr {
+ color: white;
+
+}
+
+.MyRecipes h1{
+    color: #9A2727;
+    font-size: 4vw;
+    text-align: center;
+}
+
+.MyRecipes table{
+    background-color: #9A2727;
+    width: 80%;
+    margin: 2vw auto;
+    border-radius: 3vw;
+
+}
+.MyRecipes .difficulty{
+    text-align: center;
+}
+.MyRecipes .theme{
+    text-align: center;
+}
+.MyRecipes td {
+    border-top: white solid 1px;
+}
+
+.MyRecipes .del_ubtn{
+    padding: 1vw;
+    margin: 1vw;
+    background-color: #3F0000;
+    border-radius: 1vw;
+    font-weight: bold;
+}
+
+.MyRecipes .del_ubtn:hover{
+    text-decoration: underline;
+}
+
+
+.MyRecipes td a {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #3F0000;
+    display: block;
+    padding: 1vw;
+    margin: 1vw;
+    border-radius: 1vw;
+}
+
+.MyRecipes td a:hover {
+    text-decoration: underline;
+}
+
+.MyRecipes .createrecipe{
+    display: block;
+    font-size: 2vw;
+    text-decoration: none;
+    background-color: #3F0000;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin: auto;
+    width: 50%;
+    padding: 1vw 0;
+    border-radius: 1vw;
+    
+}
+
+.MyRecipes .createrecipe:hover {
+    text-decoration: underline;
+}
+
+
+.RecipeEdit .forms{
+    width: 100%;
+}
+
+.RecipeEdit form{
+    border: 3px solid #3F0000;
+    border-radius: 1vw;
+    margin: 1vw auto;
+}
+
+.RecipeEdit .items{
+    width: 50%;
+    margin: auto;
+}
+
+.RecipeEdit .items_title{
+    color: white;
+    font-weight: bold;
+    background-color: #9A2727;
+    margin: 1vw;
+    padding: 1vw 0;
+    border-radius: 1vw;
+    text-align: center;
+}
+
+.RecipeEdit .item{
+    border: 3px solid #9A2727;
+    text-align: center;
+    color: #9A2727;
+    margin: 1vw 0;
+    border-radius: 1vw;
+}
+
+.RecipeEdit .item span{
+    font-weight: bold;
+    color: #3F0000;
+}
+
+
+
+.RecipeEdit .del_ubtn{
+    padding: 1vw;
+    margin: 1vw;
+    background-color: #3F0000;
+    border-radius: 1vw;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.RecipeEdit .del_ubtn:hover{
+    text-decoration: underline;
+}

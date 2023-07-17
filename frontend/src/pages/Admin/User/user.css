@@ -1,0 +1,82 @@
+.User tr {
+	color: white;
+}
+
+.User h1 {
+	color: #9a2727;
+	font-size: 4vw;
+	text-align: center;
+}
+
+.User img {
+	width: 4vw;
+}
+
+.User table {
+	background-color: #9a2727;
+	width: 80%;
+	margin: 2vw auto;
+	border-radius: 3vw;
+	text-align: center;
+}
+.User .difficulty {
+	text-align: center;
+}
+.User .theme {
+	text-align: center;
+}
+.User td {
+	border-top: white solid 1px;
+}
+
+.User .del_ubtn {
+	padding: 1vw;
+	margin: 1vw;
+	background-color: #3f0000;
+	border-radius: 1vw;
+	font-weight: bold;
+}
+
+.User .del_ubtn:hover {
+	text-decoration: underline;
+}
+
+.User td a {
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	background-color: #3f0000;
+	display: block;
+	padding: 1vw;
+	margin: 1vw;
+	border-radius: 1vw;
+}
+
+.User td a:hover {
+	text-decoration: underline;
+}
+
+.User .createrecipe {
+	display: block;
+	font-size: 2vw;
+	text-decoration: none;
+	background-color: #3f0000;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	margin: auto;
+	width: 50%;
+	padding: 1vw 0;
+	border-radius: 1vw;
+}
+
+.User .createrecipe:hover {
+	text-decoration: underline;
+}
+
+.UserEdit h1 {
+	color: #9a2727;
+	font-size: 4vw;
+	text-align: center;
+}

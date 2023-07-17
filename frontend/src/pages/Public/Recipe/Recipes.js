@@ -25,7 +25,7 @@ const Recipes = () => {
 
     return (
         <div className='Recipes'>
-            RECIPES
+            <h1>Liste des Recettes</h1>
             <table>
                 <thead>
                     <tr>

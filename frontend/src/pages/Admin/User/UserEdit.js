@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { userService } from '@/_services/admin/user.service';
+import './user.css'
 
 const UserEdit = () => {
     const { id } = useParams();
@@ -42,7 +43,7 @@ const UserEdit = () => {
 
     return (
         <div className='UserEdit'>
-            édition d'un utilisateur :
+            <h1>édition d'un utilisateur :</h1>
             <form className="formedit" onSubmit={onSubmit} encType="multipart/form-data">
                 <div className="group">
                     <label htmlFor="name">Nom</label>

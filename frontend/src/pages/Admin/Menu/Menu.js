@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { menuService } from '@/_services/admin/menu.service';
 import defaultmenuimage from "../../../assets/images/DefaultMenuImage.png"
 
+import './menu.css'
+
 const Menu = () => {
     const [menus, setMenus] = useState([]);
     const flag = useRef(false)
@@ -29,8 +31,8 @@ const Menu = () => {
 
 
     return (
-        <div className='list_table'>
-            liste des menus
+        <div className='Menu'>
+            <h1>liste des menus :</h1>
             <table>
                 <thead>
                     <tr>

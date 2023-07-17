@@ -1,30 +1,35 @@
-.MyMenus tr {
+.Menu tr {
 	color: white;
 }
 
-.MyMenus h1 {
+.Menu h1 {
 	color: #9a2727;
 	font-size: 4vw;
 	text-align: center;
 }
 
-.MyMenus table {
+.Menu img{
+    width: 20vw;
+}
+
+.Menu table {
 	background-color: #9a2727;
 	width: 80%;
 	margin: 2vw auto;
 	border-radius: 3vw;
+    text-align: center;
 }
-.MyMenus .difficulty {
+.Menu .difficulty {
 	text-align: center;
 }
-.MyMenus .theme {
+.Menu .theme {
 	text-align: center;
 }
-.MyMenus td {
+.Menu td {
 	border-top: white solid 1px;
 }
 
-.MyMenus .del_ubtn {
+.Menu .del_ubtn {
 	padding: 1vw;
 	margin: 1vw;
 	background-color: #3f0000;
@@ -32,11 +37,11 @@
 	font-weight: bold;
 }
 
-.MyMenus .del_ubtn:hover {
+.Menu .del_ubtn:hover {
 	text-decoration: underline;
 }
 
-.MyMenus td a {
+.Menu td a {
 	color: white;
 	font-weight: bold;
 	text-align: center;
@@ -48,11 +53,11 @@
 	border-radius: 1vw;
 }
 
-.MyMenus td a:hover {
+.Menu td a:hover {
 	text-decoration: underline;
 }
 
-.MyMenus .createmenu {
+.Menu .createmenu {
 	display: block;
 	font-size: 2vw;
 	text-decoration: none;

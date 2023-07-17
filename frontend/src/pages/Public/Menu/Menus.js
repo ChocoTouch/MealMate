@@ -22,8 +22,8 @@ const Menus = () => {
     }, [])
 
     return (
-        <div className='Menus'>
-            MENUS
+        <div className='Menu'>
+            <h1>Liste des Menus</h1>
             <table>
                 <thead>
                     <tr>

@@ -22,7 +22,7 @@ const AdminRouter = () => {
     return (
             <Routes>
                 <Route element={<ALayout />}>
-                    <Route index element={<Dashboard />} />
+                    <Route index element={<UserRouter />} />
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="user/*" element={<UserRouter />}/>
                     <Route path="/*" element={<PublicRouter />}/>

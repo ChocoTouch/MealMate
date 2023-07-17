@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { userService } from "@/_services/admin/user.service";
 import defaultuserimage from "../../../assets/images/DefaultUserImage.png";
+import './user.css'
+
 const User = () => {
 	const [users, setUsers] = useState([]);
 	const flag = useRef(false);
@@ -29,8 +31,8 @@ const User = () => {
 	};
 
 	return (
-		<div className="list_table">
-			liste des utilisateurs
+		<div className="User">
+			<h1>Liste des Utilisateurs</h1>
 			<table>
 				<thead>
 					<tr>

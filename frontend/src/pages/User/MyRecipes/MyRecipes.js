@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { recipeService } from '@/_services/user/recipe.service';
+import "./myrecipes.css"
 
 const MyRecipes = () => {
     const [recipes, setRecipes] = useState([]);
@@ -28,7 +29,8 @@ const MyRecipes = () => {
 
     return (
         <div className='MyRecipes'>
-            Mes Recettes :
+            <h1>Mes Recettes</h1>
+            <Link to={`add`} className='createrecipe'>Créer une recette</Link>
             <table>
                 <thead>
                     <tr>
@@ -44,16 +46,15 @@ const MyRecipes = () => {
                         recipes.map(recipe => (
                             <tr key={recipe.id}>
                                 <td><Link to={`edit/${recipe.id}`}>{recipe.name}</Link></td>
-                                <td>{recipe.description}</td>
-                                <td>{recipe.difficulty}</td>
-                                <td>{recipe.Theme.name}</td>
+                                <td><p>{recipe.description}</p></td>
+                                <td><p className='difficulty'>{recipe.difficulty}</p></td>
+                                <td><p className='theme'>{recipe.Theme.name}</p></td>
                                 <td><span className='del_ubtn' onClick={() => delRecipe(recipe.id)}>Supprimer</span></td>
                             </tr>
                         ))
                     }
                 </tbody>
             </table>
-            <Link to={`add`}>Création de recette</Link>
         </div>
     );
 };

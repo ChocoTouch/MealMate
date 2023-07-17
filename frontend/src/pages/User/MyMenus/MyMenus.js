@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { menuService } from '@/_services/user/menu.service';
 
+import './mymenus.css'
+
 const MyMenus = () => {
     const [menus, setMenus] = useState([]);
     const flag = useRef(false)
@@ -17,9 +19,19 @@ const MyMenus = () => {
 
         return () => flag.current = true
     }, [])
+
+    const delMenu = (menuId) => {
+        menuService.trashMyMenu(menuId)
+            .then(res => {
+                setMenus((current) => current.filter(menu => menu.id !== menuId))
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <div className='MyMenus'>
-            Mes Menus
+            <h1>Mes Menus</h1>
+            <Link className='createmenu' to={`add`}>Création de menu</Link>
             <table>
                 <thead>
                     <tr>
@@ -34,13 +46,12 @@ const MyMenus = () => {
                             <tr key={menu.id}>
                                 <td><Link to={`edit/${menu.id}` }>{menu.name}</Link></td>
                                 <td>{menu.description}</td>
-                                {/* <td><span className='del_ubtn' onClick={() => delMenu(menu.id)}>Supprimer</span></td> */}
+                                <td><span className='del_ubtn' onClick={() => delMenu(menu.id)}>Supprimer</span></td>
                             </tr>
                         ))
                     }
                 </tbody>
             </table>
-            <Link to={`add`}>Création de menu</Link>
         </div>
     );
 };
